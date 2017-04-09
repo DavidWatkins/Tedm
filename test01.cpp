@@ -5,7 +5,7 @@
 */
 
 /*
-link to SDL tutorial 
+link to SDL tutorial
 www.lazyfoo.net/tutorials/SDL/index.php
 */
 
@@ -14,6 +14,8 @@ www.lazyfoo.net/tutorials/SDL/index.php
 int main(int argc, char **argv) {
 
     Graphics graphics = Graphics();
-    //Environment env = Environment();
-    //env.add_background("resources/dat_anakin.jpg");
+    Environment env;
+    graphics.add_background("resources/dat_anakin.jpg");
+    char c;
+    std::cin >> c;
 }

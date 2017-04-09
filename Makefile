@@ -2,7 +2,7 @@ XX=g++
 
 CXXFLAGS=--std=c++11
 
-LIBS=-lSDL2main -lSDL2
+LIBS=-lSDL2main -lSDL2 -lSDL2_image
 
 OBJS=graphics.o test01.o environment.o #game.o player.o event.o
 

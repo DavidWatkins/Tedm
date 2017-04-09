@@ -1,6 +1,6 @@
-/** 
+/**
     graphics.hpp
-    purpose: abstract away SDL and give users our own graphics api 
+    purpose: abstract away SDL and give users our own graphics api
     built into game objext
 */
 
@@ -26,6 +26,7 @@ public:
     Graphics(int width=SCREEN_WIDTH, int height=SCREEN_HEIGHT);
     ~Graphics();
     bool init();
+    bool add_background(std::string fname);
     void destroy();
 };
 
