@@ -72,9 +72,15 @@ bool Graphics::add_background(std::string filename) {
         SDL_FreeSurface( loadedSurface );
     }
 
-    SDL_BlitSurface(optimizedSurface, 0, screenSurface, 0);
+    SDL_Rect stretchRect;
+    stretchRect.x = 0;
+    stretchRect.y = 0;
+    stretchRect.w = SCREEN_WIDTH;
+    stretchRect.h = SCREEN_HEIGHT;
+
+    SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
     SDL_UpdateWindowSurface(window);
-    SDL_FreeSurface(optimizedSurface);
+    //SDL_FreeSurface(optimizedSurface);
     return true;
 }
 
