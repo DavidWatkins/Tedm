@@ -1,7 +1,10 @@
-XX=g++
+CXX=g++
 
 CXXFLAGS=--std=c++11
-
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	CXXFLAGS += -I/usr/local/include -L/usr/local/lib
+endif
 LIBS=-lSDL2main -lSDL2 -lSDL2_image
 
 OBJS=graphics.o test01.o environment.o #game.o player.o event.o
