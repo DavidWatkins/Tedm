@@ -2,15 +2,17 @@ XX=g++
 
 CXXFLAGS=--std=c++11
 
-OBJS=game.o player.o environment.o event.o
+LIBS=-lSDL2main -lSDL2
+
+OBJS=graphics.o test01.o environment.o #game.o player.o event.o
 
 default: main
 
 main: $(OBJS)
-	$(CXX) $(CXXFLAGS) -o main $(OBJS)
+	$(CXX) $(CXXFLAGS) -o main $(OBJS) $(LIBS)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $*.cpp
+	$(CXX) $(CXXFLAGS) -c $*.cpp $(LIBS)
 
 clean:
 	rm -f *.o main 

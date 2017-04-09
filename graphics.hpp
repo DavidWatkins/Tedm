@@ -6,7 +6,7 @@
 
 /*
 link to sdl tutorial
-http://www.lazyfoo.net/tutorials/SDL/01_hello_SDL/linux/cli/index.php 
+www.lazyfoo.net/tutorials/SDL/index.php
 */
 
 #ifndef __GRAPHICS_HPP__
@@ -16,5 +16,17 @@ http://www.lazyfoo.net/tutorials/SDL/01_hello_SDL/linux/cli/index.php
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+
+class Graphics {
+    //The window we'll be rendering to'
+    SDL_Window *window;
+    //The surface contained by the window
+    SDL_Surface *screenSurface;
+public:
+    Graphics(int width=SCREEN_WIDTH, int height=SCREEN_HEIGHT);
+    ~Graphics();
+    bool init();
+    void destroy();
+};
 
 #endif /* __GRAPHICS_HPP__ */
