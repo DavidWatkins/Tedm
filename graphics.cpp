@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
 #include "graphics.hpp"
@@ -33,7 +34,6 @@ bool Graphics::init() {
     }
     else {
         //Get window surface
-        int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
         if( !( IMG_Init( imgFlags  ) & imgFlags  )  )
         {
             printf( "SDL_image could not initialize! SDL_image Error: %s\n",
@@ -52,7 +52,29 @@ bool Graphics::init() {
     return true;
 }
 
-bool Graphics::add_background(std::string filename) {
+SDL_Surface *Graphics::loadIMG(std::string filename) {
+    SDL_Surface* optimizedSurface = NULL;
+
+    SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
+    if( loadedSurface == NULL ) {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", filename.c_str(), IMG_GetError() );
+    } else {
+        //Convert surface to screen format
+        optimizedSurface = SDL_ConvertSurface( loadedSurface, screenSurface->format, 0);
+        if( optimizedSurface == NULL )
+        {
+            printf( "Unable to optimize image %s! SDL Error: %s\n", filename.c_str(), SDL_GetError() );
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface( loadedSurface );
+    }
+
+    return optimizedSurface;
+}
+
+bool Graphics::add_background(SDL_Surface *screenSurface, SDL_Rect &stretchRect,
+                              std::string filename) {
     //The final optimized image
     SDL_Surface* optimizedSurface = NULL;
 
@@ -72,7 +94,6 @@ bool Graphics::add_background(std::string filename) {
         SDL_FreeSurface( loadedSurface );
     }
 
-    SDL_Rect stretchRect;
     stretchRect.x = 0;
     stretchRect.y = 0;
     stretchRect.w = SCREEN_WIDTH;
