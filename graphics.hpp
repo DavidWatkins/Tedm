@@ -14,17 +14,14 @@ www.lazyfoo.net/tutorials/SDL/index.php
 
 #include <SDL2/SDL.h>
 
-
 class Graphics {
+    Graphics();
 public:
-    Graphics(int width=SCREEN_WIDTH, int height=SCREEN_HEIGHT);
-    ~Graphics();
-    static bool init();
-    static bool add_background(SDL_Surface *screenSurface,
-                               SDL_Rect &stretchRect,
-                               std::string filename);
-    static SDL_Surface *loadIMG(std::string filename);
-    void destroy();
+    static bool init(SDL_Window *window, SDL_Surface *surface, \
+            int height, int width, std::string name);
+    static bool add_background(SDL_Window *window, SDL_Surface *screenSurface, \
+            int height, int width, std::string filename);
+    static SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
 };
 
 #endif /* __GRAPHICS_HPP__ */

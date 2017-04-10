@@ -3,20 +3,9 @@
 #include <string>
 #include "graphics.hpp"
 
-Graphics::Graphics(int width, int height) {
-    window = nullptr;
-    screenSurface = nullptr;
-    this->init();
-}
-
-Graphics::~Graphics() {
-    //Destroy window
-    SDL_DestroyWindow( window );
-    //Quit SDL subsystems
-    SDL_Quit();
-}
-
-bool Graphics::init() {
+bool Graphics::init(SDL_Window *window, SDL_Surface *screenSurface, \
+        int height, int width, std::string name) {
+    const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     //Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -24,9 +13,8 @@ bool Graphics::init() {
     }
 
     //Create window
-    window = SDL_CreateWindow("Test01", SDL_WINDOWPOS_UNDEFINED, \
-            SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, \
-            SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
+            SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     if(window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", \
                 SDL_GetError());
@@ -52,7 +40,7 @@ bool Graphics::init() {
     return true;
 }
 
-SDL_Surface *Graphics::loadIMG(std::string filename) {
+SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     SDL_Surface* optimizedSurface = NULL;
 
     SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
@@ -60,7 +48,7 @@ SDL_Surface *Graphics::loadIMG(std::string filename) {
         printf( "Unable to load image %s! SDL_image Error: %s\n", filename.c_str(), IMG_GetError() );
     } else {
         //Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, screenSurface->format, 0);
+        optimizedSurface = SDL_ConvertSurface( loadedSurface, format, 0);
         if( optimizedSurface == NULL )
         {
             printf( "Unable to optimize image %s! SDL Error: %s\n", filename.c_str(), SDL_GetError() );
@@ -73,8 +61,8 @@ SDL_Surface *Graphics::loadIMG(std::string filename) {
     return optimizedSurface;
 }
 
-bool Graphics::add_background(SDL_Surface *screenSurface, SDL_Rect &stretchRect,
-                              std::string filename) {
+bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
+        int height, int width, std::string filename) {
     //The final optimized image
     SDL_Surface* optimizedSurface = NULL;
 
@@ -94,10 +82,11 @@ bool Graphics::add_background(SDL_Surface *screenSurface, SDL_Rect &stretchRect,
         SDL_FreeSurface( loadedSurface );
     }
 
+    SDL_Rect stretchRect;
     stretchRect.x = 0;
     stretchRect.y = 0;
-    stretchRect.w = SCREEN_WIDTH;
-    stretchRect.h = SCREEN_HEIGHT;
+    stretchRect.h = height;
+    stretchRect.w = width;
 
     SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
     SDL_UpdateWindowSurface(window);

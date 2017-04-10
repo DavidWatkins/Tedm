@@ -1,14 +1,12 @@
 #include <algorithm>
 #include "game.hpp"
 
-Game::Game(std::string title_screen_filename) {
+Game::Game(int screen_width, int screen_height, \
+        std::string title_screen_filename, std::string name) {
     SDL_Rect stretchRect;
-    stretchRect.x = 0;
-    stretchRect.y = 0;
-    stretchRect.w = SCREEN_WIDTH;
-    stretchRect.h = SCREEN_HEIGHT
-    Graphics::add_background(screenSurface, stretchRect,
-                             title_screen_filename);
+    Graphics::init(window, screenSurface, screen_height, screen_width, name);
+    Graphics::add_background(screenSurface, screen_height, screen_width, \
+            title_screen_filename);
 }
 
 void Game::add_player(Player_base &player) {
@@ -32,10 +30,18 @@ Game::~Game() {
         delete *it;
         players.erase(it);
     }
+    //Destroy window
+    SDL_DestroyWindow( window );
+    //Quit SDL subsystems
+    SDL_Quit();
 }
+
 
 void Game::update() {
     for(Player_base &p : players) {
-
+        /* draw the sprite */
+        SDL_BlitSurface(sprite, NULL, screen, &rcSprite);
+        /* update the screen */
+        SDL_UpdateRect(screen, 0, 0, 0, 0);
     }
 }
