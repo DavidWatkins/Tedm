@@ -2,16 +2,16 @@
 #include "game.hpp"
 
 Game::Game(std::string title, std::string title_screen_filename, \
-        int screen_width, int screen_height) {
-    SDL_Rect stretchRect;
-    Graphics::init(window, screenSurface, screen_height, screen_width, name);
+        int screen_width, int screen_height) :window{NULL},screenSurface{NULL} {
+    Graphics::init(&window, &screenSurface, screen_height, screen_width, title);
     Graphics::add_background(window, screenSurface, screen_height, screen_width, \
             title_screen_filename);
 }
 
-void Game::add_player(Player_base &player) {
+Player_base *Game::add_player(Player_base &player) {
     Player_base *p = new Player_base(player);
     players.push_back(p);
+    return p;
 }
 
 void Game::remove_player(Player_base *player) {

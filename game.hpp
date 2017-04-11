@@ -35,7 +35,7 @@ public:
                     screen_width{G.screen_width} {}
     ~Game();
     void update();
-    void add_player(Player_base &player);
+    Player_base *add_player(Player_base &player);
     void remove_player(Player_base *player);
 };
 

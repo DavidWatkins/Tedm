@@ -12,10 +12,10 @@ www.lazyfoo.net/tutorials/SDL/index.php
 #include "game.hpp"
 
 int main(int argc, char **argv) {
-
-    Graphics graphics = Graphics();
-    Environment env;
-    graphics.add_background("resources/dat_anakin.jpg");
+    SDL_Surface *surface;
+    SDL_Window *w;
+    Graphics::init(&w, &surface, 600, 800, "test01");
+    Graphics::add_background(w, surface, 600, 800, "resources/dat_anakin.jpg");
     char c;
     std::cin >> c;
 }

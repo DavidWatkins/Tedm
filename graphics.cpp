@@ -3,7 +3,7 @@
 #include <string>
 #include "graphics.hpp"
 
-bool Graphics::init(SDL_Window *window, SDL_Surface *screenSurface, \
+bool Graphics::init(SDL_Window **window, SDL_Surface **screenSurface, \
         int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     //Initialize SDL
@@ -13,9 +13,9 @@ bool Graphics::init(SDL_Window *window, SDL_Surface *screenSurface, \
     }
 
     //Create window
-    window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
+    *window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
             SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
-    if(window == NULL) {
+    if(*window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", \
                 SDL_GetError());
         return false;
@@ -28,14 +28,14 @@ bool Graphics::init(SDL_Window *window, SDL_Surface *screenSurface, \
                     IMG_GetError() );
             return false;
         }
-        screenSurface = SDL_GetWindowSurface( window );
+        *screenSurface = SDL_GetWindowSurface( *window );
 
         //Fill the surface white
-        SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, \
+        SDL_FillRect( *screenSurface, NULL, SDL_MapRGB( (*screenSurface)->format, \
                     0xFF, 0xFF, 0xFF ) );
 
         //Update the surface
-        SDL_UpdateWindowSurface( window );
+        SDL_UpdateWindowSurface( *window );
     }
     return true;
 }
@@ -73,7 +73,7 @@ bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
 
     SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
     SDL_UpdateWindowSurface(window);
-    SDL_FreeSurface(optimizedSurface);
+    //SDL_FreeSurface(optimizedSurface);
     return true;
 }
 

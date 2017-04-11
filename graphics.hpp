@@ -17,7 +17,7 @@ www.lazyfoo.net/tutorials/SDL/index.php
 class Graphics {
     Graphics();
 public:
-    static bool init(SDL_Window *window, SDL_Surface *surface, \
+    static bool init(SDL_Window **window, SDL_Surface **surface, \
             int height, int width, std::string name);
     static bool add_background(SDL_Window *window, SDL_Surface *screenSurface, \
             int height, int width, std::string filename);
