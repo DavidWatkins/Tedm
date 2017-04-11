@@ -63,24 +63,7 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
 
 bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
         int height, int width, std::string filename) {
-    //The final optimized image
-    SDL_Surface* optimizedSurface = NULL;
-
-    //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
-    if( loadedSurface == NULL ) {
-        printf( "Unable to load image %s! SDL_image Error: %s\n", filename.c_str(), IMG_GetError() );
-    } else {
-        //Convert surface to screen format
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, screenSurface->format, 0);
-        if( optimizedSurface == NULL )
-        {
-            printf( "Unable to optimize image %s! SDL Error: %s\n", filename.c_str(), SDL_GetError() );
-        }
-
-        //Get rid of old loaded surface
-        SDL_FreeSurface( loadedSurface );
-    }
+    SDL_Surface* optimizedSurface = loadIMG(screenSurface->format, filename);
 
     SDL_Rect stretchRect;
     stretchRect.x = 0;
@@ -90,8 +73,12 @@ bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
 
     SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
     SDL_UpdateWindowSurface(window);
-    //SDL_FreeSurface(optimizedSurface);
+    SDL_FreeSurface(optimizedSurface);
     return true;
 }
 
-
+void Graphics::update_screen(SDL_Window *w, SDL_Surface *sprite,
+                                    SDL_Surface *screen, SDL_Rect &rc) {
+    SDL_BlitSurface(sprite, NULL, screen, &rc);
+    SDL_UpdateWindowSurface(w);
+}

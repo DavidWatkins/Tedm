@@ -1,6 +1,6 @@
 CXX=g++
 
-CXXFLAGS=--std=c++11
+CXXFLAGS=--std=c++17
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
@@ -9,7 +9,7 @@ endif
 
 LIBS=-lSDL2main -lSDL2 -lSDL2_image
 
-OBJS=graphics.o pong.o environment.o player_base.o sprite_base.o game.o
+OBJS=graphics.o pong.o environment.o player.o sprite.o game.o
 
 default: main
 

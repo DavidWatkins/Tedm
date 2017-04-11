@@ -12,15 +12,19 @@
 
 class Player_base {
 protected:
-    struct pos{
+    struct{
         int x, y, z;
-    };
-    struct size{
+    } pos;
+    struct {
         int w, h, d;
-    };
+    } size;
     Sprite_base sprite;
 public:
-    Player_base(const int x, const int y);
+    Player_base() {}
+    Player_base(const int x, const int y) {
+    pos.x = x;
+    pos.y = y;
+    }
 };
 
 

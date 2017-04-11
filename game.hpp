@@ -18,6 +18,7 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 class Game {
+protected:
     int screen_height;
     int screen_width;
     //The window we'll be rendering to'
@@ -27,12 +28,15 @@ class Game {
     std::string name;
     std::vector<Player_base *> players;
 public:
-    Game(std::string title_screen_filename, int screen_width=SCREEN_WIDTH, \
-            int screen_height=SCREEN_HEIGHT);
+    Game(std::string title, std::string title_screen_filename, \
+            int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
+    Game(Game&& G) :window{G.window}, screenSurface{G.screenSurface},
+                    screen_height{G.screen_height}, name{G.name},
+                    screen_width{G.screen_width} {}
     ~Game();
     void update();
-    void add_player();
-    void remove_player();
+    void add_player(Player_base &player);
+    void remove_player(Player_base *player);
 };
 
 

@@ -22,6 +22,8 @@ public:
     static bool add_background(SDL_Window *window, SDL_Surface *screenSurface, \
             int height, int width, std::string filename);
     static SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
+    static void update_screen(SDL_Window *w, SDL_Surface *sprite,
+                              SDL_Surface *screen, SDL_Rect &rc);
 };
 
 #endif /* __GRAPHICS_HPP__ */
