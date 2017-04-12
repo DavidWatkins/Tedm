@@ -113,6 +113,6 @@ void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
     //SDL_BlitSurface(sprite, NULL, screen, &rc);
     //SDL_UpdateWindowSurface(w);
 
-    SDL_RenderCopy( renderer, texture, NULL, &rc );
+    SDL_RenderCopy( renderer, texture, &rc, &rc );
     SDL_RenderPresent( renderer );
 }
