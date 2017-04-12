@@ -4,9 +4,10 @@
 #include <string>
 #include "graphics.hpp"
 
-bool Graphics::init(SDL_Window **window, SDL_Renderer **renderer, \
+bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
         int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
+    SDL_Window *window = NULL;
     //Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -18,9 +19,9 @@ bool Graphics::init(SDL_Window **window, SDL_Renderer **renderer, \
     }
 
     //Create window
-    *window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
+    window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
             SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
-    if(*window == NULL) {
+    if(window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", \
                 SDL_GetError());
         return false;
@@ -33,7 +34,7 @@ bool Graphics::init(SDL_Window **window, SDL_Renderer **renderer, \
                 IMG_GetError() );
         return false;
     }
-    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+    *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 
     //Fill the surface white
     SDL_SetRenderDrawColor(*renderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -41,6 +42,7 @@ bool Graphics::init(SDL_Window **window, SDL_Renderer **renderer, \
     //Update the surface
     SDL_RenderClear( *renderer );
 
+    *w = window;
     return true;
 }
 

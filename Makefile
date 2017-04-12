@@ -1,6 +1,6 @@
 CXX=g++
 
-CXXFLAGS=--std=c++17
+CXXFLAGS=--std=c++17 -g
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
@@ -28,5 +28,6 @@ clean:
 all: clean default
 
 valgrind : main
-		valgrind -v --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes ./main
+	valgrind --leak-check=full --track-origins=yes ./pong
+#	valgrind -v --num-callers=20 --leak-check=yes --leak-resolution=high --show-reachable=yes ./main
 
