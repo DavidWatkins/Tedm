@@ -1,15 +1,20 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <iostream>
 #include <string>
 #include "graphics.hpp"
 
-bool Graphics::init(SDL_Window **window, SDL_Surface **screenSurface, \
+bool Graphics::init(SDL_Window **window, SDL_Renderer **renderer, \
         int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     //Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         return false;
+    }
+    //Set texture filtering to linear
+    if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
+        std::cerr << "Warning: Linear texture filtering not enabled!" << std::endl;
     }
 
     //Create window
@@ -20,29 +25,51 @@ bool Graphics::init(SDL_Window **window, SDL_Surface **screenSurface, \
                 SDL_GetError());
         return false;
     }
-    else {
-        //Get window surface
-        if( !( IMG_Init( imgFlags  ) & imgFlags  )  )
-        {
-            printf( "SDL_image could not initialize! SDL_image Error: %s\n",
-                    IMG_GetError() );
-            return false;
-        }
-        *screenSurface = SDL_GetWindowSurface( *window );
 
-        //Fill the surface white
-        SDL_FillRect( *screenSurface, NULL, SDL_MapRGB( (*screenSurface)->format, \
-                    0xFF, 0xFF, 0xFF ) );
-
-        //Update the surface
-        SDL_UpdateWindowSurface( *window );
+    //Get window surface
+    if( !( IMG_Init( imgFlags  ) & imgFlags  )  )
+    {
+        printf( "SDL_image could not initialize! SDL_image Error: %s\n",
+                IMG_GetError() );
+        return false;
     }
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+
+    //Fill the surface white
+    SDL_SetRenderDrawColor(*renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+
+    //Update the surface
+    SDL_RenderClear( *renderer );
+
     return true;
+}
+
+SDL_Texture *Graphics::loadTexture(SDL_Renderer *renderer, std::string path) {
+    //The final texture
+    SDL_Texture* newTexture = NULL;
+
+    //Load image at specified path
+    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
+    if( loadedSurface == NULL ) {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+    } else {
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface );
+        if( newTexture == NULL ) {
+            printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface( loadedSurface );
+    }
+
+    return newTexture;
 }
 
 SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     SDL_Surface* optimizedSurface = NULL;
 
+    std::cerr << "Loading: " << filename << std::endl;
     SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
     if( loadedSurface == NULL ) {
         printf( "Unable to load image %s! SDL_image Error: %s\n", filename.c_str(), IMG_GetError() );
@@ -61,10 +88,8 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
-        int height, int width, std::string filename) {
-    SDL_Surface* optimizedSurface = loadIMG(screenSurface->format, filename);
-
+bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
+    /*SDL_Surface* optimizedSurface = loadIMG(screenSurface->format, filename);
     SDL_Rect stretchRect;
     stretchRect.x = 0;
     stretchRect.y = 0;
@@ -73,12 +98,21 @@ bool Graphics::add_background(SDL_Window *window, SDL_Surface *screenSurface, \
 
     SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
     SDL_UpdateWindowSurface(window);
-    //SDL_FreeSurface(optimizedSurface);
+    //SDL_FreeSurface(optimizedSurface);*/
+
+    SDL_Texture *texture = loadTexture(renderer, filename);
+    SDL_RenderCopy(renderer, texture, NULL, NULL );
+    SDL_RenderPresent( renderer );
     return true;
 }
 
-void Graphics::update_screen(SDL_Window *w, SDL_Surface *sprite,
-                                    SDL_Surface *screen, SDL_Rect &rc) {
-    SDL_BlitSurface(sprite, NULL, screen, &rc);
-    SDL_UpdateWindowSurface(w);
+void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
+                             SDL_Rect &rc) {
+    //SDL_PixelFormat *fmt = screen->format;
+    //std::cerr << (fmt == sprite->format) << std::endl;
+    //SDL_BlitSurface(sprite, NULL, screen, &rc);
+    //SDL_UpdateWindowSurface(w);
+
+    SDL_RenderCopy( renderer, texture, NULL, &rc );
+    SDL_RenderPresent( renderer );
 }

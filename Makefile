@@ -10,13 +10,14 @@ endif
 LIBS=-lSDL2main -lSDL2 -lSDL2_image
 
 OBJS=graphics.o environment.o player.o sprite.o game.o 
-EXES=pong.o test01.o
+EXES=pong.o sample_render.o#test01.o
 
 default: main
 
 main: $(OBJS) $(EXES)
 	$(CXX) $(CXXFLAGS) -o pong $(OBJS) pong.o $(LIBS)
-	$(CXX) $(CXXFLAGS) -o test01 $(OBJS) test01.o $(LIBS)
+#	$(CXX) $(CXXFLAGS) -o sample_render sample_render.o $(LIBS)
+#	$(CXX) $(CXXFLAGS) -o test01 $(OBJS) test01.o $(LIBS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $*.cpp $(LIBS)
