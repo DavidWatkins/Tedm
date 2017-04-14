@@ -18,8 +18,8 @@ protected:
     struct {
         int w, h, d;
     } size;
-    Sprite_base sprite;
 public:
+    Sprite_base sprite;
     Player_base() {}
     Player_base(const int x, const int y) {
     pos.x = x;

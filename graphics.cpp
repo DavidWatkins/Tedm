@@ -5,14 +5,16 @@
 #include "graphics.hpp"
 
 bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
-        int height, int width, std::string name) {
+        SDL_Surface *screen, int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     SDL_Window *window = NULL;
+
     //Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         return false;
     }
+
     //Set texture filtering to linear
     if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) ) {
         std::cerr << "Warning: Linear texture filtering not enabled!" << std::endl;
@@ -91,17 +93,6 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
 }
 
 bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
-    /*SDL_Surface* optimizedSurface = loadIMG(screenSurface->format, filename);
-    SDL_Rect stretchRect;
-    stretchRect.x = 0;
-    stretchRect.y = 0;
-    stretchRect.h = height;
-    stretchRect.w = width;
-
-    SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
-    SDL_UpdateWindowSurface(window);
-    //SDL_FreeSurface(optimizedSurface);*/
-
     SDL_Texture *texture = loadTexture(renderer, filename);
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
@@ -109,12 +100,15 @@ bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
 }
 
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
-                             SDL_Rect &rc) {
+                             SDL_Rect &src, SDL_Rect &dst) {
     //SDL_PixelFormat *fmt = screen->format;
     //std::cerr << (fmt == sprite->format) << std::endl;
     //SDL_BlitSurface(sprite, NULL, screen, &rc);
     //SDL_UpdateWindowSurface(w);
-
-    SDL_RenderCopy( renderer, texture, &rc, &rc );
+    
+    //render background
+    //SDL_RenderCopy( renderer, texture, &src, &dst );
+    //render object
+    SDL_RenderCopy( renderer, texture, &src, &dst );
     SDL_RenderPresent( renderer );
 }

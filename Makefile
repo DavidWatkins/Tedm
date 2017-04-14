@@ -10,7 +10,7 @@ endif
 LIBS=-lSDL2main -lSDL2 -lSDL2_image
 
 OBJS=graphics.o environment.o player.o sprite.o game.o 
-EXES=pong.o sample_render.o#test01.o
+EXES=pong.o #sample_render.o#test01.o
 
 default: main
 
