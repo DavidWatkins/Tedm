@@ -99,7 +99,7 @@ SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filena
 }
 
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
-                             SDL_Rect &rc) {
-    SDL_RenderCopy( renderer, texture, &rc, &rc );
-    SDL_RenderPresent( renderer );
+                             SDL_Rect *rc) {
+    SDL_RenderCopy(renderer, texture, rc, rc);
+    SDL_RenderPresent(renderer);
 }

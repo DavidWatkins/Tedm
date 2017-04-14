@@ -24,7 +24,7 @@ public:
     static SDL_Texture *add_background(SDL_Renderer *renderer, std::string filename);
     static SDL_Texture *loadTexture(SDL_Renderer *renderer, std::string path);
     static SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
-    static void update_screen(SDL_Renderer *renderer, SDL_Texture *texture,SDL_Rect &rc);
+    static void update_screen(SDL_Renderer *renderer, SDL_Texture *texture, SDL_Rect *rc);
 };
 
 #endif /* __GRAPHICS_HPP__ */

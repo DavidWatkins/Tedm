@@ -24,10 +24,16 @@ public:
 
     void move_up() {
         pos.y = rc.y-=move_distance;
+        if(pos.y < 0) {
+            pos.y = rc.y = 0;
+        }
     }
 
     void move_down() {
         pos.y = rc.y+=move_distance;
+        if(pos.y < 500) {
+            pos.y = rc.y = 500;
+        }
     }
 };
 
@@ -103,12 +109,13 @@ public:
             SDL_Rect *rc = p->get_rc();
             SDL_Texture *sprite = p->get_sprite();
             SDL_Rect bg_redraw;
-            bg_redraw.x = rc->x;
+            bg_redraw.x = rc->x-10;
             bg_redraw.y = rc->y-10;
             bg_redraw.h = rc->h+20;
-            bg_redraw.w = rc->w;
-            Graphics::update_screen(renderer, background, bg_redraw);
-            Graphics::update_screen(renderer, sprite, *rc);
+            bg_redraw.w = rc->w+20;
+            Graphics::update_screen(renderer, background, &bg_redraw);
+            Graphics::update_screen(renderer, sprite, rc);
+            SDL_RenderPresent(renderer);
         }
     }
 
