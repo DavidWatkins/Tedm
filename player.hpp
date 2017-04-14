@@ -9,19 +9,13 @@
 #include "state.hpp"
 #include "event.hpp"
 #include "sprite.hpp"
+#include "collidable.hpp"
 
-class Player_base {
+class Player_base : public Collidable {
 protected:
-    struct{
-        int x, y, z;
-    } pos;
-    struct {
-        int w, h, d;
-    } size;
-    Sprite_base sprite;
 public:
-    Player_base() {}
-    Player_base(const int x, const int y) {
+    Player_base(const int x, const int y, const int h, const int w)
+        : Collidable(x,y,h,w) {
     pos.x = x;
     pos.y = y;
     }

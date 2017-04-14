@@ -90,31 +90,16 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
-    /*SDL_Surface* optimizedSurface = loadIMG(screenSurface->format, filename);
-    SDL_Rect stretchRect;
-    stretchRect.x = 0;
-    stretchRect.y = 0;
-    stretchRect.h = height;
-    stretchRect.w = width;
 
-    SDL_BlitScaled(optimizedSurface, 0, screenSurface, &stretchRect);
-    SDL_UpdateWindowSurface(window);
-    //SDL_FreeSurface(optimizedSurface);*/
-
-    SDL_Texture *texture = loadTexture(renderer, filename);
+SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
+    SDL_Texture *texture {loadTexture(renderer, filename)};
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
-    return true;
+    return texture;
 }
 
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &rc) {
-    //SDL_PixelFormat *fmt = screen->format;
-    //std::cerr << (fmt == sprite->format) << std::endl;
-    //SDL_BlitSurface(sprite, NULL, screen, &rc);
-    //SDL_UpdateWindowSurface(w);
-
     SDL_RenderCopy( renderer, texture, &rc, &rc );
     SDL_RenderPresent( renderer );
 }
