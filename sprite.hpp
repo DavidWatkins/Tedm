@@ -28,8 +28,8 @@ class Sprite_base {
             tgt.w = width;
             tgt.h = height;
 
-                //The final texture
-                SDL_Texture* newTexture = NULL;
+            //The final texture
+            SDL_Texture* newTexture = NULL;
 
             //Load image at specified path
             SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
@@ -49,21 +49,9 @@ class Sprite_base {
                             filename.c_str(), SDL_GetError() );
                 }
                 else {
-                    //Get image dimensions
-                    //mWidth = loadedSurface->w;
-                    //mHeight = loadedSurface->h;
-
-
                     //Get rid of old loaded surface
                     SDL_FreeSurface( loadedSurface );
                 }
-
-                //Return success
-                //return newTexture;
-
-                //    sprite = Graphics::loadTexture(renderer, filename);
-                //sprite = SDL_ConvertSurfaceFormat(temp, format, 0);
-                //SDL_FreeSurface(temp);
             }
         }
         ~Sprite_base() {

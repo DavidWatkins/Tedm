@@ -101,14 +101,6 @@ bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
 
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &src, SDL_Rect &dst) {
-    //SDL_PixelFormat *fmt = screen->format;
-    //std::cerr << (fmt == sprite->format) << std::endl;
-    //SDL_BlitSurface(sprite, NULL, screen, &rc);
-    //SDL_UpdateWindowSurface(w);
-    
-    //render background
-    //SDL_RenderCopy( renderer, texture, &src, &dst );
-    //render object
     SDL_RenderCopy( renderer, texture, &src, &dst );
     SDL_RenderPresent( renderer );
 }

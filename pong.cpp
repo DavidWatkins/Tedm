@@ -9,7 +9,7 @@
 using namespace std;
 
 class Player : public Player_base {
-    const int HEIGHT = 50;
+    const int HEIGHT = 100;
     const int WIDTH  = 10;
     public:
 
@@ -77,7 +77,6 @@ class Pong : public Game {
 
         void update_screen() {
             for(Player *p : players) {
-                //SDL_Rect rc = p->get_rc();
                 SDL_Texture *sprite = p->get_sprite();
                 Graphics::update_screen(renderer, sprite, p->sprite.src, p->sprite.tgt);
             }
@@ -85,10 +84,8 @@ class Pong : public Game {
 };
 
 int main(int argc, char*argv[]) {
-    //Pong game = Pong("pong", "resources/blue.png", 800, 600);
     Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600);
-    Player *p1 {game.add_player("resources/blue.png", 475, 475, 0, 0)};
-    //Player *p1 {game.add_player("resources/dat_anakin.jpg", 300, 300, 0, 0)};
+    Player *p1 {game.add_player("resources/blue1.png", 0, 0, 0, 0)};
     p1->set_pos(15,200);
     char ch;
     std::cout << "Game Loaded" << std::endl;
