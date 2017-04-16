@@ -5,7 +5,7 @@
 #include "graphics.hpp"
 
 bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
-        SDL_Surface *screen, int height, int width, std::string name) {
+        /*SDL_Surface *screen,*/ int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     SDL_Window *window = NULL;
 
@@ -92,15 +92,18 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-bool Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
-    SDL_Texture *texture = loadTexture(renderer, filename);
+SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
+    SDL_Texture *texture {loadTexture(renderer, filename)};
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
-    return true;
+    return texture;
 }
 
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &src, SDL_Rect &dst) {
+
+    std::cerr << "Drawing SPRITE src: (" << src.x << ", " << src.y << ", " << src.h << ", " << src.w << ")" << std::endl;
+    std::cerr << "Drawing SPRITE dst: (" << dst.x << ", " << dst.y << ", " << dst.h << ", " << dst.w << ")" << std::endl << std::endl;
     SDL_RenderCopy( renderer, texture, &src, &dst );
-    SDL_RenderPresent( renderer );
+    SDL_RenderPresent(renderer);
 }

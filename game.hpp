@@ -13,6 +13,7 @@
 #include "graphics.hpp"
 
 #include <vector>
+#include <queue>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -21,22 +22,32 @@ class Game {
 protected:
     int screen_height;
     int screen_width;
-    //The window we'll be rendering to'
-    SDL_Window *window;
-    //The surface contained by the window
-    SDL_Surface *screenSurface;
     std::string name;
     std::vector<Player_base *> players;
+    std::vector<Collidable *> collidables;
+
 public:
     Game(std::string title, std::string title_screen_filename, \
             int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
-    Game(Game&& G) :window{G.window}, screenSurface{G.screenSurface},
-                    screen_height{G.screen_height}, name{G.name},
+    Game(Game&& G) :screen_height{G.screen_height}, name{G.name},
                     screen_width{G.screen_width} {}
     ~Game();
     void update();
+
+    void enqueue_event() {
+
+    }
+    //Event_base *dequeue_event() {
+
+    //}
     Player_base *add_player(Player_base &player);
     void remove_player(Player_base *player);
+    bool collision(Collidable &obj) {
+        for(auto *x : collidables) {
+            if(x->collision(obj)) return true;
+        }
+        return false;
+    }
 };
 
 

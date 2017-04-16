@@ -8,5 +8,9 @@
 
 #include "event.hpp"
 
+class State_base {
+
+};
+
 #endif /* __STATE_HPP__ */
 

@@ -28,7 +28,7 @@ Game::~Game() {
         players.erase(it);
     }
     //Destroy window
-    SDL_DestroyWindow( window );
+    //SDL_DestroyWindow( window );
     //Quit SDL subsystems
     SDL_Quit();
 }
