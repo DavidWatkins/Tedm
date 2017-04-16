@@ -4,12 +4,13 @@ CXXFLAGS=--std=c++14 -g
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
-	CXXFLAGS += -I/usr/local/include -L/usr/local/lib
+	CXXFLAGS += -I/usr/local/include
+	LIBS= -L/usr/local/lib
 endif
 
-LIBS=-lSDL2main -lSDL2 -lSDL2_image
+LIBS+=-lSDL2main -lSDL2 -lSDL2_image
 
-OBJS=graphics.o environment.o player.o game.o collidable.o
+OBJS=graphics.o environment.o game.o 
 EXES=pong.o
 
 default: main

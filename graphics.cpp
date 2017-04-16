@@ -102,8 +102,6 @@ SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filena
 void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &src, SDL_Rect &dst) {
 
-    std::cerr << "Drawing SPRITE src: (" << src.x << ", " << src.y << ", " << src.h << ", " << src.w << ")" << std::endl;
-    std::cerr << "Drawing SPRITE dst: (" << dst.x << ", " << dst.y << ", " << dst.h << ", " << dst.w << ")" << std::endl << std::endl;
     SDL_RenderCopy( renderer, texture, &src, &dst );
     SDL_RenderPresent(renderer);
 }

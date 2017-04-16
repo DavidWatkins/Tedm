@@ -14,23 +14,9 @@ class Player : public Player_base {
     const int WIDTH  = 10;
     public:
 
-    /* Player() {
-        size.h = HEIGHT;
-        size.w = WIDTH;
-    } */
-
     Player(const int x, const int y) : Player_base(x,y,100,10) {
         set_pos(x, y);
     }
-
-    /*Player(const int x, const int y) {
-        pos.x = x;
-        pos.y = y;
-        size.h = HEIGHT;
-        size.w = WIDTH;
-        //set_rc(x,y,100,10);
-    }*/
-
     void set_pos(int x, int y){
         pos.x = x;
         pos.y = y;
@@ -71,12 +57,7 @@ class Ball : public Collidable {
     }
 
     void set_sprite(SDL_Renderer *renderer, string filename) {
-        std::cout << "BALL: (" << sprite.src.x << ", " << sprite.src.y << ", " << sprite.src.h << ", " << sprite.src.w << ")" << std::endl;
-        std::cout << "BALL: (" << sprite.tgt.x << ", " << sprite.tgt.y << ", " << sprite.tgt.h << ", " << sprite.tgt.w << ")" << std::endl;
-
         sprite.set_sprite(renderer, filename);
-        std::cout << "BALL: (" << sprite.src.x << ", " << sprite.src.y << ", " << sprite.src.h << ", " << sprite.src.w << ")" << std::endl;
-        std::cout << "BALL: (" << sprite.tgt.x << ", " << sprite.tgt.y << ", " << sprite.tgt.h << ", " << sprite.tgt.w << ")" << std::endl;
     }
 };
 
@@ -92,7 +73,7 @@ private:
 
 public:
 
-    enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN, GAME_END};
+    enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height) :
          Game(title,title_screen_filename, screen_width, screen_height),
@@ -138,17 +119,13 @@ public:
     }
 
     void update_screen() {
+        SDL_RenderCopy(renderer, background, NULL, NULL);
         for(auto sprt : sprites) {
             SDL_Rect *rc = sprt->get_pos();
             SDL_Texture *sprite = sprt->get_sprite();
-            SDL_Rect bg_redraw;
-            bg_redraw.x = rc->x-10;
-            bg_redraw.y = rc->y-10;
-            bg_redraw.h = rc->h+20;
-            bg_redraw.w = rc->w+20;
-
-            Graphics::update_screen(renderer, sprite, sprt->src, sprt->tgt);
+            SDL_RenderCopy(renderer, sprite, &sprt->src, &sprt->tgt);
         }
+        SDL_RenderPresent(renderer);
     }
 };
 
