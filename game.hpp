@@ -20,8 +20,8 @@ const int SCREEN_HEIGHT = 480;
 
 class Game {
 protected:
-    int screen_height;
-    int screen_width;
+    int height;
+    int width;
     std::string name;
     std::vector<Player_base *> players;
     std::vector<Collidable *> collidables;
@@ -29,8 +29,8 @@ protected:
 public:
     Game(std::string title, std::string title_screen_filename, \
             int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
-    Game(Game&& G) :screen_height{G.screen_height}, name{G.name},
-                    screen_width{G.screen_width} {}
+    Game(Game&& G) :height{G.height}, name{G.name},
+                    width{G.width} {}
     ~Game();
     void update();
 

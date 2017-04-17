@@ -20,7 +20,7 @@ main: $(OBJS) $(EXES)
 #	$(CXX) $(CXXFLAGS) -o sample_render sample_render.o $(LIBS)
 #	$(CXX) $(CXXFLAGS) -o test01 $(OBJS) test01.o $(LIBS)
 
-%.o: %.cpp
+%.o: %.cpp %.hpp
 	$(CXX) $(CXXFLAGS) -c $*.cpp
 
 clean:

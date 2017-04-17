@@ -2,7 +2,8 @@
 #include "game.hpp"
 
 Game::Game(std::string title, std::string title_screen_filename, \
-        int screen_width, int screen_height) {
+           int screen_width, int screen_height)
+           : height{screen_height},width{screen_width} {
 }
 
 Player_base *Game::add_player(Player_base &player) {

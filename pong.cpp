@@ -1,4 +1,5 @@
 #include <vector>
+#include <math.h>
 #include "game.hpp"
 #include "event.hpp"
 #include "state.hpp"
@@ -9,7 +10,7 @@
 using namespace std;
 
 class Player : public Player_base {
-    const unsigned int move_distance {10};
+    const unsigned int move_distance {40};
     const int HEIGHT = 100;
     const int WIDTH  = 10;
     public:
@@ -24,8 +25,7 @@ class Player : public Player_base {
     }
 
 
-    void set_sprite(SDL_Renderer *renderer, std::string filename /*, int src_x, \
-            int src_y, int tgt_x, int tgt_y*/) {
+    void set_sprite(SDL_Renderer *renderer, std::string filename) {
         sprite.set_sprite(renderer, filename);
         sprite.set_height_width(size.h, size.w);
         sprite.src.x = sprite.src.y = 0;
@@ -46,18 +46,75 @@ class Player : public Player_base {
         }
         sprite.set_position(pos.x, pos.y);
     }
+
+    int get_y() {
+        return pos.y;
+    }
+
+    int get_height() {
+        return HEIGHT;
+    }
 };
 
 class Ball : public Collidable {
-    public:
+    const double MAXBOUNCEANGLE {M_PI/12};
+    const double BALLSPEED {1};
+    double vx, vy;
+    int start_x;
+    int start_y;
+
+public:
     Ball(int posx, int posy, int srcx, int srcy) : Collidable(posx,posy,10,50) {
-        sprite.set_height_width(10, 50);
         sprite.set_source_pos(srcx, srcy);
-        sprite.set_position(posx, posy);
+        sprite.set_height_width(10, 50);
+        start_x = posx;
+        start_y = posy;
+        reset();
+    }
+
+    void reset() {
+        pos.x = start_x;
+        pos.y = start_y;
+        vx = 1;
+        vy = 0;
+    }
+
+    /* Snippet inspired by Ricket from
+     * https://gamedev.stackexchange.com/questions/4253/in-pong-how-do-you-
+     * calculate-the-balls-direction-when-it-bounces-off-the-paddl
+     */
+    void update_trajectory(Player *p) {
+        int PADDLEHEIGHT = p->get_height();
+        double relativeIntersectY = p->get_y()+(PADDLEHEIGHT/2) - (pos.y-(size.h/2));
+        double normalizedRelativeIntersectionY = (relativeIntersectY/(PADDLEHEIGHT/2));
+        double bounceAngle = normalizedRelativeIntersectionY * MAXBOUNCEANGLE;
+        cout << "(" << relativeIntersectY << ", " << normalizedRelativeIntersectionY << ", " <<  bounceAngle << ")" << endl;
+        double ballSpeed = sqrt((vx*vx) + (vy*vy)/25);
+        int dir_x = (vx<0?1:-1);
+        vx = ballSpeed*cos(bounceAngle)*dir_x;
+        vy = ballSpeed*(-sin(bounceAngle)*5);
+    }
+
+    void update_trajectory() {
+        vy=-vy;
+    }
+
+    void update_pos() {
+        pos.y += round(vy)*BALLSPEED;
+        pos.x += round(vx)*BALLSPEED;
+        sprite.set_position(pos.x, pos.y);
     }
 
     void set_sprite(SDL_Renderer *renderer, string filename) {
         sprite.set_sprite(renderer, filename);
+    }
+
+    int get_x() {
+        return pos.x;
+    }
+
+    int get_y() {
+        return pos.y;
     }
 };
 
@@ -73,7 +130,7 @@ private:
 
 public:
 
-    enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};
+    enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN, RESET};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height) :
          Game(title,title_screen_filename, screen_width, screen_height),
@@ -110,15 +167,31 @@ public:
             case P2_MOVE_DOWN:
                 p2.move_down();
                 break;
+            case RESET:
+                new_round();
+                break;
         }
     }
 
     void new_round() {
         p1.set_pos(15,250);
         p2.set_pos(750, 250);
+        ball.reset();
     }
 
     void update_screen() {
+        ball.update_pos();
+        for(Player *p : players) {
+            if(ball.collision(*p)) {
+                ball.update_trajectory(p);
+            }
+        }
+        if(ball.get_y() <= 0 || ball.get_y() >= height-10) {
+            ball.update_trajectory();
+        }
+        if(ball.get_x() <= 0 || ball.get_x() >= width-50) {
+            enqueue_events(RESET);
+        }
         SDL_RenderCopy(renderer, background, NULL, NULL);
         for(auto sprt : sprites) {
             SDL_Rect *rc = sprt->get_pos();
@@ -158,8 +231,8 @@ int main(int argc, char*argv[]) {
                         game.enqueue_events(Pong::EVENTS::P2_MOVE_DOWN);
                     break;
                 }
-                game.update_screen();
             }
         }
+        game.update_screen();
     }
 }

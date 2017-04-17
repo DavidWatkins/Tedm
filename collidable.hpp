@@ -6,6 +6,7 @@
 #ifndef __COLLIDABLE_HPP__
 #define __COLLIDABLE_HPP__
 
+#include <iostream>
 #include "sprite.hpp"
 
 class Collidable {
