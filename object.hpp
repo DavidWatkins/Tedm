@@ -39,8 +39,6 @@ public:
         }
         return false;
     }
-
-
 };
 
 #endif /* __OBJECT_HPP__ */

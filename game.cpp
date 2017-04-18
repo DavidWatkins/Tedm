@@ -36,6 +36,14 @@ Game::~Game() {
 
 
 void Game::update() {
+    //check for collisions
+    for (Object *o : objects) {
+        for (Object *other : objects) {
+            if (o != other) {
+               o->collision(*other); 
+            }
+        }
+    }
 //    for(Player_base *p : players) {
 //        /* draw the sprite */
 //        SDL_BlitSurface(p->get_sprite, NULL, screen, &rcSprite);
