@@ -12,11 +12,19 @@
 #include "event.hpp"
 #include "graphics.hpp"
 
+#include "rapidjson/document.h"     // rapidjson's DOM-style API
+#include "rapidjson/prettywriter.h" // for stringify JSON'
+
+#include <iostream>
+#include <fstream>
 #include <vector>
 #include <queue>
 
+#include <stdio.h>
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+const int BUFF_SZ = 65536;
 
 class Game {
 protected:
@@ -25,10 +33,12 @@ protected:
     std::string name;
     std::vector<Player_base *> players;
     std::vector<Object *> objects;
+    rapidjson::Document config;
 
 public:
     Game(std::string title, std::string title_screen_filename, \
-            int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
+            int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT,\
+            std::string config_file="None");
     Game(Game&& G) :height{G.height}, name{G.name},
                     width{G.width} {}
     ~Game();
@@ -42,12 +52,8 @@ public:
     //}
     Player_base *add_player(Player_base &player);
     void remove_player(Player_base *player);
-    bool collision(Object &obj) {
-        for(auto *x : objects) {
-            if(x->collision(obj)) return true;
-        }
-        return false;
-    }
+    bool collision(Object &obj);
+    bool parse_config(std::string config_file);
 };
 
 
