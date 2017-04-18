@@ -39,6 +39,12 @@ public:
         }
         return false;
     }
+    int get_height() { return size.w; };
+    int get_width() { return size.h; };
+    int get_x() { return pos.x; };
+    int get_y() { return pos.y; };
+    void set_x(int i) { pos.x = i; };
+    void set_y(int i) { pos.y = i; };
 };
 
 #endif /* __OBJECT_HPP__ */

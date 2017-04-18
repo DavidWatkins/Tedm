@@ -10,13 +10,16 @@
 using namespace std;
 
 class Player : public Player_base {
-    const unsigned int move_distance {40};
+    const static unsigned int move_distance {40};
     const int HEIGHT = 100;
     const int WIDTH  = 10;
     public:
 
-    Player(const int x, const int y) : Player_base(x,y,100,10) {
+    Player(std::string name, const int x, const int y) : \
+        Player_base(name,x,y,100,10) {
         set_pos(x, y);
+        functions["up"] = move_up;
+        functions["down"] = move_down;
     }
     void set_pos(int x, int y){
         pos.x = x;
@@ -30,24 +33,24 @@ class Player : public Player_base {
         sprite.src.x = sprite.src.y = 0;
     }
 
-    void move_up() {
-        pos.y -=move_distance;
-        if(pos.y < 0) {
-            pos.y = 0;
+    std::function<void(Player_base&)> move_up() = [](Player_base &p) {
+        p.set_y(p.get_y() - Player::move_distance);
+        if(p.get_y() < 0) {
+            p.set_y(0);
         }
-        sprite.set_position(pos.x, pos.y);
+        p.sprite.set_position(p.get_x(), p.get_y());
     }
 
-    void move_down() {
-        pos.y +=move_distance;
-        if(pos.y > 500) {
-            pos.y = 500;
+    std::function<void(Player_base&)> move_down() = [](Player_base &p) {
+        p.set_y(p_get_y() + Player::move_distance);
+        if(p.get_y() > 500) {
+            p.set_y()(500);
         }
-        sprite.set_position(pos.x, pos.y);
+        p.sprite.set_position(p.get_x(), p.get_y());
     }
 
     int get_y() {
-        return pos.y;
+        return Player_base.get_y;
     }
 
     int get_height() {
@@ -127,11 +130,13 @@ private:
 
 public:
 
-    enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN, RESET};
+    //enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN, RESET};
     Pong(std::string title, std::string title_screen_filename, \
-         int screen_width, int screen_height) :
-         Game(title,title_screen_filename, screen_width, screen_height),
-         p1{Player(15,250)}, p2{Player(750,250)} ,ball{Ball(375,295, 0, 0)} {
+         int screen_width, int screen_height, std::string config_file) :
+         Game(title,title_screen_filename, screen_width, screen_height, \
+                 config_file),
+         p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
+             ,ball{Ball(375,295, 0, 0)} {
 
         Graphics::init(&window, &renderer, screen_height, screen_width, title);
         background = Graphics::add_background(renderer, title_screen_filename);
@@ -147,7 +152,7 @@ public:
         objects.push_back(p);
     }
 
-    void enqueue_events(EVENTS e) {
+    /* void enqueue_events(EVENTS e) {
         switch(e) {
             case P1_MOVE_UP:
                 p1.move_up();
@@ -165,7 +170,7 @@ public:
                 new_round();
                 break;
         }
-    }
+    } */
 
     void new_round() {
         p1.set_pos(15,250);
@@ -199,7 +204,7 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600);
+    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "pong.cfg");
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
@@ -212,8 +217,9 @@ int main(int argc, char*argv[]) {
             if( e.type == SDL_QUIT ) {
                 quit = true;
             } else if( e.type == SDL_KEYDOWN ) { //User presses a key
+                game.handle_keypress(e.key.keysym.sym);
                 //Select surfaces based on key press
-                switch( e.key.keysym.sym ) {
+                /* switch( e.key.keysym.sym ) {
                     case SDLK_w:
                         game.enqueue_events(Pong::EVENTS::P1_MOVE_UP);
                     break;
@@ -226,7 +232,7 @@ int main(int argc, char*argv[]) {
                     case SDLK_DOWN:
                         game.enqueue_events(Pong::EVENTS::P2_MOVE_DOWN);
                     break;
-                }
+                } */
             }
         }
         game.update_screen();

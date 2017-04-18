@@ -11,20 +11,25 @@
 #include "environment.hpp"
 #include "event.hpp"
 #include "graphics.hpp"
-
 #include "rapidjson/document.h"     // rapidjson's DOM-style API
 #include "rapidjson/prettywriter.h" // for stringify JSON'
-
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <queue>
-
+#include <map>
 #include <stdio.h>
+#include <SDL2/SDL.h>
+#include <string.h>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int BUFF_SZ = 65536;
+
+//map controls for config file
+std::map<std::string, SDL_Keycode> keys = {{"up", SDLK_UP}, \
+    {"down", SDLK_DOWN}, {"left", SDLK_LEFT}, {"right", SDLK_RIGHT}, \
+    {"w", SDLK_w}, {"s", SDLK_s}};
 
 class Game {
 protected:
@@ -54,6 +59,7 @@ public:
     void remove_player(Player_base *player);
     bool collision(Object &obj);
     bool parse_config(std::string config_file);
+    void handle_keypress(SDL_Keycode key);
 };
 
 

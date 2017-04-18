@@ -2,8 +2,8 @@
 #include "game.hpp"
 
 Game::Game(std::string title, std::string title_screen_filename, \
-           int screen_width, int screen_height, std::string config_file)
-           : height{screen_height},width{screen_width} {
+        int screen_width, int screen_height, std::string config_file)
+: height{screen_height},width{screen_width} {
     if (config_file != "None") {
         if (parse_config(config_file) == false) {
             std::cerr << "Configuration file invalid" << std::endl;
@@ -13,6 +13,19 @@ Game::Game(std::string title, std::string title_screen_filename, \
 
 Player_base *Game::add_player(Player_base &player) {
     Player_base *p = new Player_base(player);
+    if (config.HasMember("controls")) {
+        if (config["controls"].HasMember(p->name.c_str())) {
+            //auto ctls = config["controls"][p->name.c_str()];
+            for (auto itr = config["controls"][p->name.c_str()].MemberBegin(); \
+                    itr != config["controls"][p->name.c_str()].MemberEnd(); \
+                    ++itr) {
+                //button = itr->name.GetString();
+                //func = itr->value.GetString();
+                p->controls[keys[itr->name.GetString()]] = \
+                    p->functions[itr->value.GetString()];
+            }
+        }
+    }
     players.push_back(p);
     return p;
 }
@@ -51,24 +64,33 @@ void Game::update() {
     for (Object *o : objects) {
         for (Object *other : objects) {
             if (o != other) {
-               o->collision(*other); 
+                o->collision(*other); 
             }
         }
     }
-//    for(Player_base *p : players) {
-//        /* draw the sprite */
-//        SDL_BlitSurface(p->get_sprite, NULL, screen, &rcSprite);
-//        /* update the screen */
-//        SDL_UpdateRect(screen, 0, 0, 0, 0);
-//    }
+    //    for(Player_base *p : players) {
+    //        /* draw the sprite */
+    //        SDL_BlitSurface(p->get_sprite, NULL, screen, &rcSprite);
+    //        /* update the screen */
+    //        SDL_UpdateRect(screen, 0, 0, 0, 0);
+    //    }
 }
 
 bool Game::parse_config(std::string config_file) {
     FILE *file = fopen(config_file.c_str(), "r");
     char buffer[BUFF_SZ];
     fread(buffer, 1, sizeof(buffer), file);
-    if (config.Parse(buffer).HasParseError()) {
+    rapidjson::StringStream s(buffer);
+    if (config.ParseStream(s).HasParseError()) {
         return false;
     }
     return true;
+}
+
+void Game::handle_keypress(SDL_Keycode key) {
+    for (Player_base *p : players) {
+        if (p->controls.find(key) != p->controls.end()) {
+            p->controls[key](*p);
+        }
+    }
 }
