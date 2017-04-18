@@ -58,10 +58,10 @@ class Player : public Player_base {
 
 class Ball : public Collidable {
     const double MAXBOUNCEANGLE {M_PI/12};
-    const double BALLSPEED {1};
     double vx, vy;
     int start_x;
     int start_y;
+    double ballSpeed;
 
 public:
     Ball(int posx, int posy, int srcx, int srcy) : Collidable(posx,posy,10,50) {
@@ -88,8 +88,7 @@ public:
         double relativeIntersectY = p->get_y()+(PADDLEHEIGHT/2) - (pos.y-(size.h/2));
         double normalizedRelativeIntersectionY = (relativeIntersectY/(PADDLEHEIGHT/2));
         double bounceAngle = normalizedRelativeIntersectionY * MAXBOUNCEANGLE;
-        cout << "(" << relativeIntersectY << ", " << normalizedRelativeIntersectionY << ", " <<  bounceAngle << ")" << endl;
-        double ballSpeed = sqrt((vx*vx) + (vy*vy)/25);
+        double ballSpeed = (sqrt((vx*vx) + (vy*vy)/25));
         int dir_x = (vx<0?1:-1);
         vx = ballSpeed*cos(bounceAngle)*dir_x;
         vy = ballSpeed*(-sin(bounceAngle)*5);
@@ -100,8 +99,8 @@ public:
     }
 
     void update_pos() {
-        pos.y += round(vy)*BALLSPEED;
-        pos.x += round(vx)*BALLSPEED;
+        pos.y += round(vy);
+        pos.x += round(vx);
         sprite.set_position(pos.x, pos.y);
     }
 
