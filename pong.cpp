@@ -56,7 +56,7 @@ class Player : public Player_base {
     }
 };
 
-class Ball : public Collidable {
+class Ball : public Object {
     const double MAXBOUNCEANGLE {M_PI/12};
     double vx, vy;
     int start_x;
@@ -64,7 +64,7 @@ class Ball : public Collidable {
     double ballSpeed;
 
 public:
-    Ball(int posx, int posy, int srcx, int srcy) : Collidable(posx,posy,10,50) {
+    Ball(int posx, int posy, int srcx, int srcy) : Object(posx,posy,10,50) {
         sprite.set_source_pos(srcx, srcy);
         sprite.set_height_width(10, 50);
         start_x = posx;
@@ -141,14 +141,14 @@ public:
         add_player(&p1);
         add_player(&p2);
         ball.set_sprite(renderer, "resources/blaster.png");
-        collidables.push_back(&ball);
+        objects.push_back(&ball);
         sprites.push_back(&ball.sprite);
     }
 
     void add_player(Player *p) {
         p->set_sprite(renderer, "resources/blue1.png");
         players.push_back(p);
-        collidables.push_back(p);
+        objects.push_back(p);
         sprites.push_back(&p->sprite);
     }
 

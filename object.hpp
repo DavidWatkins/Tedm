@@ -1,15 +1,15 @@
 /**
-    collidable.hpp
-    Purpose: Defines what it means to be collidable
+    object.hpp
+    most basic game object. All game elements should inherit object
 */
 
-#ifndef __COLLIDABLE_HPP__
-#define __COLLIDABLE_HPP__
+#ifndef __OBJECT_HPP__
+#define __OBJECT_HPP__
 
 #include <iostream>
 #include "sprite.hpp"
 
-class Collidable {
+class Object {
 protected:
     struct{
         int x, y, z;
@@ -19,7 +19,7 @@ protected:
     } size;
 public:
     Sprite_base sprite;
-    Collidable(const int x, const int y, const int h, const int w) {
+    Object(const int x, const int y, const int h, const int w) {
         pos.x = x;
         pos.y = y;
         size.h = h;
@@ -30,7 +30,7 @@ public:
         sprite.set_position(x, y);
     }
 
-    bool collision(Collidable &obj) {
+    bool collision(Object &obj) {
         if(obj.pos.x < pos.x + size.w &&
            obj.pos.x + obj.size.w > pos.x &&
            obj.pos.y < pos.y + size.h &&
@@ -43,7 +43,7 @@ public:
 
 };
 
-#endif /* __COLLIDABLE_HPP__ */
+#endif /* __OBJECT_HPP__ */
 
 
 

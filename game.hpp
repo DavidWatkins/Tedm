@@ -24,7 +24,7 @@ protected:
     int width;
     std::string name;
     std::vector<Player_base *> players;
-    std::vector<Collidable *> collidables;
+    std::vector<Object *> objects;
 
 public:
     Game(std::string title, std::string title_screen_filename, \
@@ -42,8 +42,8 @@ public:
     //}
     Player_base *add_player(Player_base &player);
     void remove_player(Player_base *player);
-    bool collision(Collidable &obj) {
-        for(auto *x : collidables) {
+    bool collision(Object &obj) {
+        for(auto *x : objects) {
             if(x->collision(obj)) return true;
         }
         return false;
