@@ -24,7 +24,6 @@ class Player : public Player_base {
         sprite.set_position(x, y);
     }
 
-
     void set_sprite(SDL_Renderer *renderer, std::string filename) {
         sprite.set_sprite(renderer, filename);
         sprite.set_height_width(size.h, size.w);
@@ -119,8 +118,7 @@ public:
 
 class Pong : public Game {
 private:
-    std::vector<Player *> players;
-    std::vector<Sprite_base *> sprites;
+    std::vector<Object *> objects;
     SDL_Texture *background;
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -142,14 +140,11 @@ public:
         add_player(&p2);
         ball.set_sprite(renderer, "resources/blaster.png");
         objects.push_back(&ball);
-        sprites.push_back(&ball.sprite);
     }
 
     void add_player(Player *p) {
         p->set_sprite(renderer, "resources/blue1.png");
-        players.push_back(p);
         objects.push_back(p);
-        sprites.push_back(&p->sprite);
     }
 
     void enqueue_events(EVENTS e) {
@@ -180,9 +175,11 @@ public:
 
     void update_screen() {
         ball.update_pos();
-        for(Player *p : players) {
-            if(ball.collision(*p)) {
-                ball.update_trajectory(p);
+        for(Object *o : objects) {
+            if (o != &ball) {
+                if(ball.collision(*o)) {
+                    ball.update_trajectory(static_cast<Player *>(o));
+                }
             }
         }
         if(ball.get_y() <= 0 || ball.get_y() >= height-10) {
@@ -192,10 +189,10 @@ public:
             enqueue_events(RESET);
         }
         SDL_RenderCopy(renderer, background, NULL, NULL);
-        for(auto sprt : sprites) {
-            SDL_Rect *rc = sprt->get_pos();
-            SDL_Texture *sprite = sprt->get_sprite();
-            SDL_RenderCopy(renderer, sprite, &sprt->src, &sprt->tgt);
+        for(auto o : objects) {
+            SDL_Rect *rc = o->sprite.get_pos();
+            SDL_Texture *sprite = o->sprite.get_sprite();
+            SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
         }
         SDL_RenderPresent(renderer);
     }
