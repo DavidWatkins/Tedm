@@ -18,15 +18,19 @@ Game::Game(std::string title, std::string title_screen_filename, \
 
 void Game::add_player(Player_base &player) {
     std::cerr << "game add player " << player.name << std::endl;
-    //Player_base *p = new Player_base(*player);
     if (config.HasMember("controls")) {
         if (config["controls"].HasMember(player.name.c_str())) {
+            std::cerr << "has member controls" << std::endl;
             for (auto itr = config["controls"][player.name.c_str()].MemberBegin(); \
                     itr != config["controls"][player.name.c_str()].MemberEnd(); \
                     ++itr) {
-                //button = itr->name.GetString();
-                //func = itr->value.GetString();
-                player.controls[keymap[itr->name.GetString()]] = \
+                std::cerr << "adding control" << std::endl;
+                std::string button = itr->name.GetString();
+                std::string func = itr->value.GetString();
+                SDL_Keycode key = keymap[button];
+                std::function<void(Player_base&)> f = player.functions[func];
+                player.controls[key] = f;
+                //player.controls[keymap[itr->name.GetString()]] = \
                     player.functions[itr->value.GetString()];
             }
         }
@@ -88,7 +92,6 @@ bool Game::parse_config(std::string config_file) {
 
 void Game::handle_keypress(SDL_Keycode key) {
     std::cerr << "handle_keypress" << std::endl;
-    std::cerr << "players len: " << players.size() << std::endl;
     for (Player_base *p : players) {
         std::cerr << "checking " << p->name << std::endl;
         std::cerr << "key: " << key << std::endl;

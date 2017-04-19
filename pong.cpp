@@ -165,7 +165,6 @@ public:
     }
 
     void update_screen() {
-        std::cerr << "update screen" << std::endl;
         ball.update_pos();
         for(Object *o : objects) {
             if (o != &ball) {
@@ -181,7 +180,6 @@ public:
             enqueue_events(RESET);
         }
         SDL_RenderCopy(renderer, background, NULL, NULL);
-        std::cerr << "objects len " << objects.size() << std::endl;
         for(Object *o : objects) {
             SDL_Rect *rc = o->sprite.get_pos();
             SDL_Texture *sprite = o->sprite.get_sprite();
@@ -208,6 +206,6 @@ int main(int argc, char*argv[]) {
                 game.handle_keypress(e.key.keysym.sym);
             }
         }
-        //game.update_screen();
+        game.update_screen();
     }
 }

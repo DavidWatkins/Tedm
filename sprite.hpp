@@ -16,12 +16,7 @@ public:
     Sprite_base(SDL_Renderer *renderer, std::string filename, int height, \
             int width) {
 
-
-        std::cerr << "BEFORE src: (" << src.h << ", " << src.w << ")" << std::endl;
-        std::cerr << "BEFORE dst: (" << tgt.h << ", " << tgt.w << ")" << std::endl;
         set_height_width(height, width);
-        std::cerr << "AFTER src: (" << src.h << ", " << src.w << ")" << std::endl;
-        std::cerr << "AFTER dst: (" << tgt.h << ", " << tgt.w << ")" << std::endl;
         set_sprite(renderer, filename);
        /*
         //The final texture
@@ -58,12 +53,10 @@ public:
     }
 
     void set_sprite(SDL_Renderer *renderer, std::string filename) {
-        std::cerr << "sprite set_sprite" << std::endl;
         sprite = Graphics::loadTexture(renderer, filename);
     }
 
     void set_height_width(int height, int width) {
-        std::cerr << "sprite set_height_width" << std::endl;
         src.w = tgt.w = width;
         src.h = tgt.h = height;
     }
@@ -74,7 +67,6 @@ public:
 
     void set_source_pos(int x, int y) {
         //location of the sprite within the texture
-        std::cerr << "sprite set_source_pos" << std::endl;
         src.x = x;
         src.y = y;
     }

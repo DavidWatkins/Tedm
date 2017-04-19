@@ -19,7 +19,6 @@ class Player_base : public Object {
         std::map<std::string, std::function<void(Player_base&)>> functions;
         std::map<SDL_Keycode, std::function<void(Player_base&)>> controls;
         std::string name;
-        //std::vector<std::function<void(Player_base)>> control_funcs;
         Player_base(std::string nm, const int x, const int y, const int h, \
                 const int w)
             : Object(x,y,h,w) {
