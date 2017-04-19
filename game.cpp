@@ -3,8 +3,7 @@
 
 //map controls for config file
 std::map<std::string, SDL_Keycode> keymap = {{"up", SDLK_UP}, \
-    {"down", SDLK_DOWN}, {"left", SDLK_LEFT}, {"right", SDLK_RIGHT}, \
-    {"w", SDLK_w}, {"s", SDLK_s}};
+    {"down", SDLK_DOWN}, {"w", SDLK_w}, {"s", SDLK_s}};
 
 Game::Game(std::string title, std::string title_screen_filename, \
         int screen_width, int screen_height, std::string config_file)
@@ -17,21 +16,16 @@ Game::Game(std::string title, std::string title_screen_filename, \
 }
 
 void Game::add_player(Player_base &player) {
-    std::cerr << "game add player " << player.name << std::endl;
     if (config.HasMember("controls")) {
         if (config["controls"].HasMember(player.name.c_str())) {
-            std::cerr << "has member controls" << std::endl;
             for (auto itr = config["controls"][player.name.c_str()].MemberBegin(); \
                     itr != config["controls"][player.name.c_str()].MemberEnd(); \
                     ++itr) {
-                std::cerr << "adding control" << std::endl;
-                std::string button = itr->name.GetString();
-                std::string func = itr->value.GetString();
-                SDL_Keycode key = keymap[button];
-                std::function<void(Player_base&)> f = player.functions[func];
-                player.controls[key] = f;
-                //player.controls[keymap[itr->name.GetString()]] = \
-                    player.functions[itr->value.GetString()];
+                std::string func = itr->name.GetString();
+                std::string button= itr->value.GetString();
+                SDL_Keycode key = keymap.find(button)->second;
+                std::function<void(Player_base&)> f = player.functions.find(func)->second;
+                player.controls.insert(std::pair<SDL_Keycode, std::function<void(Player_base&)>>(key, f));
             }
         }
     }
@@ -73,7 +67,7 @@ void Game::update() {
     for (Object *o : objects) {
         for (Object *other : objects) {
             if (o != other) {
-                o->collision(*other); 
+                o->collision(*other);
             }
         }
     }
@@ -91,17 +85,8 @@ bool Game::parse_config(std::string config_file) {
 }
 
 void Game::handle_keypress(SDL_Keycode key) {
-    std::cerr << "handle_keypress" << std::endl;
     for (Player_base *p : players) {
-        std::cerr << "checking " << p->name << std::endl;
-        std::cerr << "key: " << key << std::endl;
-        std::cerr << "player functions len: " << p->functions.size() << std::endl;
-        std::cerr << "player controls len: " << p->controls.size() << std::endl;
-        for (auto fname : p->controls) {
-            std::cout << "player function name: " << fname.first << std::endl;
-        }
         if (p->controls.find(key) != p->controls.end()) {
-            std::cerr << "found" << std::endl;
             p->controls[key](*p);
         }
     }

@@ -17,11 +17,11 @@ class Player : public Player_base {
 
     Player(std::string name, const int x, const int y) : \
         Player_base(name,x,y,100,10) {
-        std::cerr << "player constructor" << std::endl;
         set_pos(x, y);
-        functions["up"] = move_up();
-        functions["down"] = move_down();
+        functions.insert(std::pair<string, std::function<void(Player_base&)>>("up", move_up()));
+        functions.insert(std::pair<string, std::function<void(Player_base&)>>("down", move_down()));
     }
+
     void set_pos(int x, int y){
         pos.x = x;
         pos.y = y;
@@ -145,7 +145,6 @@ public:
     }
 
     void add_player(Player &p, std::string image) {
-        std::cerr << "pong add player " << p.name << std::endl;
         p.set_sprite(renderer, image);
         Game::add_player(p);
     }
@@ -156,7 +155,7 @@ public:
                 new_round();
                 break;
         }
-    } 
+    }
 
     void new_round() {
         p1.set_pos(15,250);
