@@ -17,6 +17,7 @@ class Player : public Player_base {
 
     Player(std::string name, const int x, const int y) : \
         Player_base(name,x,y,100,10) {
+        std::cerr << "player constructor" << std::endl;
         set_pos(x, y);
         functions["up"] = move_up();
         functions["down"] = move_down();
@@ -25,12 +26,6 @@ class Player : public Player_base {
         pos.x = x;
         pos.y = y;
         sprite.set_position(x, y);
-    }
-
-    void set_sprite(SDL_Renderer *renderer, std::string filename) {
-        sprite.set_sprite(renderer, filename);
-        sprite.set_height_width(size.h, size.w);
-        sprite.src.x = sprite.src.y = 0;
     }
 
     struct move_up {
@@ -53,23 +48,6 @@ class Player : public Player_base {
         }
     };
 
-
-/*    std::function<void(Player_base&)> move_up() = [](Player_base &p) {
-        p.set_y(p.get_y() - Player::move_distance);
-        if(p.get_y() < 0) {
-            p.set_y(0);
-        }
-        p.sprite.set_position(p.get_x(), p.get_y());
-    }
-
-    std::function<void(Player_base&)> move_down() = [](Player_base &p) {
-        p.set_y(p_get_y() + Player::move_distance);
-        if(p.get_y() > 500) {
-            p.set_y()(500);
-        }
-        p.sprite.set_position(p.get_x(), p.get_y());
-    }
-*/
     int get_y() {
         return Player_base::get_y();
     }
@@ -142,7 +120,6 @@ public:
 
 class Pong : public Game {
 private:
-    std::vector<Object *> objects;
     SDL_Texture *background;
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -150,7 +127,6 @@ private:
     Ball ball;
 
 public:
-
     enum EVENTS {RESET};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
@@ -162,31 +138,20 @@ public:
         Graphics::init(&window, &renderer, screen_height, screen_width, title);
         background = Graphics::add_background(renderer, title_screen_filename);
 
-        add_player(&p1);
-        add_player(&p2);
+        Pong::add_player(p1, "resources/blue1.png");
+        Pong::add_player(p2, "resources/blue1.png");
         ball.set_sprite(renderer, "resources/blaster.png");
         objects.push_back(&ball);
     }
 
-    void add_player(Player *p) {
-        p->set_sprite(renderer, "resources/blue1.png");
-        objects.push_back(p);
+    void add_player(Player &p, std::string image) {
+        std::cerr << "pong add player " << p.name << std::endl;
+        p.set_sprite(renderer, image);
+        Game::add_player(p);
     }
 
     void enqueue_events(EVENTS e) {
         switch(e) {
-            /*case P1_MOVE_UP:
-                p1.move_up();
-                break;
-            case P1_MOVE_DOWN:
-                p1.move_down();
-                break;
-            case P2_MOVE_UP:
-                p2.move_up();
-                break;
-            case P2_MOVE_DOWN:
-                p2.move_down();
-                break; */
             case RESET:
                 new_round();
                 break;
@@ -200,6 +165,7 @@ public:
     }
 
     void update_screen() {
+        std::cerr << "update screen" << std::endl;
         ball.update_pos();
         for(Object *o : objects) {
             if (o != &ball) {
@@ -215,7 +181,8 @@ public:
             enqueue_events(RESET);
         }
         SDL_RenderCopy(renderer, background, NULL, NULL);
-        for(auto o : objects) {
+        std::cerr << "objects len " << objects.size() << std::endl;
+        for(Object *o : objects) {
             SDL_Rect *rc = o->sprite.get_pos();
             SDL_Texture *sprite = o->sprite.get_sprite();
             SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
@@ -239,23 +206,8 @@ int main(int argc, char*argv[]) {
                 quit = true;
             } else if( e.type == SDL_KEYDOWN ) { //User presses a key
                 game.handle_keypress(e.key.keysym.sym);
-                //Select surfaces based on key press
-                /* switch( e.key.keysym.sym ) {
-                    case SDLK_w:
-                        game.enqueue_events(Pong::EVENTS::P1_MOVE_UP);
-                    break;
-                    case SDLK_s:
-                        game.enqueue_events(Pong::EVENTS::P1_MOVE_DOWN);
-                    break;
-                    case SDLK_UP:
-                        game.enqueue_events(Pong::EVENTS::P2_MOVE_UP);
-                    break;
-                    case SDLK_DOWN:
-                        game.enqueue_events(Pong::EVENTS::P2_MOVE_DOWN);
-                    break;
-                } */
             }
         }
-        game.update_screen();
+        //game.update_screen();
     }
 }

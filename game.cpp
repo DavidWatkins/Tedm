@@ -16,23 +16,23 @@ Game::Game(std::string title, std::string title_screen_filename, \
     }
 }
 
-Player_base *Game::add_player(Player_base &player) {
-    Player_base *p = new Player_base(player);
+void Game::add_player(Player_base &player) {
+    std::cerr << "game add player " << player.name << std::endl;
+    //Player_base *p = new Player_base(*player);
     if (config.HasMember("controls")) {
-        if (config["controls"].HasMember(p->name.c_str())) {
-            //auto ctls = config["controls"][p->name.c_str()];
-            for (auto itr = config["controls"][p->name.c_str()].MemberBegin(); \
-                    itr != config["controls"][p->name.c_str()].MemberEnd(); \
+        if (config["controls"].HasMember(player.name.c_str())) {
+            for (auto itr = config["controls"][player.name.c_str()].MemberBegin(); \
+                    itr != config["controls"][player.name.c_str()].MemberEnd(); \
                     ++itr) {
                 //button = itr->name.GetString();
                 //func = itr->value.GetString();
-                p->controls[keymap[itr->name.GetString()]] = \
-                    p->functions[itr->value.GetString()];
+                player.controls[keymap[itr->name.GetString()]] = \
+                    player.functions[itr->value.GetString()];
             }
         }
     }
-    players.push_back(p);
-    return p;
+    objects.push_back(&player);
+    players.push_back(&player);
 }
 
 void Game::remove_player(Player_base *player) {
@@ -73,12 +73,6 @@ void Game::update() {
             }
         }
     }
-    //    for(Player_base *p : players) {
-    //        /* draw the sprite */
-    //        SDL_BlitSurface(p->get_sprite, NULL, screen, &rcSprite);
-    //        /* update the screen */
-    //        SDL_UpdateRect(screen, 0, 0, 0, 0);
-    //    }
 }
 
 bool Game::parse_config(std::string config_file) {
@@ -93,8 +87,18 @@ bool Game::parse_config(std::string config_file) {
 }
 
 void Game::handle_keypress(SDL_Keycode key) {
+    std::cerr << "handle_keypress" << std::endl;
+    std::cerr << "players len: " << players.size() << std::endl;
     for (Player_base *p : players) {
+        std::cerr << "checking " << p->name << std::endl;
+        std::cerr << "key: " << key << std::endl;
+        std::cerr << "player functions len: " << p->functions.size() << std::endl;
+        std::cerr << "player controls len: " << p->controls.size() << std::endl;
+        for (auto fname : p->controls) {
+            std::cout << "player function name: " << fname.first << std::endl;
+        }
         if (p->controls.find(key) != p->controls.end()) {
+            std::cerr << "found" << std::endl;
             p->controls[key](*p);
         }
     }

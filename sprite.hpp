@@ -58,10 +58,12 @@ public:
     }
 
     void set_sprite(SDL_Renderer *renderer, std::string filename) {
+        std::cerr << "sprite set_sprite" << std::endl;
         sprite = Graphics::loadTexture(renderer, filename);
     }
 
     void set_height_width(int height, int width) {
+        std::cerr << "sprite set_height_width" << std::endl;
         src.w = tgt.w = width;
         src.h = tgt.h = height;
     }
@@ -72,6 +74,7 @@ public:
 
     void set_source_pos(int x, int y) {
         //location of the sprite within the texture
+        std::cerr << "sprite set_source_pos" << std::endl;
         src.x = x;
         src.y = y;
     }

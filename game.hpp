@@ -51,7 +51,7 @@ public:
     //Event_base *dequeue_event() {
 
     //}
-    Player_base *add_player(Player_base &player);
+    void add_player(Player_base &player);
     void remove_player(Player_base *player);
     bool collision(Object &obj);
     bool parse_config(std::string config_file);
