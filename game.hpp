@@ -26,10 +26,6 @@ const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int BUFF_SZ = 65536;
 
-//map controls for config file
-std::map<std::string, SDL_Keycode> keys = {{"up", SDLK_UP}, \
-    {"down", SDLK_DOWN}, {"left", SDLK_LEFT}, {"right", SDLK_RIGHT}, \
-    {"w", SDLK_w}, {"s", SDLK_s}};
 
 class Game {
 protected:

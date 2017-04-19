@@ -18,8 +18,8 @@ class Player : public Player_base {
     Player(std::string name, const int x, const int y) : \
         Player_base(name,x,y,100,10) {
         set_pos(x, y);
-        functions["up"] = move_up;
-        functions["down"] = move_down;
+        functions["up"] = move_up();
+        functions["down"] = move_down();
     }
     void set_pos(int x, int y){
         pos.x = x;
@@ -33,7 +33,28 @@ class Player : public Player_base {
         sprite.src.x = sprite.src.y = 0;
     }
 
-    std::function<void(Player_base&)> move_up() = [](Player_base &p) {
+    struct move_up {
+        void operator()(Player_base& p) {
+            p.set_y(p.get_y() - Player::move_distance);
+            if(p.get_y() < 0) {
+                p.set_y(0);
+            }
+            p.sprite.set_position(p.get_x(), p.get_y());
+        }
+    };
+
+    struct move_down {
+        void operator()(Player_base& p) {
+            p.set_y(p.get_y() + Player::move_distance);
+            if(p.get_y() > 500) {
+                p.set_y(500);
+            }
+            p.sprite.set_position(p.get_x(), p.get_y());
+        }
+    };
+
+
+/*    std::function<void(Player_base&)> move_up() = [](Player_base &p) {
         p.set_y(p.get_y() - Player::move_distance);
         if(p.get_y() < 0) {
             p.set_y(0);
@@ -48,9 +69,9 @@ class Player : public Player_base {
         }
         p.sprite.set_position(p.get_x(), p.get_y());
     }
-
+*/
     int get_y() {
-        return Player_base.get_y;
+        return Player_base::get_y();
     }
 
     int get_height() {
@@ -130,7 +151,7 @@ private:
 
 public:
 
-    //enum EVENTS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN, RESET};
+    enum EVENTS {RESET};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height, \
@@ -152,9 +173,9 @@ public:
         objects.push_back(p);
     }
 
-    /* void enqueue_events(EVENTS e) {
+    void enqueue_events(EVENTS e) {
         switch(e) {
-            case P1_MOVE_UP:
+            /*case P1_MOVE_UP:
                 p1.move_up();
                 break;
             case P1_MOVE_DOWN:
@@ -165,12 +186,12 @@ public:
                 break;
             case P2_MOVE_DOWN:
                 p2.move_down();
-                break;
+                break; */
             case RESET:
                 new_round();
                 break;
         }
-    } */
+    } 
 
     void new_round() {
         p1.set_pos(15,250);

@@ -1,6 +1,11 @@
 #include <algorithm>
 #include "game.hpp"
 
+//map controls for config file
+std::map<std::string, SDL_Keycode> keymap = {{"up", SDLK_UP}, \
+    {"down", SDLK_DOWN}, {"left", SDLK_LEFT}, {"right", SDLK_RIGHT}, \
+    {"w", SDLK_w}, {"s", SDLK_s}};
+
 Game::Game(std::string title, std::string title_screen_filename, \
         int screen_width, int screen_height, std::string config_file)
 : height{screen_height},width{screen_width} {
@@ -21,7 +26,7 @@ Player_base *Game::add_player(Player_base &player) {
                     ++itr) {
                 //button = itr->name.GetString();
                 //func = itr->value.GetString();
-                p->controls[keys[itr->name.GetString()]] = \
+                p->controls[keymap[itr->name.GetString()]] = \
                     p->functions[itr->value.GetString()];
             }
         }
