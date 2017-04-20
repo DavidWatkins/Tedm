@@ -6,21 +6,11 @@
 #ifndef __GAME_HPP__
 #define __GAME_HPP__
 
-#include "player.hpp"
-#include "state.hpp"
-#include "environment.hpp"
-#include "event.hpp"
-#include "graphics.hpp"
-#include "rapidjson/document.h"     // rapidjson's DOM-style API
-#include "rapidjson/prettywriter.h" // for stringify JSON'
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <queue>
-#include <map>
-#include <stdio.h>
 #include <SDL2/SDL.h>
 #include <string.h>
+#include <functional>
+#include <map>
+#include "player.hpp"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -34,27 +24,24 @@ protected:
     std::string name;
     std::vector<Player_base *> players;
     std::vector<Object *> objects;
-    rapidjson::Document config;
+    std::vector<SDL_Keycode> buttons;
+    std::vector<std::function<void()>> functions;
 
 public:
     Game(std::string title, std::string title_screen_filename, \
-            int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT,\
-            std::string config_file="None");
-    Game(Game&& G) :height{G.height}, name{G.name},
-                    width{G.width} {}
-    ~Game();
+            int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
     void update();
 
     void enqueue_event() {
 
     }
-    //Event_base *dequeue_event() {
-
-    //}
     void add_player(Player_base &player);
     void remove_player(Player_base *player);
     bool collision(Object &obj);
-    bool parse_config(std::string config_file);
+    std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>
+    parse_config(
+            std::string config_file,
+            std::map<std::string, std::function<void()>> func_map);
     void handle_keypress(SDL_Keycode key);
 };
 

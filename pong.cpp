@@ -10,7 +10,7 @@
 using namespace std;
 
 class Player : public Player_base {
-    const static unsigned int move_distance {40};
+    const unsigned int move_distance {40};
     const int HEIGHT = 100;
     const int WIDTH  = 10;
     public:
@@ -18,8 +18,6 @@ class Player : public Player_base {
     Player(std::string name, const int x, const int y) : \
         Player_base(name,x,y,100,10) {
         set_pos(x, y);
-        functions.insert(std::pair<string, std::function<void(Player_base&)>>("up", move_up()));
-        functions.insert(std::pair<string, std::function<void(Player_base&)>>("down", move_down()));
     }
 
     void set_pos(int x, int y){
@@ -28,25 +26,21 @@ class Player : public Player_base {
         sprite.set_position(x, y);
     }
 
-    struct move_up {
-        void operator()(Player_base& p) {
-            p.set_y(p.get_y() - Player::move_distance);
-            if(p.get_y() < 0) {
-                p.set_y(0);
-            }
-            p.sprite.set_position(p.get_x(), p.get_y());
+    void move_up() {
+        set_y(get_y() - move_distance);
+        if(get_y() < 0) {
+            set_y(0);
         }
-    };
+        sprite.set_position(get_x(), get_y());
+    }
 
-    struct move_down {
-        void operator()(Player_base& p) {
-            p.set_y(p.get_y() + Player::move_distance);
-            if(p.get_y() > 500) {
-                p.set_y(500);
-            }
-            p.sprite.set_position(p.get_x(), p.get_y());
+    void move_down() {
+        set_y(get_y() + move_distance);
+        if(get_y() > 500) {
+            set_y(500);
         }
-    };
+        sprite.set_position(get_x(), get_y());
+    }
 
     int get_y() {
         return Player_base::get_y();
@@ -125,16 +119,30 @@ private:
     SDL_Window *window;
     Player p1, p2;
     Ball ball;
+    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};
 
 public:
     enum EVENTS {RESET};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
-         Game(title,title_screen_filename, screen_width, screen_height, \
-                 config_file),
+         Game(title,title_screen_filename, screen_width, screen_height),
          p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
              ,ball{Ball(375,295, 0, 0)} {
-
+        map<string, function<void()>> keymap;
+        function<void()> f = bind(&Player::move_up, &p1);
+        keymap.insert(make_pair("p1_move_up", bind(&Player::move_up, &p1)));
+        keymap.insert(make_pair("p1_move_down", bind(&Player::move_down, &p1)));
+        keymap.insert(make_pair("p2_move_up", bind(&Player::move_up, &p2)));
+        keymap.insert(make_pair("p2_move_down", bind(&Player::move_down, &p2)));
+        auto str_key_func_map = parse_config("pong.cfg", keymap);
+        buttons.push_back(str_key_func_map.find("p1_move_up")->second.first);
+        functions.push_back(str_key_func_map.find("p1_move_up")->second.second);
+        buttons.push_back(str_key_func_map.find("p1_move_down")->second.first);
+        functions.push_back(str_key_func_map.find("p1_move_down")->second.second);
+        buttons.push_back(str_key_func_map.find("p2_move_up")->second.first);
+        functions.push_back(str_key_func_map.find("p2_move_up")->second.second);
+        buttons.push_back(str_key_func_map.find("p2_move_down")->second.first);
+        functions.push_back(str_key_func_map.find("p2_move_down")->second.second);
         Graphics::init(&window, &renderer, screen_height, screen_width, title);
         background = Graphics::add_background(renderer, title_screen_filename);
 
@@ -142,6 +150,13 @@ public:
         Pong::add_player(p2, "resources/blue1.png");
         ball.set_sprite(renderer, "resources/blaster.png");
         objects.push_back(&ball);
+    }
+
+    ~Pong() {
+        //Destroy window
+        SDL_DestroyWindow( window );
+        //Quit SDL subsystems
+        SDL_Quit();
     }
 
     void add_player(Player &p, std::string image) {
@@ -189,7 +204,7 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "pong.cfg");
+    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "pong.ini");
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;

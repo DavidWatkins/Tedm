@@ -1,10 +1,8 @@
 #ifndef __SPRITE_HPP__
 #define __SPRITE_HPP__
 
-#include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include "graphics.hpp"
 
 class Sprite_base {
@@ -18,37 +16,11 @@ public:
 
         set_height_width(height, width);
         set_sprite(renderer, filename);
-       /*
-        //The final texture
-        SDL_Texture* newTexture = NULL;
-
-        //Load image at specified path
-        SDL_Surface* loadedSurface = IMG_Load( filename.c_str() );
-
-        if( loadedSurface == NULL ) {
-            printf( "Unable to load image %s! SDL_image Error: %s\n", \
-                    filename.c_str(), IMG_GetError() );
-        }
-
-        else {
-
-            //Create texture from surface pixels
-            sprite = SDL_CreateTextureFromSurface( renderer, loadedSurface );
-
-            if( sprite == NULL ) {
-                printf( "Unable to create texture from %s! SDL Error: %s\n", \
-                        filename.c_str(), SDL_GetError() );
-            }
-            else {
-                //Get rid of old loaded surface
-                SDL_FreeSurface( loadedSurface );
-            }
-        }*/
-
     }
+
     ~Sprite_base() {
         if(sprite) {
-            //SDL_FreeSurface(sprite);
+            SDL_DestroyTexture(sprite);
         }
     }
 

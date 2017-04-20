@@ -6,7 +6,6 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
-#include <iostream>
 #include "sprite.hpp"
 
 class Object {

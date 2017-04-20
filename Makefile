@@ -1,6 +1,6 @@
 CXX=g++
 
-CXXFLAGS=--std=c++14 -g -Irapidjson/include
+CXXFLAGS=--std=c++14 -g 
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
@@ -9,9 +9,6 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 LIBS+=-lSDL2main -lSDL2 -lSDL2_image
-
-
-INCS=#-Irapidjson/include
 
 OBJS=graphics.o environment.o game.o 
 EXES=pong.o
