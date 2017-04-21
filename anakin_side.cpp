@@ -93,10 +93,10 @@ public:
         keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
         keymap.insert(make_pair("move_down", bind(&Player::move_left, &p)));
         auto str_key_func_map = parse_config(config_file, keymap);
-        add_control"jump", keymap, str_key_func_map);
-        add_control"duck", keymap, str_key_func_map);
-        add_control"move_left", keymap, str_key_func_map);
-        add_control"move_right", keymap, str_key_func_map);
+        add_control("jump", keymap, str_key_func_map);
+        add_control("duck", keymap, str_key_func_map);
+        add_control("move_left", keymap, str_key_func_map);
+        add_control("move_right", keymap, str_key_func_map);
 
         background = Graphics::add_background(renderer, title_screen_filename);
 

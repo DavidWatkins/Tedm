@@ -129,20 +129,15 @@ public:
          p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
              ,ball{Ball(375,295, 0, 0)} {
         map<string, function<void()>> keymap;
-        function<void()> f = bind(&Player::move_up, &p1);
         keymap.insert(make_pair("p1_move_up", bind(&Player::move_up, &p1)));
         keymap.insert(make_pair("p1_move_down", bind(&Player::move_down, &p1)));
         keymap.insert(make_pair("p2_move_up", bind(&Player::move_up, &p2)));
         keymap.insert(make_pair("p2_move_down", bind(&Player::move_down, &p2)));
         auto str_key_func_map = parse_config("pong.cfg", keymap);
-        buttons.push_back(str_key_func_map.find("p1_move_up")->second.first);
-        functions.push_back(str_key_func_map.find("p1_move_up")->second.second);
-        buttons.push_back(str_key_func_map.find("p1_move_down")->second.first);
-        functions.push_back(str_key_func_map.find("p1_move_down")->second.second);
-        buttons.push_back(str_key_func_map.find("p2_move_up")->second.first);
-        functions.push_back(str_key_func_map.find("p2_move_up")->second.second);
-        buttons.push_back(str_key_func_map.find("p2_move_down")->second.first);
-        functions.push_back(str_key_func_map.find("p2_move_down")->second.second);
+        add_control("p1_move_up", keymap, str_key_func_map);
+        add_control("p1_move_down", keymap, str_key_func_map);
+        add_control("p2_move_up", keymap, str_key_func_map);
+        add_control("p2_move_down", keymap, str_key_func_map);
         Graphics::init(&window, &renderer, screen_height, screen_width, title);
         background = Graphics::add_background(renderer, title_screen_filename);
 
