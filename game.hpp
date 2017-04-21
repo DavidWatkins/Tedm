@@ -30,7 +30,10 @@ protected:
 public:
     Game(std::string title, std::string title_screen_filename, \
             int screen_width=SCREEN_WIDTH, int screen_height=SCREEN_HEIGHT);
-    void update();
+
+void add_control(std::string func, std::map<std::string, std::function<void()>>
+                 std::map<std::string, std::pair
+                 <SDL_Keycode, std::function<void()>>> str_key_func_map);
 
     void enqueue_event() {
 

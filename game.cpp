@@ -36,16 +36,13 @@ bool Game::collision(Object &obj) {
     }
     return false;
 }
-
-void Game::update() {
-    //check for collisions
-    for (Object *o : objects) {
-        for (Object *other : objects) {
-            if (o != other) {
-                o->collision(*other);
-            }
-        }
-    }
+void Game::add_control(std::string &func,
+                       std::map<std::string,std::function<void()>>&str_func_map
+                       std::map<std::string, std::pair
+                       <SDL_Keycode, std::function<void()>>> &str_key_func_map){
+    std::function<void()> f = str_func_map.find(func).second;
+    buttons.push_back(str_key_func_map.find(func)->second.first);
+    functions.push_back(str_key_func_map.find(func)->second.second)
 }
 
 std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>

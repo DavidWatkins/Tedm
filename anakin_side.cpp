@@ -11,12 +11,15 @@ using namespace std;
 
 class Player : public Player_base {
     const unsigned int move_distance {40};
-    const int HEIGHT = 100;
-    const int WIDTH  = 10;
+    const int HEIGHT = 75;
+    const int WIDTH  = 73;
+    void set_frame(int x, int y) {
+        sprite.set_pos(WIDTH*x, HEIGHT*y;
+    }
     public:
 
     Player(std::string name, const int x, const int y) : \
-        Player_base(name,x,y,100,10) {
+        Player_base(name,x,y,75,73) {
         set_pos(x, y);
     }
 
@@ -26,15 +29,23 @@ class Player : public Player_base {
         sprite.set_position(x, y);
     }
 
-    void move_up() {
-        set_y(get_y() - move_distance);
+    void jump() {
+        set_frame(3, 0);
+        /*set_y(get_y() - move_distance);
+
         if(get_y() < 0) {
             set_y(0);
         }
-        sprite.set_position(get_x(), get_y());
+        sprite.set_position(get_x(), get_y());*/
     }
 
-    void move_down() {
+
+    void neutral() {
+        set_frame(0, 0);
+    }
+
+    void move_right() {
+        set_frame(0, 0);
         set_y(get_y() + move_distance);
         if(get_y() > 500) {
             set_y(500);
@@ -42,9 +53,16 @@ class Player : public Player_base {
         sprite.set_position(get_x(), get_y());
     }
 
-    int get_y() {
-        return Player_base::get_y();
+    void move_left() {
+        set_frame(0, 0);
+        set_y(get_y() + move_distance);
+        if(get_y() > 500) {
+            set_y(500);
+        }
+        sprite.set_position(get_x(), get_y());
     }
+
+
 
     int get_height() {
         return HEIGHT;
@@ -60,42 +78,32 @@ private:
     SDL_Texture *background;
     SDL_Renderer *renderer;
     SDL_Window *window;
-    Player p1, p2;
-    Ball ball;
-    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};
+    Player p;
+    enum CONTROLS {P_JUMP, P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT};
 
 public:
     enum EVENTS {RESET};
-    Pong(std::string title, std::string title_screen_filename, \
+    Anakin_side_scroller(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
-         p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
-             ,ball{Ball(375,295, 0, 0)} {
+         p{Player("player_1", 15,250)}  {
         map<string, function<void()>> keymap;
-        function<void()> f = bind(&Player::move_up, &p1);
-        keymap.insert(make_pair("p1_move_up", bind(&Player::move_up, &p1)));
-        keymap.insert(make_pair("p1_move_down", bind(&Player::move_down, &p1)));
-        keymap.insert(make_pair("p2_move_up", bind(&Player::move_up, &p2)));
-        keymap.insert(make_pair("p2_move_down", bind(&Player::move_down, &p2)));
-        auto str_key_func_map = parse_config("pong.cfg", keymap);
-        buttons.push_back(str_key_func_map.find("p1_move_up")->second.first);
-        functions.push_back(str_key_func_map.find("p1_move_up")->second.second);
-        buttons.push_back(str_key_func_map.find("p1_move_down")->second.first);
-        functions.push_back(str_key_func_map.find("p1_move_down")->second.second);
-        buttons.push_back(str_key_func_map.find("p2_move_up")->second.first);
-        functions.push_back(str_key_func_map.find("p2_move_up")->second.second);
-        buttons.push_back(str_key_func_map.find("p2_move_down")->second.first);
-        functions.push_back(str_key_func_map.find("p2_move_down")->second.second);
-        Graphics::init(&window, &renderer, screen_height, screen_width, title);
+        keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
+        keymap.insert(make_pair("duck", bind(&Player::duck, &p)));
+        keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
+        keymap.insert(make_pair("move_down", bind(&Player::move_left, &p)));
+        auto str_key_func_map = parse_config(config_file, keymap);
+        add_control"jump", keymap, str_key_func_map);
+        add_control"duck", keymap, str_key_func_map);
+        add_control"move_left", keymap, str_key_func_map);
+        add_control"move_right", keymap, str_key_func_map);
+
         background = Graphics::add_background(renderer, title_screen_filename);
 
-        Pong::add_player(p1, "resources/blue1.png");
-        Pong::add_player(p2, "resources/blue1.png");
-        ball.set_sprite(renderer, "resources/blaster.png");
-        objects.push_back(&ball);
+        add_player(p, "resources/anakin.png");
     }
 
-    ~Pong() {
+    ~Anakin_side_scroller() {
         //Destroy window
         SDL_DestroyWindow( window );
         //Quit SDL subsystems
@@ -122,20 +130,6 @@ public:
     }
 
     void update_screen() {
-        ball.update_pos();
-        for(Object *o : objects) {
-            if (o != &ball) {
-                if(ball.collision(*o)) {
-                    ball.update_trajectory(static_cast<Player *>(o));
-                }
-            }
-        }
-        if(ball.get_y() <= 0 || ball.get_y() >= height-10) {
-            ball.update_trajectory();
-        }
-        if(ball.get_x() <= 0 || ball.get_x() >= width-50) {
-            enqueue_events(RESET);
-        }
         SDL_RenderCopy(renderer, background, NULL, NULL);
         for(Object *o : objects) {
             SDL_Rect *rc = o->sprite.get_pos();
@@ -147,7 +141,7 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "pong.ini");
+    Pong game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
