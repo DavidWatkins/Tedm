@@ -14,7 +14,7 @@ class Player : public Player_base {
     const int HEIGHT = 75;
     const int WIDTH  = 73;
     void set_frame(int x, int y) {
-        sprite.set_pos(WIDTH*x, HEIGHT*y;
+        sprite.set_source_pos(WIDTH*x, HEIGHT*y);
     }
     public:
 
@@ -39,6 +39,9 @@ class Player : public Player_base {
         sprite.set_position(get_x(), get_y());*/
     }
 
+    void duck() {
+        set_frame(0, 0);
+    }
 
     void neutral() {
         set_frame(0, 0);
@@ -71,7 +74,7 @@ class Player : public Player_base {
 
 class Block : public Object {
 
-}
+};
 
 class Anakin_side_scroller : public Game {
 private:
@@ -87,16 +90,24 @@ public:
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
          p{Player("player_1", 15,250)}  {
+        Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
         map<string, function<void()>> keymap;
+        cerr << "made map" << endl;
         keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
         keymap.insert(make_pair("duck", bind(&Player::duck, &p)));
         keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
         keymap.insert(make_pair("move_down", bind(&Player::move_left, &p)));
-        auto str_key_func_map = parse_config(config_file, keymap);
+        cerr << "inserted keys" << endl;
+        map<std::string, std::pair<SDL_Keycode, std::function<void()>>> \
+            str_key_func_map = parse_config(config_file, keymap);
+        cerr << "parsed config" << endl;
         add_control("jump", keymap, str_key_func_map);
+        cerr << "added jump" << endl;
         add_control("duck", keymap, str_key_func_map);
         add_control("move_left", keymap, str_key_func_map);
+        cerr << "added move_left" << endl;
         add_control("move_right", keymap, str_key_func_map);
+        cerr << "added controls" << endl;
 
         background = Graphics::add_background(renderer, title_screen_filename);
 
@@ -124,9 +135,7 @@ public:
     }
 
     void new_round() {
-        p1.set_pos(15,250);
-        p2.set_pos(750, 250);
-        ball.reset();
+        p.set_pos(15,250);
     }
 
     void update_screen() {
@@ -141,7 +150,8 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
+    Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
+    cerr << "Made game" << endl;
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;

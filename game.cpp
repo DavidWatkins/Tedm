@@ -40,7 +40,10 @@ void Game::add_control(std::string func,
                        std::map<std::string,std::function<void()>>&str_func_map,
                        std::map<std::string, std::pair
                        <SDL_Keycode, std::function<void()>>> &str_key_func_map){
-    auto key_func_pair = str_key_func_map.find(func)->second;
+    std::cerr << "adding control" << std::endl;
+    std::pair<SDL_Keycode, std::function<void()>> key_func_pair = \
+        str_key_func_map.find(func)->second;
+    std::cerr << "got key_func_pair" << std::endl;
     buttons.push_back(key_func_pair.first);
     functions.push_back(key_func_pair.second);
 }
