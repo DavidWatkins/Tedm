@@ -10,7 +10,7 @@
 using namespace std;
 
 class Player : public Player_base {
-    const unsigned int move_distance {40};
+    const unsigned int move_distance {5};
     const int HEIGHT = 75;
     const int WIDTH  = 73;
     void set_frame(int x, int y) {
@@ -49,26 +49,28 @@ class Player : public Player_base {
 
     void move_right() {
         set_frame(0, 0);
-        set_y(get_y() + move_distance);
-        if(get_y() > 500) {
-            set_y(500);
+        set_x(get_x() + move_distance);
+        if(get_x() > 500) {
+            set_x(500);
         }
         sprite.set_position(get_x(), get_y());
     }
 
     void move_left() {
-        set_frame(0, 0);
-        set_y(get_y() + move_distance);
-        if(get_y() > 500) {
-            set_y(500);
+        set_frame(5, 0);
+        set_x(get_x() - move_distance);
+        if(get_x() <15) {
+            set_x(15);
         }
         sprite.set_position(get_x(), get_y());
     }
 
-
-
     int get_height() {
         return HEIGHT;
+    }
+
+    int get_width() {
+        return WIDTH;
     }
 };
 
@@ -92,26 +94,20 @@ public:
          p{Player("player_1", 15,250)}  {
         Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
         map<string, function<void()>> keymap;
-        cerr << "made map" << endl;
         keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
         keymap.insert(make_pair("duck", bind(&Player::duck, &p)));
         keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
-        keymap.insert(make_pair("move_down", bind(&Player::move_left, &p)));
-        cerr << "inserted keys" << endl;
+        keymap.insert(make_pair("move_left", bind(&Player::move_left, &p)));
         map<std::string, std::pair<SDL_Keycode, std::function<void()>>> \
             str_key_func_map = parse_config(config_file, keymap);
-        cerr << "parsed config" << endl;
         add_control("jump", keymap, str_key_func_map);
-        cerr << "added jump" << endl;
         add_control("duck", keymap, str_key_func_map);
         add_control("move_left", keymap, str_key_func_map);
-        cerr << "added move_left" << endl;
         add_control("move_right", keymap, str_key_func_map);
-        cerr << "added controls" << endl;
 
         background = Graphics::add_background(renderer, title_screen_filename);
 
-        add_player(p, "resources/anakin.png");
+        add_player(p, "resources/anakin1.png");
     }
 
     ~Anakin_side_scroller() {
@@ -151,7 +147,6 @@ public:
 
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
-    cerr << "Made game" << endl;
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
