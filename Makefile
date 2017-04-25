@@ -27,16 +27,16 @@ EXECS_OBJS=$(patsubst $(EXEC_DIR)/%.cpp, $(EXEC_DIR)/%.o,$(EXECS_SRCS))
 DEPS = $(SRCS) $(LIBS)
 
 $(EXEC_DIR)/%.o: $(EXEC_DIR)/%.cpp $(OBJS)
-	$(CXX) $(CXXFLAGS) $< -o $@ $(OBJS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LIBS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@ $(LIBS)
 
 pong: $(OBJS) $(EXECS_OBJS)
-	$(CXX) $(CXXFLAGS) -o pong $(OBJS) $(EXEC_DIR)/pong.o $(DEPS)
+	$(CXX) $(CXXFLAGS) -o pong $(OBJS) $(EXEC_DIR)/pong.o $(LIBS)
 
 anakin_side: $(OBJS) $(EXECS_OBJS)
-	$(CXX) $(CXXFLAGS) -o anakin_side $(OBJS) $(EXEC_DIR)/anakin_side.o $(DEPS)
+	$(CXX) $(CXXFLAGS) -o anakin_side $(OBJS) $(EXEC_DIR)/anakin_side.o $(LIBS)
 
 default: anakin_side pong
 
