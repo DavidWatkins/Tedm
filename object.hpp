@@ -8,6 +8,7 @@
 
 #include "sprite.hpp"
 #include "state.hpp"
+#include <iostream>
 
 class Object {
 protected:
@@ -27,7 +28,7 @@ public:
         size.w = w;
         sprite.set_source_pos(x, y);
         sprite.set_height_width(h, w);
-        state = State_base();
+//        state = State_base();
     }
 
     void set_position(int x, int y) {
@@ -54,6 +55,12 @@ public:
         sprite.set_height_width(size.h, size.w);
         sprite.src.x = sprite.src.y = 0;
         sprite.set_position(pos.x, pos.y);
+    }
+
+    void update() {
+        if(state.is_busy()) {
+            state.dequeue_event();
+        }
     }
 };
 

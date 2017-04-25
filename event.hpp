@@ -1,6 +1,6 @@
 /**
   event.cpp
-Purpose: Define event for game object to subscribe/respond to 
+Purpose: Define event for game object to subscribe/respond to
 */
 
 #ifndef __EVENT_HPP__
@@ -8,13 +8,16 @@ Purpose: Define event for game object to subscribe/respond to
 
 #include <map>
 #include <vector>
+#include <iostream>
 
-template<typename T>
+//template<typename T>
 class Event {
-    T action;
-    Event(T& t) {
-        action = t;
+    std::function<void()> action;
+public:
+    Event(std::function<void()> e) {
+        action = e;
     }
+    void operator()() {action();}
 };
 
 #endif /* __EVENT_HPP__ */

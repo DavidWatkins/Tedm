@@ -37,22 +37,20 @@ bool Game::collision(Object &obj) {
     return false;
 }
 void Game::add_control(std::string func,
-                       std::map<std::string,std::function<void()>>&str_func_map,
+                       std::map<std::string, Event>&str_func_map,
                        std::map<std::string, std::pair
-                       <SDL_Keycode, std::function<void()>>> &str_key_func_map){
-    std::pair<SDL_Keycode, std::function<void()>> key_func_pair = \
-        str_key_func_map.find(func)->second;
-    buttons.push_back(key_func_pair.first);
-    functions.push_back(key_func_pair.second);
+                       <SDL_Keycode, Event>> &str_key_func_map){
+    std::pair<SDL_Keycode, Event> key_func_pair = str_key_func_map.find(func)->second;
+    controls.push_back(std::make_pair(key_func_pair.first, key_func_pair.second));
 }
 
-std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>
+std::map<std::string, std::pair<SDL_Keycode, Event>>
         Game::parse_config(std::string config_file,
-            std::map<std::string, std::function<void()>> func_map) {
+            std::map<std::string, Event> func_map) {
 
     std::ifstream infile(config_file);
-    std::map<std::string, SDL_Keycode> keymap;
-    std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>> controls;
+    //std::map<std::string, SDL_Keycode> keymap;
+    std::map<std::string, std::pair<SDL_Keycode, Event>> controls;
     while(infile) {
         std::string line;
         if (!getline(infile, line)) break;
@@ -61,8 +59,8 @@ std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>
         std::getline(ss, func, ':' );
         std::getline(ss, button);
         std::cout << "(" << button << ", " << func << ")" << std::endl;
-        keymap.insert(std::make_pair(func, SDL_GetKeyFromName(button.c_str())));
-        controls.insert(make_pair(func, make_pair(
+        //keymap.insert(std::make_pair(func, SDL_GetKeyFromName(button.c_str())));
+        controls.insert(std::make_pair(func, std::make_pair(
                     SDL_GetKeyFromName(button.c_str()),
                     func_map.find(func)->second)));
     }
@@ -70,9 +68,9 @@ std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>
 }
 
 void Game::handle_keypress(SDL_Keycode key) {
-    for(int i = 0; i < buttons.size(); i++) {
-        if(key==buttons[i]) {
-            (functions[i])();
+    for(auto it : controls) {
+        if(key==it.first) {
+            enqueue_event(it.second);
             return;
         }
     }

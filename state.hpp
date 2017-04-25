@@ -8,16 +8,25 @@
 
 #include "event.hpp"
 #include <queue>
+#include <iostream>
 
-template<typename T>
+//template<typename T>
 class State_base {
-    std::queue<Event<T>> pending_events;
+    std::queue<Event> pending_events;
 public:
     State_base() {
-        pending_events = std::queue<Event<T>>();
+        pending_events = std::queue<Event>();
     }
     bool is_busy() {
         return !pending_events.empty();
+    }
+    void enqueue_event(Event e) {
+        pending_events.push(e);
+    }
+
+    void dequeue_event() {
+        pending_events.front()();
+        pending_events.pop();
     }
 };
 

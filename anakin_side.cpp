@@ -49,20 +49,19 @@ class Player : public Player_base {
         }
     }
 
-    void attack() { 
-        if (!state.is_busy()) {
-            if (facing_right) {
-                set_frame(0, 4);
-                state.pending_events.push(Event{set_frame(1, 4)});
-                state.pending_events.push(Event{set_frame(2, 4)});
-                state.pending_events.push(Event{set_frame(3, 4)});
-            } else {
-                //facing left
-                set_frame(7, 4)
-                state.pending_events.push(Event{set_frame(6, 4)});
-                state.pending_events.push(Event{set_frame(5, 4)});
-                state.pending_events.push(Event{set_frame(4, 4)});
-            }
+    void attack() {
+        cerr << "Attacking" << endl;
+        if (facing_right) {
+            set_frame(0, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 1, 4)});
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 2, 4)});
+            //state.enqueue_event(Event{bind(&Player::set_frame, this, 3, 4)});
+        } else {
+            //facing left
+            set_frame(7, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 6, 4)});
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 5, 4)});
+            //state.enqueue_event(Event{bind(&Player::set_frame, this, 4, 4)});
         }
     }
 
@@ -71,39 +70,26 @@ class Player : public Player_base {
     }
 
     void move_right() {
-        if (!state.busy()) {
-            SDL_Rect *src = sprite.get_src();
-            set_frame(((src->x + 1) % 4), 0);
-            set_x(get_x() + move_distance);
-            if(get_x() > 600) {
-                //next screen
-                set_x(600);
-            }
-            sprite.set_position(get_x(), get_y());
-            facing_right = true;
+        SDL_Rect *src = sprite.get_src();
+        set_frame(((src->x + 1) % 4), 0);
+        set_x(get_x() + move_distance);
+        if(get_x() > 600) {
+            //next screen
+            set_x(600);
         }
+        sprite.set_position(get_x(), get_y());
+        facing_right = true;
     }
 
     void move_left() {
-        if (!state.busy()) {
-            SDL_Rect *src = sprite.get_src();
-            set_frame((((src->x + 1) % 4)+4), 0);
-            set_x(get_x() - move_distance);
-            if(get_x() < 15) {
-                set_x(15);
-            }
-            sprite.set_position(get_x(), get_y());
-            facing_right = false;
+        SDL_Rect *src = sprite.get_src();
+        set_frame((((src->x + 1) % 4)+4), 0);
+        set_x(get_x() - move_distance);
+        if(get_x() < 15) {
+            set_x(15);
         }
-    }
-
-    void start() {
-        if(title_screen) {
-            //update game state
-        }
-        else {
-            //pause
-        }
+        sprite.set_position(get_x(), get_y());
+        facing_right = false;
     }
 
     int get_height() {
@@ -113,6 +99,7 @@ class Player : public Player_base {
     int get_width() {
         return WIDTH;
     }
+
 };
 
 class Block : public Object {
@@ -134,14 +121,13 @@ public:
          Game(title,title_screen_filename, screen_width, screen_height),
          p{Player("player_1", 15,250)}  {
         Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
-        //keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
-        keymap.insert(make_pair("duck", bind(&Player::duck, &p)));
-        keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
-        keymap.insert(make_pair("move_left", bind(&Player::move_left, &p)));
-        keymap.insert(make_pair("attack", bind(&Player::attack, &p)));
-        map<std::string, std::pair<SDL_Keycode, std::function<void()>>> \
+        map<string, Event> keymap;
+        keymap.insert(make_pair("duck", Event{bind(&Player::duck, &p)}));
+        keymap.insert(make_pair("move_right", Event{bind(&Player::move_right, &p)}));
+        keymap.insert(make_pair("move_left", Event{bind(&Player::move_left, &p)}));
+        keymap.insert(make_pair("attack", Event{bind(&Player::attack, &p)}));
+        map<std::string, std::pair<SDL_Keycode, Event>> \
             str_key_func_map = parse_config(config_file, keymap);
-        //add_control("jump", keymap, str_key_func_map);
         add_control("duck", keymap, str_key_func_map);
         add_control("move_left", keymap, str_key_func_map);
         add_control("move_right", keymap, str_key_func_map);
@@ -188,7 +174,7 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
+    Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "demos/anakin.cfg");
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
@@ -204,6 +190,7 @@ int main(int argc, char*argv[]) {
                 game.handle_keypress(e.key.keysym.sym);
             }
         }
+        game.update();
         game.update_screen();
     }
 }
