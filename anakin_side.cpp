@@ -112,14 +112,13 @@ private:
     SDL_Window *window;
     Player p;
     enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK};
-    Event e_attack;
 
 public:
     enum EVENTS {RESET};
     Anakin_side_scroller(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
-         p{Player("player_1", 15,250, window, renderer)}  {
+         p{Player("player_1", 15,250)}  {
         Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
         map<string, function<void()>> keymap;
         //keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
@@ -177,17 +176,6 @@ public:
 
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "anakin.cfg");
-    function<void(SDL_Texture *, SDL_Renderer *, SDL_Window *, Player *)> attack = \
-            [](SDL_Texture *texture, SDL_Renderer *renderer, \
-            SDL_Window *window, Player *player) {
-        SDL_RenderCopy(renderer, background, NULL, NULL);
-        SDL_Rect *rc = player->sprite.get_pos();
-        SDL_Texture *sprite = player->sprite.get_sprite();
-        SDL_RenderCopy(renderer, sprite, &player->sprite.src, i\
-                &player->sprite.tgt);
-        
-    }
-    e_attack = Event{"Attack", }
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
