@@ -13,11 +13,12 @@
 #include <queue>
 #include "player.hpp"
 #include "state.hpp"
+#include "timer.hpp"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int BUFF_SZ = 65536;
-
+const int FRAMES_PER_SECOND = 12;
 
 class Game {
 protected:
@@ -43,7 +44,7 @@ public:
     }
 
     void update() {
-        if(state.is_busy()) {
+        if(state.pending()) {
             state.dequeue_event();
         }
         for(auto obj : objects) {
@@ -58,6 +59,8 @@ public:
             std::string config_file,
             std::map<std::string, Event> func_map);
     void handle_keypress(SDL_Keycode key);
+    int run();
+    virtual void update_screen() = 0;
 };
 
 

@@ -11,7 +11,7 @@ using namespace std;
 
 class Player : public Player_base {
     const unsigned int move_distance {8};
-    const int HEIGHT = 75;
+    const int HEIGHT = 72;
     const int WIDTH  = 73;
     bool facing_right;
     void set_frame(int x, int y) {
@@ -20,7 +20,7 @@ class Player : public Player_base {
     public:
 
     Player(std::string name, const int x, const int y) : \
-        Player_base(name,x,y,75,73) {
+        Player_base(name,x,y,72,73) {
         set_pos(x, y);
         facing_right = true;
     }
@@ -52,13 +52,13 @@ class Player : public Player_base {
     void attack() {
         cerr << "Attacking" << endl;
         if (facing_right) {
-            set_frame(0, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 0, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 1, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 2, 4)});
             //state.enqueue_event(Event{bind(&Player::set_frame, this, 3, 4)});
         } else {
             //facing left
-            set_frame(7, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 7, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 6, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 5, 4)});
             //state.enqueue_event(Event{bind(&Player::set_frame, this, 4, 4)});
@@ -162,7 +162,7 @@ public:
         p.set_pos(15,250);
     }
 
-    void update_screen() {
+    void update_screen() override {
         SDL_RenderCopy(renderer, background, NULL, NULL);
         for(Object *o : objects) {
             SDL_Rect *rc = o->sprite.get_pos();
@@ -171,26 +171,11 @@ public:
         }
         SDL_RenderPresent(renderer);
     }
+
 };
 
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "demos/anakin.cfg");
-    bool quit = false;
-    char ch;
     std::cout << "Game Loaded" << std::endl;
-    game.update_screen();
-    SDL_Event e;
-    while( !quit ) {
-        //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 ) {
-            //User requests quit
-            if( e.type == SDL_QUIT ) {
-                quit = true;
-            } else if( e.type == SDL_KEYDOWN ) { //User presses a key
-                game.handle_keypress(e.key.keysym.sym);
-            }
-        }
-        game.update();
-        game.update_screen();
-    }
+    game.run();
 }

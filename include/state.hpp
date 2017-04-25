@@ -17,7 +17,7 @@ public:
     State_base() {
         pending_events = std::queue<Event>();
     }
-    bool is_busy() {
+    bool pending() {
         return !pending_events.empty();
     }
     void enqueue_event(Event e) {
@@ -25,6 +25,7 @@ public:
     }
 
     void dequeue_event() {
+        //execute the event
         pending_events.front()();
         pending_events.pop();
     }

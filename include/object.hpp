@@ -28,7 +28,6 @@ public:
         size.w = w;
         sprite.set_source_pos(x, y);
         sprite.set_height_width(h, w);
-//        state = State_base();
     }
 
     void set_position(int x, int y) {
@@ -58,8 +57,10 @@ public:
     }
 
     void update() {
-        if(state.is_busy()) {
+        if(state.pending()) {
             state.dequeue_event();
+        } else {
+            //default action
         }
     }
 };
