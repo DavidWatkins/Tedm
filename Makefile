@@ -10,7 +10,7 @@ endif
 
 LIBS+=-lSDL2main -lSDL2 -lSDL2_image
 
-OBJS=graphics.o environment.o game.o 
+OBJS=graphics.o environment.o game.o  
 EXES=anakin_side.o
 
 default: main

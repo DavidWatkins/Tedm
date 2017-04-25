@@ -1,6 +1,6 @@
 /**
-  player.cpp
-Purpose: define user-controlled player or enemy/npc
+    player.hpp
+    Purpose: define user-controlled player or enemy/npc
 */
 
 #ifndef __PLAYER_HPP__
@@ -8,7 +8,6 @@ Purpose: define user-controlled player or enemy/npc
 
 #include <string>
 #include "object.hpp"
-
 
 class Player_base : public Object {
 public:

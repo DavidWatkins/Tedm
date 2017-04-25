@@ -7,6 +7,7 @@
 #define __OBJECT_HPP__
 
 #include "sprite.hpp"
+#include "state.hpp"
 
 class Object {
 protected:
@@ -17,6 +18,7 @@ protected:
         int w, h, d;
     } size;
 public:
+    State_base state;
     Sprite_base sprite;
     Object(const int x, const int y, const int h, const int w) {
         pos.x = x;
@@ -25,6 +27,7 @@ public:
         size.w = w;
         sprite.set_source_pos(x, y);
         sprite.set_height_width(h, w);
+        state = State_base();
     }
 
     void set_position(int x, int y) {

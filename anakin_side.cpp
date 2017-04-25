@@ -49,12 +49,19 @@ class Player : public Player_base {
         }
     }
 
-    void attack() {
-        if (facing_right) {
-            set_frame(0, 4);
-            for (int i = 0; i < 4; i++) {
-
-                
+    void attack() { 
+        if (!state.is_busy()) {
+            if (facing_right) {
+                set_frame(0, 4);
+                state.pending_events.push(Event{set_frame(1, 4)});
+                state.pending_events.push(Event{set_frame(2, 4)});
+                state.pending_events.push(Event{set_frame(3, 4)});
+            } else {
+                //facing left
+                set_frame(7, 4)
+                state.pending_events.push(Event{set_frame(6, 4)});
+                state.pending_events.push(Event{set_frame(5, 4)});
+                state.pending_events.push(Event{set_frame(4, 4)});
             }
         }
     }
@@ -64,26 +71,30 @@ class Player : public Player_base {
     }
 
     void move_right() {
-        SDL_Rect *src = sprite.get_src();
-        set_frame(((src->x + 1) % 4), 0);
-        set_x(get_x() + move_distance);
-        if(get_x() > 600) {
-            //next screen
-            set_x(600);
+        if (!state.busy()) {
+            SDL_Rect *src = sprite.get_src();
+            set_frame(((src->x + 1) % 4), 0);
+            set_x(get_x() + move_distance);
+            if(get_x() > 600) {
+                //next screen
+                set_x(600);
+            }
+            sprite.set_position(get_x(), get_y());
+            facing_right = true;
         }
-        sprite.set_position(get_x(), get_y());
-        facing_right = true;
     }
 
     void move_left() {
-        SDL_Rect *src = sprite.get_src();
-        set_frame((((src->x + 1) % 4)+4), 0);
-        set_x(get_x() - move_distance);
-        if(get_x() <15) {
-            set_x(15);
+        if (!state.busy()) {
+            SDL_Rect *src = sprite.get_src();
+            set_frame((((src->x + 1) % 4)+4), 0);
+            set_x(get_x() - move_distance);
+            if(get_x() < 15) {
+                set_x(15);
+            }
+            sprite.set_position(get_x(), get_y());
+            facing_right = false;
         }
-        sprite.set_position(get_x(), get_y());
-        facing_right = false;
     }
 
     void start() {
@@ -123,7 +134,6 @@ public:
          Game(title,title_screen_filename, screen_width, screen_height),
          p{Player("player_1", 15,250)}  {
         Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
-        map<string, function<void()>> keymap;
         //keymap.insert(make_pair("jump", bind(&Player::jump, &p)));
         keymap.insert(make_pair("duck", bind(&Player::duck, &p)));
         keymap.insert(make_pair("move_right", bind(&Player::move_right, &p)));
