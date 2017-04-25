@@ -3,6 +3,9 @@
 	copied from SDL_Tutorials
 */
 
+#ifndef __TIMER_HPP__
+#define __TIMER_HPP__
+
 #include <SDL2/SDL.h>
 
 //The timer
@@ -36,3 +39,5 @@ class Timer
     bool is_started();
     bool is_paused();
 };
+
+#endif /* __TIMER_HPP__ */

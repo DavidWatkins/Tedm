@@ -3,6 +3,10 @@
 Environment::Environment() {
 }
 
+Environment::Environment(std::string filename) {
+    background_file.open(filename, std::ios::binary);
+}
+
 Environment::~Environment() {
     background_file.close();
 }

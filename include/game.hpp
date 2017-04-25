@@ -14,6 +14,7 @@
 #include "player.hpp"
 #include "state.hpp"
 #include "timer.hpp"
+#include "game_state.hpp"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;

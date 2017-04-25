@@ -16,6 +16,7 @@ class Environment {
     std::ofstream background_file;
 public:
     Environment();
+    Environment(std::string filename);
     ~Environment();
     void add_background(std::string filename);
 };

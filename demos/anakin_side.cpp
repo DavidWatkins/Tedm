@@ -55,13 +55,11 @@ class Player : public Player_base {
             state.enqueue_event(Event{bind(&Player::set_frame, this, 0, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 1, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 2, 4)});
-            //state.enqueue_event(Event{bind(&Player::set_frame, this, 3, 4)});
         } else {
             //facing left
             state.enqueue_event(Event{bind(&Player::set_frame, this, 7, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 6, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 5, 4)});
-            //state.enqueue_event(Event{bind(&Player::set_frame, this, 4, 4)});
         }
     }
 
@@ -120,7 +118,8 @@ public:
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
          p{Player("player_1", 15,250)}  {
-        Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
+        Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, \
+                "I don't like sand'");
         map<string, Event> keymap;
         keymap.insert(make_pair("duck", Event{bind(&Player::duck, &p)}));
         keymap.insert(make_pair("move_right", Event{bind(&Player::move_right, &p)}));
@@ -133,8 +132,9 @@ public:
         add_control("move_right", keymap, str_key_func_map);
         add_control("attack", keymap, str_key_func_map);
 
-        background = Graphics::add_background(renderer, title_screen_filename);
-
+        Game_state_base title("title", Environment env(title_screen_filename));
+        states.add_state(title);
+        //background = Graphics::add_background(renderer, title_screen_filename);
         add_player(p, "resources/anakin1.png");
     }
 
