@@ -66,12 +66,6 @@ class Player : public Player_base {
     void move_right() {
         SDL_Rect *src = sprite.get_src();
         set_frame(((src->x + 1) % 4), 0);
-        /*int x = ((src->x + 1) % 4);
-        if (x == 1) {
-            ++x;
-        }
-        set_frame(x, 0);*/
-        
         set_x(get_x() + move_distance);
         if(get_x() > 600) {
             //next screen
@@ -90,6 +84,15 @@ class Player : public Player_base {
         }
         sprite.set_position(get_x(), get_y());
         facing_right = false;
+    }
+
+    void start() {
+        if(title_screen) {
+            //update game state
+        }
+        else {
+            //pause
+        }
     }
 
     int get_height() {
@@ -111,7 +114,7 @@ private:
     SDL_Renderer *renderer;
     SDL_Window *window;
     Player p;
-    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK};
+    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};
 
 public:
     enum EVENTS {RESET};
