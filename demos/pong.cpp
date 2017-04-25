@@ -1,3 +1,7 @@
+//
+// Created by David on 4/24/2017.
+//
+
 #include <vector>
 #include <math.h>
 #include "game.hpp"
@@ -13,7 +17,7 @@ class Player : public Player_base {
     const unsigned int move_distance {40};
     const int HEIGHT = 100;
     const int WIDTH  = 10;
-    public:
+public:
 
     Player(std::string name, const int x, const int y) : \
         Player_base(name,x,y,100,10) {
@@ -125,8 +129,8 @@ public:
     enum EVENTS {RESET};
     Pong(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
-         Game(title,title_screen_filename, screen_width, screen_height),
-         p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
+            Game(title,title_screen_filename, screen_width, screen_height),
+            p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
              ,ball{Ball(375,295, 0, 0)} {
         map<string, function<void()>> keymap;
         keymap.insert(make_pair("p1_move_up", bind(&Player::move_up, &p1)));
