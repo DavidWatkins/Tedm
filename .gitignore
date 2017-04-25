@@ -2,3 +2,7 @@
 *.name
 .idea/misc.xml
 *.xml
+.vagrant/*
+Vagrantfile
+*.log
+*.o

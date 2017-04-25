@@ -87,12 +87,12 @@ class Player : public Player_base {
     }
 
     void start() {
-        if(title_screen) {
-            //update game state
-        }
-        else {
-            //pause
-        }
+//        if(title_screen) {
+//            //update game state
+//        }
+//        else {
+//            //pause
+//        }
     }
 
     int get_height() {
