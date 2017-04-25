@@ -6,6 +6,8 @@
 #define TEDM_KEYBOARDEVENT_H
 
 
+#include "event.hpp"
+
 class KeyboardEvent : Event {
 
 };

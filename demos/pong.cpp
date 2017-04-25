@@ -132,12 +132,12 @@ public:
             Game(title,title_screen_filename, screen_width, screen_height),
             p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
              ,ball{Ball(375,295, 0, 0)} {
-        map<string, function<void()>> keymap;
-        keymap.insert(make_pair("p1_move_up", bind(&Player::move_up, &p1)));
-        keymap.insert(make_pair("p1_move_down", bind(&Player::move_down, &p1)));
-        keymap.insert(make_pair("p2_move_up", bind(&Player::move_up, &p2)));
-        keymap.insert(make_pair("p2_move_down", bind(&Player::move_down, &p2)));
-        auto str_key_func_map = parse_config("pong.cfg", keymap);
+        map<string, Event> keymap;
+        keymap.insert(make_pair("p1_move_up", Event{bind(&Player::move_up, &p1)}));
+        keymap.insert(make_pair("p1_move_down", Event{bind(&Player::move_down, &p1)}));
+        keymap.insert(make_pair("p2_move_up", Event{bind(&Player::move_up, &p2)}));
+        keymap.insert(make_pair("p2_move_down", Event{bind(&Player::move_down, &p2)}));
+        auto str_key_func_map = parse_config(config_file, keymap);
         add_control("p1_move_up", keymap, str_key_func_map);
         add_control("p1_move_down", keymap, str_key_func_map);
         add_control("p2_move_up", keymap, str_key_func_map);
@@ -203,7 +203,7 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "pong.ini");
+    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "demos/pong.cfg");
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;

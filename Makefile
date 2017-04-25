@@ -1,31 +1,53 @@
-CXX=g++
-
-CXXFLAGS=--std=c++14 -g 
-
+INC_DIR = include
+SRC_DIR = src
+OBJ_DIR = obj
+EXEC_DIR = demos
+BIN_DIR = bin
 UNAME_S := $(shell uname -s)
+LIBS=
 ifeq ($(UNAME_S),Darwin)
-	CXXFLAGS += -I/usr/local/include
-	LIBS= -L/usr/local/lib
+	INC_DIR += -I/usr/local/include
+	LIBS+= -L/usr/local/lib
 endif
+LIBS+= -lSDL2main -lSDL2 -lSDL2_image
 
-LIBS+=-lSDL2main -lSDL2 -lSDL2_image
+CXX=g++
+RM=rm -f
+CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)# -dynamiclib
+DEBUG_FLAGS=-O0 -std=c++1z -g3 -I$(INC_DIR)
 
-OBJS=graphics.o environment.o game.o  
-EXES=anakin_side.o
+EXECS=pong anakin_side
 
-default: main
+SRCS=$(wildcard $(SRC_DIR)/*.cpp)
 
-main: $(OBJS) $(EXES)
-	$(CXX) $(CXXFLAGS) $(INCS) -o anakin_side $(OBJS) anakin_side.o $(LIBS)
+OBJS=$(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o,$(SRCS))
 
-%.o: %.cpp %.hpp
-	$(CXX) $(CXXFLAGS) $(INCS) -c $*.cpp
+EXECS_SRCS=$(wildcard $(EXEC_DIR)/*.cpp)
+EXECS_OBJS=$(patsubst $(EXEC_DIR)/%.cpp, $(EXEC_DIR)/%.o,$(EXECS_SRCS))
+BINS=$(wildcard $(BIN_DIR)/*)
 
-clean:
-	rm -f *.o anakin_side 
+
+DEPS = $(SRCS)# $(LIBS)
+
+$(EXEC_DIR)/%.o: $(EXEC_DIR)/%.cpp $(OBJS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+pong: $(OBJS) $(EXECS_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)/pong $(OBJS) $(EXEC_DIR)/pong.o $(LIBS)
+
+anakin_side: $(OBJS) $(EXECS_OBJS)
+	$(CXX) $(CXXFLAGS) -o $(BIN_DIR)/anakin_side $(OBJS) $(EXEC_DIR)/anakin_side.o $(LIBS)
+
+default: anakin_side pong
 
 all: clean default
 
-valgrind : main
-	valgrind --leak-check=full --track-origins=yes ./anakin_side
-
+clean:
+	$(RM) $(OBJS)
+	$(RM) $(DEBUG_OBJS)
+	$(RM) $(EXECS)
+	$(RM) $(EXECS_OBJS)
+	$(RM) $(BINS)
