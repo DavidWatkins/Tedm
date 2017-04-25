@@ -10,6 +10,7 @@
 #include <string.h>
 #include <functional>
 #include <map>
+#include <queue>
 #include "player.hpp"
 
 const int SCREEN_WIDTH = 640;

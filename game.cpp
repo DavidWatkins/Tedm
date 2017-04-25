@@ -72,7 +72,7 @@ std::map<std::string, std::pair<SDL_Keycode, std::function<void()>>>
 void Game::handle_keypress(SDL_Keycode key) {
     for(int i = 0; i < buttons.size(); i++) {
         if(key==buttons[i]) {
-            (functions[i])();
+            (functions[i])(this);
             return;
         }
     }

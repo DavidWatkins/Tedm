@@ -51,6 +51,10 @@ public:
     SDL_Rect *get_pos() {
         return &tgt;
     }
+
+    SDL_Rect *get_src() {
+        return &src;
+    }
 };
 
 #endif
