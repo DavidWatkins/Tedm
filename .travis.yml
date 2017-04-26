@@ -1,6 +1,6 @@
 sudo: required
 before_install:
-  - sudo apt-get install libsdl2-dev libsdl2-2.0 libsdl2-image libsdl2-image-dev
+  - sudo apt-get install libsdl1.2-dev libsdl1.2-2.0 libsdl1.2-image libsdl1.2-image-dev
 
 # Enable C++ support
 language: cpp
