@@ -132,9 +132,7 @@ public:
         add_control("move_right", keymap, str_key_func_map);
         add_control("attack", keymap, str_key_func_map);
 
-        Game_state_base title("title", Environment env(title_screen_filename));
-        states.add_state(title);
-        //background = Graphics::add_background(renderer, title_screen_filename);
+        background = Graphics::add_background(renderer, title_screen_filename);
         add_player(p, "resources/anakin1.png");
     }
 
@@ -177,6 +175,5 @@ public:
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "demos/anakin.cfg");
     std::cout << "Game Loaded" << std::endl;
-    game.set_state(title);
     game.run();
 }
