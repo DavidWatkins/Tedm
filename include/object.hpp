@@ -50,8 +50,8 @@ public:
     int get_y() { return pos.y; };
     void set_x(int i) { pos.x = i; };
     void set_y(int i) { pos.y = i; };
-    void set_sprite(SDL_Renderer *renderer, std::string filename) {
-        sprite.set_sprite(renderer, filename);
+    void set_sprite(SDL_Graphics *graphics, std::string filename) {
+        sprite.set_sprite(g->renderer, filename);
         sprite.set_height_width(size.h, size.w);
         sprite.src.x = sprite.src.y = 0;
         sprite.set_position(pos.x, pos.y);

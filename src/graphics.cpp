@@ -4,8 +4,16 @@
 #include <string>
 #include "graphics.hpp"
 
-bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
-        /*SDL_Surface *screen,*/ int height, int width, std::string name) {
+Graphics() {
+    init();
+}
+
+~Graphics() {
+	SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+bool Graphics::init() {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     SDL_Window *window = NULL;
 
@@ -21,7 +29,7 @@ bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
     }
 
     //Create window
-    window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, \
+    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, \
             SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     if(window == NULL) {
         printf("Window could not be created! SDL_Error: %s\n", \
@@ -92,14 +100,14 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
-    SDL_Texture *texture {loadTexture(renderer, filename)};
+SDL_Texture *Graphics::add_background(std::string filename) {
+    texture = loadTexture(renderer, filename);
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
-    return texture;
+    //return texture;
 }
 
-void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
+/* void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &src, SDL_Rect &dst) {
 
 }

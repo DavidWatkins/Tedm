@@ -108,9 +108,6 @@ class Block : public Object {
 
 class Anakin_side_scroller : public Game {
 private:
-    SDL_Texture *background;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
     Player p;
     enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};
 
@@ -120,7 +117,7 @@ public:
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
          p{Player("player_1", 15,250)}  {
-        Graphics::init(&window, &renderer, SCREEN_HEIGHT, SCREEN_WIDTH, "Sand is course");
+        Graphics graphics(SCREEN_HEIGHT, SCREEN_WIDTH, "I hate sand");
         map<string, Event> keymap;
         keymap.insert(make_pair("duck", Event{bind(&Player::duck, &p)}));
         keymap.insert(make_pair("move_right", Event{bind(&Player::move_right, &p)}));
@@ -133,20 +130,16 @@ public:
         add_control("move_right", keymap, str_key_func_map);
         add_control("attack", keymap, str_key_func_map);
 
-        background = Graphics::add_background(renderer, title_screen_filename);
+        graphics.add_background(title_screen_filename);
 
         add_player(p, "resources/anakin1.png");
     }
 
     ~Anakin_side_scroller() {
-        //Destroy window
-        SDL_DestroyWindow( window );
-        //Quit SDL subsystems
-        SDL_Quit();
     }
 
     void add_player(Player &p, std::string image) {
-        p.set_sprite(renderer, image);
+        p.set_sprite(graphics, image);
         Game::add_player(p);
     }
 
