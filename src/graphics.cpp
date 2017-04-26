@@ -4,16 +4,25 @@
 #include <string>
 #include "graphics.hpp"
 
-Graphics() {
-    init();
+Graphics::Graphics(){}
+
+Graphics::Graphics(int height, int width, std::string title) {
+    init(height, width, title);
 }
 
-~Graphics() {
+Graphics::~Graphics() {
 	SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
-bool Graphics::init() {
+Graphics& Graphics::operator=(const Graphics& rhs) {
+    window = rhs.window;
+    renderer = rhs.renderer;
+    texture = rhs.texture;
+    return *this;
+}
+
+bool Graphics::init(int height, int width, std::string title) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     SDL_Window *window = NULL;
 
@@ -44,15 +53,15 @@ bool Graphics::init() {
                 IMG_GetError() );
         return false;
     }
-    *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 
     //Fill the surface white
-    SDL_SetRenderDrawColor(*renderer, 0xFF, 0xFF, 0xFF, 0xFF );
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
     //Update the surface
-    SDL_RenderClear( *renderer );
+    SDL_RenderClear( renderer );
 
-    *w = window;
+    //*w = window;
     return true;
 }
 
@@ -100,14 +109,20 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-SDL_Texture *Graphics::add_background(std::string filename) {
+void Graphics::add_background(std::string filename) {
     texture = loadTexture(renderer, filename);
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
     //return texture;
 }
 
-/* void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
-                             SDL_Rect &src, SDL_Rect &dst) {
-
+void Graphics::draw(std::vector<Object *> objects) {
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    for(Object *o : objects) {
+        SDL_Rect *rc = o->sprite.get_pos();
+        SDL_Texture *sprite = o->sprite.get_sprite();
+        SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
+    }
+    SDL_RenderPresent(renderer);
 }
+

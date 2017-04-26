@@ -14,6 +14,7 @@
 Game::Game(std::string title, std::string title_screen_filename, \
         int screen_width, int screen_height)
 : height{screen_height},width{screen_width} {
+    graphics = Graphics(screen_height, screen_width, title);
 }
 
 void Game::add_player(Player_base &player) {
@@ -37,16 +38,16 @@ bool Game::collision(Object &obj) {
     return false;
 }
 void Game::add_control(std::string func,
-                       std::map<std::string, Event>&str_func_map,
-                       std::map<std::string, std::pair
-                       <SDL_Keycode, Event>> &str_key_func_map){
+        std::map<std::string, Event>&str_func_map,
+        std::map<std::string, std::pair
+        <SDL_Keycode, Event>> &str_key_func_map){
     std::pair<SDL_Keycode, Event> key_func_pair = str_key_func_map.find(func)->second;
     controls.push_back(std::make_pair(key_func_pair.first, key_func_pair.second));
 }
 
 std::map<std::string, std::pair<SDL_Keycode, Event>>
-        Game::parse_config(std::string config_file,
-            std::map<std::string, Event> func_map) {
+Game::parse_config(std::string config_file,
+        std::map<std::string, Event> func_map) {
 
     std::ifstream infile(config_file);
     //std::map<std::string, SDL_Keycode> keymap;
@@ -61,8 +62,8 @@ std::map<std::string, std::pair<SDL_Keycode, Event>>
         std::cout << "(" << button << ", " << func << ")" << std::endl;
         //keymap.insert(std::make_pair(func, SDL_GetKeyFromName(button.c_str())));
         controls.insert(std::make_pair(func, std::make_pair(
-                    SDL_GetKeyFromName(button.c_str()),
-                    func_map.find(func)->second)));
+                        SDL_GetKeyFromName(button.c_str()),
+                        func_map.find(func)->second)));
     }
     return controls;
 }
@@ -75,3 +76,46 @@ void Game::handle_keypress(SDL_Keycode key) {
         }
     }
 }
+
+int Game::run() {
+    update_screen();
+    SDL_Event e;
+    Timer fps;
+    bool quit = false;
+    //char ch;
+    while( !quit ) {
+
+        //start frame timer
+        fps.start();
+
+            //Handle events on queue
+            while( SDL_PollEvent( &e ) != 0 ) {
+
+                //User requests quit
+                if( e.type == SDL_QUIT ) {
+                    quit = true;
+                } else if( e.type == SDL_KEYDOWN ) { //User presses a key
+                    handle_keypress(e.key.keysym.sym);
+                }
+                //process a pending event for each object
+                for (Object *o : objects) {
+                    if (o->state.pending()) {
+                        o->state.dequeue_event();
+                    } 
+                }
+            }
+
+        update();
+        //Cap the frame rate
+        if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND ) {
+            SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );
+        }
+        update_screen();
+    }
+    return 0;
+}
+
+void Game::update_screen() {
+    graphics.draw(objects);
+}
+

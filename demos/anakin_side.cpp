@@ -11,7 +11,7 @@ using namespace std;
 
 class Player : public Player_base {
     const unsigned int move_distance {8};
-    const int HEIGHT = 75;
+    const int HEIGHT = 72;
     const int WIDTH  = 73;
     bool facing_right;
     void set_frame(int x, int y) {
@@ -20,7 +20,7 @@ class Player : public Player_base {
     public:
 
     Player(std::string name, const int x, const int y) : \
-        Player_base(name,x,y,75,73) {
+        Player_base(name, x, y, 72, 73, "resources/anakin1.png") {
         set_pos(x, y);
         facing_right = true;
     }
@@ -52,16 +52,14 @@ class Player : public Player_base {
     void attack() {
         cerr << "Attacking" << endl;
         if (facing_right) {
-            set_frame(0, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 0, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 1, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 2, 4)});
-            //state.enqueue_event(Event{bind(&Player::set_frame, this, 3, 4)});
         } else {
             //facing left
-            set_frame(7, 4);
+            state.enqueue_event(Event{bind(&Player::set_frame, this, 7, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 6, 4)});
             state.enqueue_event(Event{bind(&Player::set_frame, this, 5, 4)});
-            //state.enqueue_event(Event{bind(&Player::set_frame, this, 4, 4)});
         }
     }
 
@@ -116,8 +114,7 @@ public:
     Anakin_side_scroller(std::string title, std::string title_screen_filename, \
          int screen_width, int screen_height, std::string config_file) :
          Game(title,title_screen_filename, screen_width, screen_height),
-         p{Player("player_1", 15,250)}  {
-        Graphics graphics(SCREEN_HEIGHT, SCREEN_WIDTH, "I hate sand");
+         p{Player("player_1", 15, 250)}  {
         map<string, Event> keymap;
         keymap.insert(make_pair("duck", Event{bind(&Player::duck, &p)}));
         keymap.insert(make_pair("move_right", Event{bind(&Player::move_right, &p)}));
@@ -130,18 +127,24 @@ public:
         add_control("move_right", keymap, str_key_func_map);
         add_control("attack", keymap, str_key_func_map);
 
+        Graphics graphics(SCREEN_HEIGHT, SCREEN_WIDTH, "I don't like sand");
         graphics.add_background(title_screen_filename);
-
-        add_player(p, "resources/anakin1.png");
+        
+        //Game_state_base title("title", Environment env(title_screen_filename));
+        //states.add_state(title);
+        
+        //add_player(p, "resources/anakin1.png");
     }
 
     ~Anakin_side_scroller() {
     }
 
-    void add_player(Player &p, std::string image) {
-        p.set_sprite(graphics, image);
+    /* void add_player(Player &p, std::string image) {
+        //p.set_sprite(graphics, image);
+        p.sprite.set_sprite(graphics, image. p.sprite.get_height(), \
+                p.sprite.get_width(), p.sprite.get_x(), p.sprite.get_y());
         Game::add_player(p);
-    }
+    } */
 
     void enqueue_events(EVENTS e) {
         switch(e) {
@@ -155,7 +158,7 @@ public:
         p.set_pos(15,250);
     }
 
-    void update_screen() {
+/*    void update_screen() override {
         SDL_RenderCopy(renderer, background, NULL, NULL);
         for(Object *o : objects) {
             SDL_Rect *rc = o->sprite.get_pos();
@@ -163,27 +166,13 @@ public:
             SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
         }
         SDL_RenderPresent(renderer);
-    }
+    }*/
+
 };
 
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "demos/anakin.cfg");
-    bool quit = false;
-    char ch;
     std::cout << "Game Loaded" << std::endl;
-    game.update_screen();
-    SDL_Event e;
-    while( !quit ) {
-        //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 ) {
-            //User requests quit
-            if( e.type == SDL_QUIT ) {
-                quit = true;
-            } else if( e.type == SDL_KEYDOWN ) { //User presses a key
-                game.handle_keypress(e.key.keysym.sym);
-            }
-        }
-        game.update();
-        game.update_screen();
-    }
+    game.set_state(title);
+    game.run();
 }

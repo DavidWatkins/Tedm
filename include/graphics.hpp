@@ -14,22 +14,26 @@ www.lazyfoo.net/tutorials/SDL/index.php
 
 #include <SDL2/SDL.h>
 #include <string>
+#include <vector>
+#include "object.hpp"
 
-class Graphics_SDL {
+class Graphics {
     SDL_Window *window;
-    SDL_Rendereer *renderer;
+    SDL_Renderer *renderer;
     SDL_Texture *texture;
 public:
+    Graphics();
     Graphics(int height, int width, std::string title);
     ~Graphics();
-    static const std::string RELOAD_BACKGROUND;
-    static bool init(SDL_Window **window, SDL_Renderer **renderer, \
-        /*SDL_Surface *screen, */int height, int width, std::string title);
-    static SDL_Texture *loadTexture(SDL_Renderer *renderer, std::string path);
-    static SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
-    static void update_screen(SDL_Renderer *renderer, SDL_Texture *texture, \
+    Graphics& operator=(const Graphics& rhs);
+    const std::string RELOAD_BACKGROUND;
+    bool init(int height, int width, std::string title);
+    SDL_Texture *loadTexture(SDL_Renderer *renderer, std::string path);
+    SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
+    void update_screen(SDL_Renderer *renderer, SDL_Texture *texture, \
             SDL_Rect &src, SDL_Rect &dst);
-    static SDL_Texture *add_background(std::string filename);
+    void add_background(std::string filename);
+    void draw(std::vector<Object *> objects);
 };
 
 #endif /* __GRAPHICS_HPP__ */
