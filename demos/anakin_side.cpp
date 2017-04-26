@@ -177,5 +177,6 @@ public:
 int main(int argc, char*argv[]) {
     Anakin_side_scroller game = Anakin_side_scroller("Anakin", "resources/anakin_title.jpeg", 800, 600, "demos/anakin.cfg");
     std::cout << "Game Loaded" << std::endl;
+    game.set_state(title);
     game.run();
 }
