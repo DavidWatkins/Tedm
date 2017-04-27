@@ -5,15 +5,22 @@ include_directories(src)
 include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
 
-set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
-set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_Image.so)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+MESSAGE(${CMAKE_MODULE_PATH})
+if(APPLE)
+    
+    find_package(sdl2 REQUIRED)
+    find_package(SDL2_image REQUIRED)
+elseif(UNIX)
+    set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
+    set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_image.so)
+    INCLUDE(FindPkgConfig)
+    PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+    PKG_SEARCH_MODULE(SDL2_image REQUIRED SDL2_image)
+endif()
 
-INCLUDE(FindPkgConfig)
-PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
-PKG_SEARCH_MODULE(SDL2_image REQUIRED SDL2_image)
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
-include_directories(${SDL2_INCLUDE_DIR}
-        ${SDL2_IMAGE_INCLUDE_DIR})
+include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1z -O2")
 
@@ -54,6 +61,7 @@ foreach (_src ${TARGETS})
     get_filename_component(EXEC_NAME ${_src} NAME_WE)
 
     add_executable(${EXEC_NAME} ${SOURCE_FILES} ${_src})
-        MESSAGE(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    MESSAGE(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+
     TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} SDL2_image)
 endforeach()
