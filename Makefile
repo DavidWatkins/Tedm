@@ -13,7 +13,7 @@ LIBS+= -lSDL2main -lSDL2 -lSDL2_image
 
 CXX=g++
 RM=rm -f
-CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)# -dynamiclib
+CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)
 DEBUG_FLAGS=-O0 -std=c++1z -g3 -I$(INC_DIR)
 
 EXECS=pong anakin_side
