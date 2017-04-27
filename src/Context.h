@@ -17,6 +17,16 @@ namespace Tedm {
         int timeSinceLastLoop;
         long targetFramerate;
         bool isPaused;
+
+        Context() : timeSinceLastLoop{0}, isRunning{false}, 
+                    targetFramerate{10}, isPaused{false}, 
+                    width{800}, height{600} {
+        }
+        
+        Context(int w, int h) : timeSinceLastLoop{0}, isRunning{false}, 
+                                targetFramerate{10}, isPaused{false}, 
+                                width{w}, height{h} {
+        }
     };
 }
 

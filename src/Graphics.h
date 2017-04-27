@@ -17,6 +17,7 @@ www.lazyfoo.net/tutorials/SDL/index.php
 #include <iostream>
 #include <string>
 #include "utils/Logger.h"
+#include "src/objects/object.h"
 
 namespace Tedm {
     class Graphics {
@@ -36,6 +37,9 @@ namespace Tedm {
         bool isInitialized();
 
         void setWindowTitle(std::string basic_string);
+
+        void draw(Object &object);
+        void draw(SDL_Texture *texture);
 
     private:
         SDL_Renderer *renderer;

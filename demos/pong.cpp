@@ -4,9 +4,7 @@
 
 #include <vector>
 #include <math.h>
-#include "../old/game.hpp"
-#include "../old/event.hpp"
-#include "../old/state.hpp"
+#include "src/utils/Game.h"
 #include "objects/sprite.h"
 #include "objects/player.h"
 #include <iostream>
@@ -116,60 +114,11 @@ public:
     }
 };
 
-/*class Pong : public Game {
-private:
-    SDL_Texture *background;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
+class Pong_State : public State {
     Player p1, p2;
     Ball ball;
-    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};
-
-public:
-    enum EVENTS {RESET};
-    Pong(std::string title, std::string title_screen_filename, \
-         int screen_width, int screen_height, std::string config_file) :
-            Game(title,title_screen_filename, screen_width, screen_height),
-            p1{Player("player_1", 15,250)}, p2{Player("player_2",750,250)} \
-             ,ball{Ball(375,295, 0, 0)} {
-        map<string, Event> keymap;
-        keymap.insert(make_pair("p1_move_up", Event{bind(&Player::move_up, &p1)}));
-        keymap.insert(make_pair("p1_move_down", Event{bind(&Player::move_down, &p1)}));
-        keymap.insert(make_pair("p2_move_up", Event{bind(&Player::move_up, &p2)}));
-        keymap.insert(make_pair("p2_move_down", Event{bind(&Player::move_down, &p2)}));
-        auto str_key_func_map = parse_config(config_file, keymap);
-        add_control("p1_move_up", keymap, str_key_func_map);
-        add_control("p1_move_down", keymap, str_key_func_map);
-        add_control("p2_move_up", keymap, str_key_func_map);
-        add_control("p2_move_down", keymap, str_key_func_map);
-        Graphics::init(&window, &renderer, screen_height, screen_width, title);
-        background = Graphics::add_background(renderer, title_screen_filename);
-
-        Pong::add_player(p1, "resources/blue1.png");
-        Pong::add_player(p2, "resources/blue1.png");
-        ball.set_sprite(renderer, "resources/blaster.png");
-        objects.push_back(&ball);
-    }
-
-    ~Pong() {
-        //Destroy window
-        SDL_DestroyWindow( window );
-        //Quit SDL subsystems
-        SDL_Quit();
-    }
-
-    void add_player(Player &p, std::string image) {
-        p.set_sprite(renderer, image);
-        Game::add_player(p);
-    }
-
-    void enqueue_events(EVENTS e) {
-        switch(e) {
-            case RESET:
-                new_round();
-                break;
-        }
-    }
+    
+    SDL_Texture *background;
 
     void new_round() {
         p1.set_pos(15,250);
@@ -177,40 +126,40 @@ public:
         ball.reset();
     }
 
-    void update_screen() {
-        ball.update_pos();
-        for(Object *o : objects) {
-            if (o != &ball) {
-                if(ball.collision(*o)) {
-                    ball.update_trajectory(static_cast<Player *>(o));
-                }
-            }
+    bool init() override {
+        p1 = Player(15,250);
+        p2 = Player(750,250);
+        ball = Ball(375,295, 0, 0);
+        parent->setWindowTitle("Dat Pong");
+        background = graphics.add_background("resources/dat_anaking.jpg");
+    }
+
+    void update() override {
+    	ball.update_pos();
+		
+        if(ball.collision(p1)) {    
+            ball.update_trajectory(p1);
+        } else if (ball.collision(p2)) {
+            ball.update_trajectory(p2);
         }
+
         if(ball.get_y() <= 0 || ball.get_y() >= height-10) {
             ball.update_trajectory();
         }
         if(ball.get_x() <= 0 || ball.get_x() >= width-50) {
             enqueue_events(RESET);
         }
-        SDL_RenderCopy(renderer, background, NULL, NULL);
-        for(Object *o : objects) {
-            SDL_Rect *rc = o->sprite.get_pos();
-            SDL_Texture *sprite = o->sprite.get_sprite();
-            SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
-        }
+        render();
+    }
+
+    void render() override {
+        graphics.draw(background);
+        graphics.draw(p1);
+        graphics.draw(p2);
+        graphics.draw(ball);
         SDL_RenderPresent(renderer);
     }
-};*/
-
-class Pong_State : public State {
-    Player p1, p2;
-    Ball ball;
-    bool init() override {
-        p1 = Player(15,250);
-        p2 = Player(750,250);
-        ball = Ball(375,295, 0, 0);
-        parent->setWindowTitle("Dat Pong");
-    }
+    
 };
 
 class player_event_listener : KeyEventListener {
@@ -240,7 +189,8 @@ public:
 };
 
 int main(int argc, char*argv[]) {
-    Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "demos/pong.cfg");
+    //Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "demos/pong.cfg");
+    Game pong = Game(Context(800, 600));
     bool quit = false;
     char ch;
     std::cout << "Game Loaded" << std::endl;
