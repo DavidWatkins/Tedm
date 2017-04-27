@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 project(Tedm)
 
-include_directories(include)
 include_directories(src)
 include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
@@ -19,20 +18,35 @@ include_directories(${SDL2_INCLUDE_DIR}
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1z -O2")
 
 set(SOURCE_FILES
+        src/events/Event.cpp
+        src/events/Event.h
+        src/events/EventHandler.cpp
+        src/events/EventHandler.h
+        src/events/EventListener.cpp
+        src/events/EventListener.h
+
+        src/img/Texture.cpp
+        src/img/Texture.h
+
+        src/objects/environment.cpp
         src/objects/environment.h
-        old/game.hpp
-        src/Graphics.h
         src/objects/object.h
         src/objects/player.h
         src/objects/sprite.h
-        old/state.hpp
+
+        src/utils/Logger.cpp
+        src/utils/Logger.h
+        src/utils/Timer.cpp
         src/utils/Timer.h
 
-        src/objects/environment.cpp
-        old/game.cpp
+        src/Context.cpp
+        src/Context.h
+        src/Game.cpp
+        src/Game.h
         src/Graphics.cpp
-        src/utils/Timer.cpp
-        src/State.cpp src/State.h src/events/Event.cpp src/events/Event.h src/Context.cpp src/Context.h src/Game.cpp src/Game.h src/events/EventHandler.cpp src/events/EventHandler.h src/utils/Logger.cpp src/utils/Logger.h src/events/EventListener.cpp src/events/EventListener.h src/img/Texture.cpp src/img/Texture.h)
+        src/Graphics.h
+        src/State.cpp
+        src/State.h)
 
 set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 
