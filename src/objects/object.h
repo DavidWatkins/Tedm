@@ -6,8 +6,8 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
-#include "sprite.hpp"
-#include "state.hpp"
+#include "sprite.h"
+#include "../../old/state.hpp"
 #include <iostream>
 
 class Object {
@@ -45,14 +45,12 @@ public:
     }
 
     bool collision(Object &obj) {
-        if(obj.pos.x < pos.x + size.w &&
-           obj.pos.x + obj.size.w > pos.x &&
-           obj.pos.y < pos.y + size.h &&
-           obj.size.h + obj.pos.y > pos.y) {
-            return true;
-        }
-        return false;
+        return obj.pos.x < pos.x + size.w &&
+       obj.pos.x + obj.size.w > pos.x &&
+       obj.pos.y < pos.y + size.h &&
+       obj.size.h + obj.pos.y > pos.y;
     }
+
     int get_height() { return size.w; };
     int get_width() { return size.h; };
     int get_x() { return pos.x; };

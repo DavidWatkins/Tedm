@@ -3,7 +3,7 @@
     copied from SDL tutorials
 */
 
-#include "utils/Timer.hpp"
+#include "utils/Timer.h"
 
 Timer::Timer()
 {
@@ -77,7 +77,7 @@ int Timer::get_ticks()
         }
         else
         {
-            //Return the current time minus the start time
+            //Return the current time minus the mainLoop time
             return SDL_GetTicks() - startTicks;
         }
     }

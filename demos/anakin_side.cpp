@@ -1,10 +1,10 @@
 #include <vector>
 #include <math.h>
-#include "game.hpp"
-#include "event.hpp"
-#include "state.hpp"
-#include "objects/sprite.hpp"
-#include "objects/player.hpp"
+#include "../old/game.hpp"
+#include "../old/event.hpp"
+#include "../old/state.hpp"
+#include "objects/sprite.h"
+#include "objects/player.h"
 #include <iostream>
 
 using namespace std;

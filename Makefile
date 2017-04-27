@@ -11,7 +11,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 LIBS+= -lSDL2main -lSDL2 -lSDL2_image
 
-CXX=g++
+CXX=graphics++
 RM=rm -f
 CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)
 DEBUG_FLAGS=-O0 -std=c++1z -g3 -I$(INC_DIR)

@@ -1,15 +1,16 @@
 //
-// Created by david on 4/27/17.
 //
 
 #ifndef TEDM_GAME_H
 #define TEDM_GAME_H
 
-#include <objects/Surface.h>
+#include <unordered_map>
 #include <events/EventHandler.h>
-#include <bits/unordered_map.h>
+#include <utils/Logger.h>
+#include <objects/object.h>
 #include "Context.h"
 #include "State.h"
+#include "Graphics.h"
 
 namespace Tedm {
 
@@ -19,17 +20,19 @@ namespace Tedm {
         Game(Context ctx);
         virtual ~Game();
 
-        void start();
+        void mainLoop();
 
-        void setTargetFramerate();
+        void setTargetFramerate(int framerate);
 
-        void setWindowTitle();
+        void setWindowTitle(std::string windowTitle);
 
-        void setEventHandler();
+        void setEventHandler(EventHandler &eventHandler);
 
         void shutdown();
 
         void registerState(std::string id, State s);
+
+        bool collision(Object &obj);
 
     protected:
 
@@ -41,24 +44,17 @@ namespace Tedm {
 
         virtual void resume();
 
-        virtual bool onInit() = 0;
-
-        virtual void onUpdate() = 0;
-
-        virtual void onRender() = 0;
-
-        virtual void onDestroy() = 0;
-
-        Surface rootSurface;
         EventHandler eventHandler;
         Context ctx;
         std::unordered_map<std::string, State> state_id_dict;
-        std::vector<State> states;
+        State &currentState;
 
-        Graphics g;
+        //TODO WHy does game need to manage objects?
+        std::vector<Object> objects;
 
-    private:
-        void handleEvent(Event e);
+        Logger log;
+        Graphics graphics;
+
     };
 
 }

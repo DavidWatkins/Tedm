@@ -13,6 +13,7 @@
 
 namespace Tedm {
     class EventHandler {
+    public:
         virtual void OnEvent(Event event);
 
         virtual void OnInputFocus(EventListener eventListener);
@@ -65,7 +66,11 @@ namespace Tedm {
 
         virtual void OnUser(UserListener eventListener);
 
-    private:
+        bool poll();
+
+        void process();
+
+    protected:
         std::vector<EventListener> _InputFocusEvents;
         std::vector<EventListener> _InputBlurEvents;
         std::vector<EventListener> _MouseFocusEvents;

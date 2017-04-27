@@ -1,4 +1,4 @@
-#include "objects/environment.hpp"
+#include "objects/environment.h"
 
 Environment::Environment() {
 }

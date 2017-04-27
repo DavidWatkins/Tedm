@@ -4,12 +4,9 @@
 
 #include "Logger.h"
 
-#define _LOG(level) \
-    std::cout << Tedm::Logger::level_strings[int(level)] << " " __FILE__  ":"  << __LINE__ << ": "
-
 void Tedm::Logger::log(Tedm::Logger::Level level, std::string msg) {
-    if(level > getLevel()) {
-        _LOG(level) << msg << std::endl;
+    if(level >= getLevel()) {
+        std::cout << Tedm::Logger::level_strings[int(level)] << ": " << msg << std::endl;
     }
 }
 
@@ -26,3 +23,19 @@ Tedm::Logger::Logger(Tedm::Logger::Level level) {
 }
 
 Tedm::Logger::~Logger() { }
+
+void Tedm::Logger::log_error(std::string msg) {
+    log(Level::LOG_ERROR, msg);
+}
+
+void Tedm::Logger::log_warning(std::string msg) {
+    log(Level::LOG_WARN, msg);
+}
+
+void Tedm::Logger::log_info(std::string msg) {
+    log(Level::LOG_INFO, msg);
+}
+
+void Tedm::Logger::log_debug(std::string msg) {
+    log(Level::LOG_DEBUG, msg);
+}

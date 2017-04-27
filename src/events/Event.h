@@ -24,7 +24,7 @@ namespace Tedm {
          *
          * @param e
          */
-        Event(SDL_Event e) : e(e) {}
+        Event() : e(SDL_Event()) {}
 
         /**
          * Retrieve the SDL_Event from the event object
@@ -57,8 +57,7 @@ namespace Tedm {
 
         int currentMouseButtonY() { return e.button.y; }
 
-        getNewWindowWidth
-                int getNewWindowHeight() { return e.resize.h; }
+        int poll() { return SDL_PollEvent(&e); }
 
     private:
         SDL_Event e;

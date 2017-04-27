@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <sstream>
 #include "state.hpp"
-#include "objects/environment.hpp"
+#include "objects/environment.h"
 #include "event.hpp"
-#include "Graphics.hpp"
+#include "Graphics.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -86,7 +86,7 @@ int Game::run() {
     //char ch;
     while( !quit ) {
 
-        //start frame timer
+        //mainLoop frame timer
         fps.start();
 
             //Handle events on queue

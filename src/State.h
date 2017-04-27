@@ -28,13 +28,13 @@
 namespace Tedm {
     class State {
     public:
-        State();
+        State(Graphics &g);
 
-        State(Context ctx, std::string id);
+        State(Graphics &g, Context ctx, std::string id);
 
         virtual ~State();
 
-    protected:
+        std::string getID() { return id; }
 
         virtual bool init() = 0;
 
@@ -42,15 +42,18 @@ namespace Tedm {
 
         virtual void render() = 0;
 
-        virtual void cleanup() = 0;
+        virtual void destroy() = 0;
 
         virtual void paused() = 0;
 
         virtual void resumed() = 0;
 
+    protected:
+
         Game parent;
         Context ctx;
         std::string id;
+        Graphics &g;
 
     };
 }

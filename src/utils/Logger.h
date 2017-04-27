@@ -26,11 +26,18 @@ namespace Tedm {
                 "NONE"
         };
 
+        Logger() : level(level) {}
+
         Logger(Level level);
 
         ~Logger();
 
         void log(Level level, std::string msg);
+
+        void log_error(std::string msg);
+        void log_warning(std::string msg);
+        void log_info(std::string msg);
+        void log_debug(std::string msg);
 
         static Level getLevel();
 

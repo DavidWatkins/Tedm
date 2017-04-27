@@ -4,23 +4,22 @@
 
 #include <vector>
 #include <math.h>
-#include "game.hpp"
-#include "event.hpp"
-#include "state.hpp"
-#include "objects/sprite.hpp"
-#include "objects/player.hpp"
+#include "../old/game.hpp"
+#include "../old/event.hpp"
+#include "../old/state.hpp"
+#include "objects/sprite.h"
+#include "objects/player.h"
 #include <iostream>
 
 using namespace std;
 
 class Player : public Player_base {
-    const unsigned int move_distance {40};
+    const unsigned int move_distance = 40;
     const int HEIGHT = 100;
     const int WIDTH  = 10;
 public:
 
-    Player(std::string name, const int x, const int y) : \
-        Player_base(name,x,y,100,10) {
+    Player(std::string name, const int x, const int y) : Player_base(name,x,y,100,10) {
         set_pos(x, y);
     }
 
@@ -47,7 +46,7 @@ public:
     }
 
     int get_y() {
-        return Player_base::get_y();
+        return Object::get_y();
     }
 
     int get_height() {
