@@ -8,9 +8,11 @@
 #include <iostream>
 
 namespace Tedm {
+
     class Logger {
     public:
-        enum Level {
+
+        enum LogLevel {
             LOG_DEBUG = 1,
             LOG_INFO = 2,
             LOG_WARN = 3,
@@ -18,34 +20,23 @@ namespace Tedm {
             LOG_NONE = 5,
         };
 
-        const std::string level_strings[5] = {
-                "DEBUG",
-                "INFO",
-                "WARN",
-                "ERROR",
-                "NONE"
-        };
+        static const std::string level_strings[];
 
-        //Logger() : Level(level) {}
         Logger() {}
 
-        Logger(Level level);
+        static void log(LogLevel level, std::string msg);
 
-        ~Logger();
+        static void log_error(std::string msg);
+        static void log_warning(std::string msg);
+        static void log_info(std::string msg);
+        static void log_debug(std::string msg);
 
-        void log(Level level, std::string msg);
+        static LogLevel getLevel();
 
-        void log_error(std::string msg);
-        void log_warning(std::string msg);
-        void log_info(std::string msg);
-        void log_debug(std::string msg);
-
-        static Level getLevel();
-
-        static void setLevel(Level level);
+        static void setLevel(LogLevel level);
 
     private:
-        static Level level;
+        static LogLevel level;
     };
 }
 

@@ -17,6 +17,10 @@
 #ifndef TEDM_STATE_H
 #define TEDM_STATE_H
 
+namespace Tedm {
+    class State;
+}
+
 #include <SDL2/SDL.h>
 #include <string>
 #include <events/EventHandler.h>
@@ -28,11 +32,13 @@
 namespace Tedm {
     class State {
     public:
-        State(Graphics &g);
+        State(const Graphics &graphics, const Game &game) :
+                graphics(graphics), ctx(Context()), id(""), game(game) {}
 
-        State(Graphics &g, Context ctx, std::string id);
+        State(const Graphics &graphics, const Game &game, const Context &ctx, std::string id) :
+                graphics(graphics), ctx(Context()), id(id), game(game) {}
 
-        virtual ~State();
+        virtual ~State() {};
 
         std::string getID() { return id; }
 
@@ -48,12 +54,14 @@ namespace Tedm {
 
         virtual void resumed() = 0;
 
+        bool operator==(const State &other) { return id == other.id; }
+
     protected:
 
-        Game parent;
-        Context ctx;
+        const Game &game;
+        const Context &ctx;
+        const Graphics &graphics;
         std::string id;
-        Graphics &g;
 
     };
 }

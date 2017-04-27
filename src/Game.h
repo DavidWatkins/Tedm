@@ -4,6 +4,10 @@
 #ifndef TEDM_GAME_H
 #define TEDM_GAME_H
 
+namespace Tedm {
+    class Game;
+}
+
 #include <unordered_map>
 #include "events/EventHandler.h"
 #include "utils/Logger.h"
@@ -11,6 +15,7 @@
 #include "Context.h"
 #include "State.h"
 #include "Graphics.h"
+#include "utils/Timer.h"
 
 namespace Tedm {
 
@@ -30,9 +35,9 @@ namespace Tedm {
 
         void shutdown();
 
-        void registerState(std::string id, State s);
+        void registerState(std::string id, std::shared_ptr<State> s);
 
-        bool collision(Object &obj);
+        void transition(std::string newStateId);
 
     protected:
 
@@ -46,15 +51,15 @@ namespace Tedm {
 
         EventHandler eventHandler;
         Context ctx;
-        std::unordered_map<std::string, State> state_id_dict;
-        State &currentState;
-
-        //TODO WHy does game need to manage objects?
-        std::vector<Object> objects;
+        std::unordered_map<std::string, std::shared_ptr<State>> state_id_dict;
+        std::string currentStateId;
+        std::string startStateId;
 
         Logger log;
         Graphics graphics;
 
+        std::string nextStateId;
+        bool doTransition;
     };
 
 }

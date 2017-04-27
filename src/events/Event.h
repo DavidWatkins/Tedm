@@ -58,7 +58,7 @@ namespace Tedm {
 
         int currentMouseButtonY() { return e.button.y; }
 
-        int poll() { return SDL_PollEvent(&e); }
+        bool poll() { return (bool) SDL_PollEvent(&e); }
 
     private:
         SDL_Event e;
