@@ -5,8 +5,14 @@ include_directories(src)
 include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
 
-set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
-set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_Image.so)
+if(APPLE)
+    set(SDL2_IMAGE_INCLUDE_DIR /usr/local/include/SDL2)
+    set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_Image.so)
+elseif(UNIX)
+    set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
+    set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_image.dylib)
+endif()
+
 
 INCLUDE(FindPkgConfig)
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
