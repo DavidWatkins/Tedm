@@ -5,9 +5,9 @@
 #define TEDM_GAME_H
 
 #include <unordered_map>
-#include <events/EventHandler.h>
-#include <utils/Logger.h>
-#include <objects/object.h>
+#include "events/EventHandler.h"
+#include "utils/Logger.h"
+#include "objects/object.h"
 #include "Context.h"
 #include "State.h"
 #include "Graphics.h"

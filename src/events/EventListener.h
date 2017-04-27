@@ -5,7 +5,7 @@
 #ifndef TEDM_EVENTLISTENER_H
 #define TEDM_EVENTLISTENER_H
 
-#include <SDL_keycode.h>
+#include <SDL2/SDL_keycode.h>
 
 namespace Tedm {
     class EventListener {

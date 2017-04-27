@@ -1,0 +1,367 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Anakin_side_scroller	demos/anakin_side.cpp	/^    Anakin_side_scroller(std::string title, std::string title_screen_filename, \\$/;"	f	class:Anakin_side_scroller
+Anakin_side_scroller	demos/anakin_side.cpp	/^class Anakin_side_scroller : public Game {$/;"	c	file:
+BINS	Makefile	/^BINS=$(wildcard $(BIN_DIR)\/*)$/;"	m
+BIN_DIR	Makefile	/^BIN_DIR = bin$/;"	m
+BUFF_SZ	old/game.hpp	/^const int BUFF_SZ = 65536;$/;"	v
+Ball	demos/pong.cpp	/^    Ball(int posx, int posy, int srcx, int srcy) : Object(posx,posy,10,50) {$/;"	f	class:Ball
+Ball	demos/pong.cpp	/^class Ball : public Object {$/;"	c	file:
+Block	demos/anakin_side.cpp	/^class Block : public Object {$/;"	c	file:
+CONTROLS	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	g	class:Anakin_side_scroller	file:
+CONTROLS	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	g	class:Pong	file:
+CXX	Makefile	/^CXX=g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)$/;"	m
+Context	src/Context.h	/^    class Context {$/;"	c	namespace:Tedm
+DEBUG_FLAGS	Makefile	/^DEBUG_FLAGS=-O0 -std=c++1z -g3 -I$(INC_DIR)$/;"	m
+DEPS	Makefile	/^DEPS = $(SRCS)# $(LIBS)$/;"	m
+EVENTS	demos/anakin_side.cpp	/^    enum EVENTS {RESET};$/;"	g	class:Anakin_side_scroller	file:
+EVENTS	demos/pong.cpp	/^    enum EVENTS {RESET};$/;"	g	class:Pong	file:
+EXECS	Makefile	/^EXECS=pong anakin_side$/;"	m
+EXECS_OBJS	Makefile	/^EXECS_OBJS=$(patsubst $(EXEC_DIR)\/%.cpp, $(EXEC_DIR)\/%.o,$(EXECS_SRCS))$/;"	m
+EXECS_SRCS	Makefile	/^EXECS_SRCS=$(wildcard $(EXEC_DIR)\/*.cpp)$/;"	m
+EXEC_DIR	Makefile	/^EXEC_DIR = demos$/;"	m
+Environment	src/objects/environment.cpp	/^Environment::Environment() {$/;"	f	class:Environment
+Environment	src/objects/environment.cpp	/^Environment::Environment(std::string filename) {$/;"	f	class:Environment
+Environment	src/objects/environment.h	/^class Environment {$/;"	c
+Event	src/events/Event.h	/^        Event() : e(SDL_Event()) {}$/;"	f	class:Tedm::Event
+Event	src/events/Event.h	/^    class Event {$/;"	c	namespace:Tedm
+EventHandler	src/events/EventHandler.h	/^    class EventHandler {$/;"	c	namespace:Tedm
+EventListener	src/events/EventListener.h	/^    class EventListener {$/;"	c	namespace:Tedm
+FRAMES_PER_SECOND	old/game.hpp	/^const int FRAMES_PER_SECOND = 12;$/;"	v
+Game	old/game.cpp	/^Game::Game(std::string title, std::string title_screen_filename, \\$/;"	f	class:Game
+Game	old/game.hpp	/^class Game {$/;"	c
+Game	src/Game.cpp	/^Tedm::Game::Game() : ctx(Context()), currentState(graphics) {$/;"	f	class:Tedm::Game
+Game	src/Game.cpp	/^Tedm::Game::Game(Tedm::Context ctx) : ctx(ctx), currentState(graphics)  {$/;"	f	class:Tedm::Game
+Game	src/Game.h	/^    class Game {$/;"	c	namespace:Tedm
+Graphics	src/Graphics.h	/^        Graphics() : renderer(NULL), window(NULL), initialized(false), l(Logger()) {}$/;"	f	class:Tedm::Graphics
+Graphics	src/Graphics.h	/^    class Graphics {$/;"	c	namespace:Tedm
+HEIGHT	demos/anakin_side.cpp	/^    const int HEIGHT = 72;$/;"	m	class:Player	file:
+HEIGHT	demos/pong.cpp	/^    const int HEIGHT = 100;$/;"	m	class:Player	file:
+INC_DIR	Makefile	/^INC_DIR = include$/;"	m
+JoyAxisListener	src/events/EventListener.h	/^    class JoyAxisListener {$/;"	c	namespace:Tedm
+JoyBallListener	src/events/EventListener.h	/^    class JoyBallListener {$/;"	c	namespace:Tedm
+JoyButtonListener	src/events/EventListener.h	/^    class JoyButtonListener {$/;"	c	namespace:Tedm
+JoyHatListener	src/events/EventListener.h	/^    class JoyHatListener {$/;"	c	namespace:Tedm
+KeyEventListener	src/events/EventListener.h	/^    class KeyEventListener {$/;"	c	namespace:Tedm
+LIBS	Makefile	/^LIBS=$/;"	m
+LOG_DEBUG	src/utils/Logger.h	/^            LOG_DEBUG = 1;$/;"	e	enum:Tedm::Logger::Level
+LOG_ERROR	src/utils/Logger.h	/^            LOG_ERROR = 4;$/;"	e	enum:Tedm::Logger::Level
+LOG_INFO	src/utils/Logger.h	/^            LOG_INFO = 2;$/;"	e	enum:Tedm::Logger::Level
+LOG_NONE	src/utils/Logger.h	/^            LOG_NONE = 5;$/;"	e	enum:Tedm::Logger::Level
+LOG_WARN	src/utils/Logger.h	/^            LOG_WARN = 3;$/;"	e	enum:Tedm::Logger::Level
+Level	src/utils/Logger.h	/^        enum Level {$/;"	g	class:Tedm::Logger
+Logger	src/utils/Logger.cpp	/^Tedm::Logger::Logger(Tedm::Logger::Level level) {$/;"	f	class:Tedm::Logger
+Logger	src/utils/Logger.h	/^        Logger() : level(level) {}$/;"	f	class:Tedm::Logger
+Logger	src/utils/Logger.h	/^    class Logger {$/;"	c	namespace:Tedm
+MouseButtonListener	src/events/EventListener.h	/^    class MouseButtonListener {$/;"	c	namespace:Tedm
+MouseMoveListener	src/events/EventListener.h	/^    class MouseMoveListener {$/;"	c	namespace:Tedm
+MouseWheelListener	src/events/EventListener.h	/^    class MouseWheelListener {$/;"	c	namespace:Tedm
+OBJS	Makefile	/^OBJS=$(patsubst $(SRC_DIR)\/%.cpp, $(OBJ_DIR)\/%.o,$(SRCS))$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR = obj$/;"	m
+Object	src/objects/object.h	/^    Object() {$/;"	f	class:Object
+Object	src/objects/object.h	/^    Object(const int x, const int y, const int h, const int w) {$/;"	f	class:Object
+Object	src/objects/object.h	/^class Object {$/;"	c
+OnEvent	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnEvent(Tedm::Event event) {$/;"	f	class:Tedm::EventHandler
+OnExit	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnExit(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnExpose	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnExpose(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnInputBlur	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnInputBlur(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnInputFocus	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnInputFocus(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnJoyAxis	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnJoyAxis(Tedm::JoyAxisListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnJoyBall	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnJoyBall(Tedm::JoyBallListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnJoyButtonDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnJoyButtonDown(Tedm::JoyButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnJoyButtonUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnJoyButtonUp(Tedm::JoyButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnJoyHat	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnJoyHat(Tedm::JoyHatListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnKeyDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnKeyDown(Tedm::KeyEventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnKeyUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnKeyUp(Tedm::KeyEventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnLButtonDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnLButtonDown(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnLButtonUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnLButtonUp(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMButtonDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMButtonDown(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMButtonUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMButtonUp(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMinimize	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMinimize(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMouseBlur	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMouseBlur(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMouseFocus	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMouseFocus(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMouseMove	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMouseMove(Tedm::MouseMoveListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnMouseWheel	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnMouseWheel(Tedm::MouseWheelListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnRButtonDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRButtonDown(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnRButtonUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRButtonUp(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnResize	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnResize(Tedm::WindowResizeListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnRestore	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRestore(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnUser	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnUser(Tedm::UserListener eventListener) {$/;"	f	class:Tedm::EventHandler
+P1_MOVE_DOWN	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
+P1_MOVE_UP	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
+P2_MOVE_DOWN	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
+P2_MOVE_UP	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
+P_ATTACK	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	e	enum:Anakin_side_scroller::CONTROLS	file:
+P_DUCK	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	e	enum:Anakin_side_scroller::CONTROLS	file:
+P_MOVE_LEFT	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	e	enum:Anakin_side_scroller::CONTROLS	file:
+P_MOVE_RIGHT	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	e	enum:Anakin_side_scroller::CONTROLS	file:
+P_START	demos/anakin_side.cpp	/^    enum CONTROLS {P_DUCK, P_MOVE_RIGHT, P_MOVE_LEFT, P_ATTACK, P_START};$/;"	e	enum:Anakin_side_scroller::CONTROLS	file:
+Player	demos/anakin_side.cpp	/^class Player : public Player_base {$/;"	c	file:
+Player	demos/pong.cpp	/^    Player(std::string name, const int x, const int y) : Player_base(name,x,y,100,10) {$/;"	f	class:Player
+Player	demos/pong.cpp	/^class Player : public Player_base {$/;"	c	file:
+Player_base	demos/anakin_side.cpp	/^        Player_base(name,x,y,72,73) {$/;"	f	class:Player
+Player_base	src/objects/player.h	/^    Player_base(std::string nm, const int x, const int y, const int h, const int w) : Object(x,y,h,w) {$/;"	f	class:Player_base
+Player_base	src/objects/player.h	/^class Player_base : public Object {$/;"	c
+Pong	demos/pong.cpp	/^    Pong(std::string title, std::string title_screen_filename, \\$/;"	f	class:Pong
+Pong	demos/pong.cpp	/^class Pong : public Game {$/;"	c	file:
+RESET	demos/anakin_side.cpp	/^    enum EVENTS {RESET};$/;"	e	enum:Anakin_side_scroller::EVENTS	file:
+RESET	demos/pong.cpp	/^    enum EVENTS {RESET};$/;"	e	enum:Pong::EVENTS	file:
+RM	Makefile	/^RM=rm -f$/;"	m
+SCREEN_HEIGHT	old/game.hpp	/^const int SCREEN_HEIGHT = 480;$/;"	v
+SCREEN_WIDTH	old/game.hpp	/^const int SCREEN_WIDTH = 640;$/;"	v
+SRCS	Makefile	/^SRCS=$(wildcard $(SRC_DIR)\/*.cpp)$/;"	m
+SRC_DIR	Makefile	/^SRC_DIR = src$/;"	m
+Sprite_base	src/objects/sprite.h	/^    Sprite_base() {}$/;"	f	class:Sprite_base
+Sprite_base	src/objects/sprite.h	/^    Sprite_base(SDL_Renderer *renderer, std::string filename, int height, \\$/;"	f	class:Sprite_base
+Sprite_base	src/objects/sprite.h	/^class Sprite_base {$/;"	c
+State	src/State.cpp	/^Tedm::State::State() {$/;"	f	class:Tedm::State
+State	src/State.h	/^    class State {$/;"	c	namespace:Tedm
+State_base	old/state.hpp	/^    State_base() {$/;"	f	class:State_base
+State_base	old/state.hpp	/^class State_base {$/;"	c
+TEDM_CONTEXT_H	src/Context.h	/^#define TEDM_CONTEXT_H$/;"	d
+TEDM_EVENTHANDLER_H	src/events/EventHandler.h	/^#define TEDM_EVENTHANDLER_H$/;"	d
+TEDM_EVENTLISTENER_H	src/events/EventListener.h	/^#define TEDM_EVENTLISTENER_H$/;"	d
+TEDM_EVENT_H	src/events/Event.h	/^#define TEDM_EVENT_H$/;"	d
+TEDM_GAME_H	src/Game.h	/^#define TEDM_GAME_H$/;"	d
+TEDM_LOGGER_H	src/utils/Logger.h	/^#define TEDM_LOGGER_H$/;"	d
+TEDM_STATE_H	src/State.h	/^#define TEDM_STATE_H$/;"	d
+TEDM_TEXTURE_H	src/img/Texture.h	/^#define TEDM_TEXTURE_H$/;"	d
+Tedm	src/Context.h	/^namespace Tedm {$/;"	n
+Tedm	src/Game.h	/^namespace Tedm {$/;"	n
+Tedm	src/Graphics.h	/^namespace Tedm {$/;"	n
+Tedm	src/State.h	/^namespace Tedm {$/;"	n
+Tedm	src/events/Event.h	/^namespace Tedm {$/;"	n
+Tedm	src/events/EventHandler.h	/^namespace Tedm {$/;"	n
+Tedm	src/events/EventListener.h	/^namespace Tedm {$/;"	n
+Tedm	src/img/Texture.h	/^namespace Tedm {$/;"	n
+Tedm	src/utils/Logger.h	/^namespace Tedm {$/;"	n
+Texture	src/img/Texture.h	/^    class Texture {$/;"	c	namespace:Tedm
+Timer	src/utils/Timer.cpp	/^Timer::Timer()$/;"	f	class:Timer
+Timer	src/utils/Timer.h	/^class Timer$/;"	c
+UNAME_S	Makefile	/^UNAME_S := $(shell uname -s)$/;"	m
+UserListener	src/events/EventListener.h	/^    class UserListener {$/;"	c	namespace:Tedm
+WIDTH	demos/anakin_side.cpp	/^    const int WIDTH  = 73;$/;"	m	class:Player	file:
+WIDTH	demos/pong.cpp	/^    const int WIDTH  = 10;$/;"	m	class:Player	file:
+WindowResizeListener	src/events/EventListener.h	/^    class WindowResizeListener {$/;"	c	namespace:Tedm
+_ExitEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _ExitEvents;$/;"	m	class:Tedm::EventHandler
+_ExposeEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _ExposeEvents;$/;"	m	class:Tedm::EventHandler
+_InputBlurEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _InputBlurEvents;$/;"	m	class:Tedm::EventHandler
+_InputFocusEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _InputFocusEvents;$/;"	m	class:Tedm::EventHandler
+_JoyAxisEvents	src/events/EventHandler.h	/^        std::vector<JoyAxisListener> _JoyAxisEvents;$/;"	m	class:Tedm::EventHandler
+_JoyBallEvents	src/events/EventHandler.h	/^        std::vector<JoyBallListener> _JoyBallEvents;$/;"	m	class:Tedm::EventHandler
+_JoyButtonDownEvents	src/events/EventHandler.h	/^        std::vector<JoyButtonListener> _JoyButtonDownEvents;$/;"	m	class:Tedm::EventHandler
+_JoyButtonUpEvents	src/events/EventHandler.h	/^        std::vector<JoyButtonListener> _JoyButtonUpEvents;$/;"	m	class:Tedm::EventHandler
+_JoyHatEvents	src/events/EventHandler.h	/^        std::vector<JoyHatListener> _JoyHatEvents;$/;"	m	class:Tedm::EventHandler
+_KeyDownEvents	src/events/EventHandler.h	/^        std::vector<KeyEventListener> _KeyDownEvents;$/;"	m	class:Tedm::EventHandler
+_KeyUpEvents	src/events/EventHandler.h	/^        std::vector<KeyEventListener> _KeyUpEvents;$/;"	m	class:Tedm::EventHandler
+_LButtonDownEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _LButtonDownEvents;$/;"	m	class:Tedm::EventHandler
+_LButtonUpEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _LButtonUpEvents;$/;"	m	class:Tedm::EventHandler
+_MButtonDownEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _MButtonDownEvents;$/;"	m	class:Tedm::EventHandler
+_MButtonUpEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _MButtonUpEvents;$/;"	m	class:Tedm::EventHandler
+_MinimizeEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _MinimizeEvents;$/;"	m	class:Tedm::EventHandler
+_MouseBlurEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _MouseBlurEvents;$/;"	m	class:Tedm::EventHandler
+_MouseFocusEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _MouseFocusEvents;$/;"	m	class:Tedm::EventHandler
+_MouseMoveEvents	src/events/EventHandler.h	/^        std::vector<MouseMoveListener> _MouseMoveEvents;$/;"	m	class:Tedm::EventHandler
+_MouseWheelEvents	src/events/EventHandler.h	/^        std::vector<MouseWheelListener> _MouseWheelEvents;$/;"	m	class:Tedm::EventHandler
+_RButtonDownEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _RButtonDownEvents;$/;"	m	class:Tedm::EventHandler
+_RButtonUpEvents	src/events/EventHandler.h	/^        std::vector<MouseButtonListener> _RButtonUpEvents;$/;"	m	class:Tedm::EventHandler
+_RestoreEvents	src/events/EventHandler.h	/^        std::vector<EventListener> _RestoreEvents;$/;"	m	class:Tedm::EventHandler
+_UserEvents	src/events/EventHandler.h	/^        std::vector<UserListener> _UserEvents;$/;"	m	class:Tedm::EventHandler
+_WindowResizeEvents	src/events/EventHandler.h	/^        std::vector<WindowResizeListener> _WindowResizeEvents;$/;"	m	class:Tedm::EventHandler
+__ENVIRONMENT_HPP__	src/objects/environment.h	/^#define __ENVIRONMENT_HPP__$/;"	d
+__GAME_HPP__	old/game.hpp	/^#define __GAME_HPP__$/;"	d
+__GRAPHICS_HPP__	src/Graphics.h	/^#define __GRAPHICS_HPP__$/;"	d
+__OBJECT_HPP__	src/objects/object.h	/^#define __OBJECT_HPP__$/;"	d
+__PLAYER_HPP__	src/objects/player.h	/^#define __PLAYER_HPP__$/;"	d
+__SPRITE_HPP__	src/objects/sprite.h	/^#define __SPRITE_HPP__$/;"	d
+__STATE_HPP__	old/state.hpp	/^#define __STATE_HPP__$/;"	d
+__TIMER_HPP__	src/utils/Timer.h	/^#define __TIMER_HPP__$/;"	d
+add_background	src/Graphics.cpp	/^SDL_Texture *Tedm::Graphics::add_background(std::string filename) {$/;"	f	class:Tedm::Graphics
+add_background	src/objects/environment.cpp	/^void Environment::add_background(std::string filename) {$/;"	f	class:Environment
+add_control	old/game.cpp	/^void Game::add_control(std::string func,$/;"	f	class:Game
+add_player	demos/anakin_side.cpp	/^    void add_player(Player &p, std::string image) {$/;"	f	class:Anakin_side_scroller
+add_player	demos/pong.cpp	/^    void add_player(Player &p, std::string image) {$/;"	f	class:Pong
+add_player	old/game.cpp	/^void Game::add_player(Player_base &player) {$/;"	f	class:Game
+attack	demos/anakin_side.cpp	/^    void attack() {$/;"	f	class:Player
+background	demos/anakin_side.cpp	/^    SDL_Texture *background;$/;"	m	class:Anakin_side_scroller	file:
+background	demos/pong.cpp	/^    SDL_Texture *background;$/;"	m	class:Pong	file:
+background_file	src/objects/environment.h	/^    std::ofstream background_file;$/;"	m	class:Environment
+ball	demos/pong.cpp	/^    Ball ball;$/;"	m	class:Pong	file:
+ballSpeed	demos/pong.cpp	/^    double ballSpeed;$/;"	m	class:Ball	file:
+collision	old/game.cpp	/^bool Game::collision(Object &obj) {$/;"	f	class:Game
+collision	src/Game.cpp	/^bool Tedm::Game::collision(Object &obj) {$/;"	f	class:Tedm::Game
+collision	src/objects/object.h	/^    bool collision(Object &obj) {$/;"	f	class:Object
+controls	old/game.hpp	/^    std::vector<std::pair<SDL_Keycode, Event>> controls;$/;"	m	class:Game
+ctx	src/Game.h	/^        Context ctx;$/;"	m	class:Tedm::Game
+ctx	src/State.h	/^        Context ctx;$/;"	m	class:Tedm::State
+currentMouseButtonPress	src/events/Event.h	/^        int currentMouseButtonPress() { return e.button.button; }$/;"	f	class:Tedm::Event
+currentMouseButtonX	src/events/Event.h	/^        int currentMouseButtonX() { return e.button.x; }$/;"	f	class:Tedm::Event
+currentMouseButtonY	src/events/Event.h	/^        int currentMouseButtonY() { return e.button.y; }$/;"	f	class:Tedm::Event
+currentState	src/Game.h	/^        State &currentState;$/;"	m	class:Tedm::Game
+d	src/objects/object.h	/^        int w, h, d;$/;"	m	struct:Object::__anon2
+dequeue_event	old/state.hpp	/^    void dequeue_event() {$/;"	f	class:State_base
+destroy	src/Game.cpp	/^void Tedm::Game::destroy() {$/;"	f	class:Tedm::Game
+destroy	src/Graphics.cpp	/^void Tedm::Graphics::destroy() {$/;"	f	class:Tedm::Graphics
+duck	demos/anakin_side.cpp	/^    void duck() {$/;"	f	class:Player
+e	src/events/Event.h	/^        SDL_Event e;$/;"	m	class:Tedm::Event
+enqueue_event	old/game.hpp	/^    void enqueue_event(Event e) {$/;"	f	class:Game
+enqueue_event	old/state.hpp	/^    void enqueue_event(Event e) {$/;"	f	class:State_base
+enqueue_events	demos/anakin_side.cpp	/^    void enqueue_events(EVENTS e) {$/;"	f	class:Anakin_side_scroller
+enqueue_events	demos/pong.cpp	/^    void enqueue_events(EVENTS e) {$/;"	f	class:Pong
+eventHandler	src/Game.h	/^        EventHandler eventHandler;$/;"	m	class:Tedm::Game
+facing_right	demos/anakin_side.cpp	/^    bool facing_right;$/;"	m	class:Player	file:
+g	src/State.h	/^        Graphics &g;$/;"	m	class:Tedm::State
+getEvent	src/events/Event.h	/^        SDL_Event &getEvent() { return e; }$/;"	f	class:Tedm::Event
+getID	src/State.h	/^        std::string getID() { return id; }$/;"	f	class:Tedm::State
+getKeySymbol	src/events/Event.h	/^        SDL_Keycode getKeySymbol() { return e.key.keysym.sym; }$/;"	f	class:Tedm::Event
+getLevel	src/utils/Logger.cpp	/^Tedm::Logger::Level Tedm::Logger::getLevel() {$/;"	f	class:Tedm::Logger
+getMouseX	src/events/Event.h	/^        int getMouseX() { return e.motion.x; }$/;"	f	class:Tedm::Event
+getMouseXRel	src/events/Event.h	/^        int getMouseXRel() { return e.motion.xrel; }$/;"	f	class:Tedm::Event
+getMouseY	src/events/Event.h	/^        int getMouseY() { return e.motion.y; }$/;"	f	class:Tedm::Event
+getMouseYRel	src/events/Event.h	/^        int getMouseYRel() { return e.motion.yrel; }$/;"	f	class:Tedm::Event
+getType	src/events/Event.h	/^        int getType() { return e.type; }$/;"	f	class:Tedm::Event
+get_height	demos/anakin_side.cpp	/^    int get_height() {$/;"	f	class:Player
+get_height	demos/pong.cpp	/^    int get_height() {$/;"	f	class:Player
+get_height	src/objects/object.h	/^    int get_height() { return size.w; };$/;"	f	class:Object
+get_pos	src/objects/sprite.h	/^    SDL_Rect *get_pos() {$/;"	f	class:Sprite_base
+get_sprite	src/objects/sprite.h	/^    SDL_Texture *get_sprite() {$/;"	f	class:Sprite_base
+get_src	src/objects/sprite.h	/^    SDL_Rect *get_src() {$/;"	f	class:Sprite_base
+get_ticks	src/utils/Timer.cpp	/^int Timer::get_ticks()$/;"	f	class:Timer
+get_width	demos/anakin_side.cpp	/^    int get_width() {$/;"	f	class:Player
+get_width	src/objects/object.h	/^    int get_width() { return size.h; };$/;"	f	class:Object
+get_x	demos/pong.cpp	/^    int get_x() {$/;"	f	class:Ball
+get_x	src/objects/object.h	/^    int get_x() { return pos.x; };$/;"	f	class:Object
+get_y	demos/pong.cpp	/^    int get_y() {$/;"	f	class:Ball
+get_y	demos/pong.cpp	/^    int get_y() {$/;"	f	class:Player
+get_y	src/objects/object.h	/^    int get_y() { return pos.y; };$/;"	f	class:Object
+graphics	src/Game.h	/^        Graphics graphics;$/;"	m	class:Tedm::Game
+h	src/objects/object.h	/^        int w, h, d;$/;"	m	struct:Object::__anon2
+handle_keypress	old/game.cpp	/^void Game::handle_keypress(SDL_Keycode key) {$/;"	f	class:Game
+height	old/game.hpp	/^    int height;$/;"	m	class:Game
+height	src/Context.h	/^        int height;$/;"	m	class:Tedm::Context
+id	src/State.h	/^        std::string id;$/;"	m	class:Tedm::State
+init	src/Game.cpp	/^bool Tedm::Game::init() {$/;"	f	class:Tedm::Game
+init	src/Graphics.cpp	/^bool Tedm::Graphics::init(int height, int width, std::string name) {$/;"	f	class:Tedm::Graphics
+initialized	src/Graphics.h	/^        bool initialized;$/;"	m	class:Tedm::Graphics
+isInitialized	src/Graphics.cpp	/^bool Tedm::Graphics::isInitialized() {$/;"	f	class:Tedm::Graphics
+isPaused	src/Context.h	/^        bool isPaused;$/;"	m	class:Tedm::Context
+isRunning	src/Context.h	/^        bool isRunning;$/;"	m	class:Tedm::Context
+is_paused	src/utils/Timer.cpp	/^bool Timer::is_paused()$/;"	f	class:Timer
+is_started	src/utils/Timer.cpp	/^bool Timer::is_started()$/;"	f	class:Timer
+l	src/Graphics.h	/^        Logger l;$/;"	m	class:Tedm::Graphics
+leftButtonPress	src/events/Event.h	/^        bool leftButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_LEFT))!=0; }$/;"	f	class:Tedm::Event
+level	src/utils/Logger.h	/^        static Level level;$/;"	m	class:Tedm::Logger
+level_strings	src/utils/Logger.h	/^        const std::string level_strings[] = {$/;"	m	class:Tedm::Logger
+loadIMG	src/Graphics.cpp	/^SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {$/;"	f	class:Tedm::Graphics
+loadTexture	src/Graphics.cpp	/^SDL_Texture *Tedm::Graphics::loadTexture(std::string path) {$/;"	f	class:Tedm::Graphics
+log	src/Game.h	/^        Logger log;$/;"	m	class:Tedm::Game
+log	src/utils/Logger.cpp	/^void Tedm::Logger::log(Tedm::Logger::Level level, std::string msg) {$/;"	f	class:Tedm::Logger
+log_debug	src/utils/Logger.cpp	/^void Tedm::Logger::log_debug(std::string msg) {$/;"	f	class:Tedm::Logger
+log_error	src/utils/Logger.cpp	/^void Tedm::Logger::log_error(std::string msg) {$/;"	f	class:Tedm::Logger
+log_info	src/utils/Logger.cpp	/^void Tedm::Logger::log_info(std::string msg) {$/;"	f	class:Tedm::Logger
+log_warning	src/utils/Logger.cpp	/^void Tedm::Logger::log_warning(std::string msg) {$/;"	f	class:Tedm::Logger
+main	demos/anakin_side.cpp	/^int main(int argc, char*argv[]) {$/;"	f
+main	demos/pong.cpp	/^int main(int argc, char*argv[]) {$/;"	f
+mainLoop	src/Game.cpp	/^void Tedm::Game::mainLoop() {$/;"	f	class:Tedm::Game
+middleButtonPress	src/events/Event.h	/^        bool middleButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_MIDDLE))!=0; }$/;"	f	class:Tedm::Event
+move_distance	demos/pong.cpp	/^    const unsigned int move_distance = 40;$/;"	m	class:Player	file:
+move_down	demos/pong.cpp	/^    void move_down() {$/;"	f	class:Player
+move_left	demos/anakin_side.cpp	/^    void move_left() {$/;"	f	class:Player
+move_right	demos/anakin_side.cpp	/^    void move_right() {$/;"	f	class:Player
+move_up	demos/pong.cpp	/^    void move_up() {$/;"	f	class:Player
+name	old/game.hpp	/^    std::string name;$/;"	m	class:Game
+neutral	demos/anakin_side.cpp	/^    void neutral() {$/;"	f	class:Player
+new_round	demos/anakin_side.cpp	/^    void new_round() {$/;"	f	class:Anakin_side_scroller
+new_round	demos/pong.cpp	/^    void new_round() {$/;"	f	class:Pong
+objects	old/game.hpp	/^    std::vector<Object *> objects;$/;"	m	class:Game
+objects	src/Game.h	/^        std::vector<Object> objects;$/;"	m	class:Tedm::Game
+p	demos/anakin_side.cpp	/^    Player p;$/;"	m	class:Anakin_side_scroller	file:
+p1	demos/pong.cpp	/^    Player p1, p2;$/;"	m	class:Pong	file:
+p2	demos/pong.cpp	/^    Player p1, p2;$/;"	m	class:Pong	file:
+parent	src/State.h	/^        Game parent;$/;"	m	class:Tedm::State
+parse_config	old/game.cpp	/^Game::parse_config(std::string config_file,$/;"	f	class:Game
+pause	src/Game.cpp	/^void Tedm::Game::pause() {$/;"	f	class:Tedm::Game
+pause	src/utils/Timer.cpp	/^void Timer::pause()$/;"	f	class:Timer
+paused	src/utils/Timer.h	/^    bool paused;$/;"	m	class:Timer
+pausedTicks	src/utils/Timer.h	/^    int pausedTicks;$/;"	m	class:Timer
+pending	old/state.hpp	/^    bool pending() {$/;"	f	class:State_base
+pending_events	old/state.hpp	/^    std::queue<Event> pending_events;$/;"	m	class:State_base
+players	old/game.hpp	/^    std::vector<Player_base *> players;$/;"	m	class:Game
+poll	src/events/Event.h	/^        int poll() { return SDL_PollEvent(&e); }$/;"	f	class:Tedm::Event
+pos	src/objects/object.h	/^    } pos;$/;"	m	class:Object	typeref:struct:Object::__anon1
+registerState	src/Game.cpp	/^void Tedm::Game::registerState(std::string id, Tedm::State s) {$/;"	f	class:Tedm::Game
+remove_player	old/game.cpp	/^void Game::remove_player(Player_base *player) {$/;"	f	class:Game
+renderer	demos/anakin_side.cpp	/^    SDL_Renderer *renderer;$/;"	m	class:Anakin_side_scroller	file:
+renderer	demos/pong.cpp	/^    SDL_Renderer *renderer;$/;"	m	class:Pong	file:
+renderer	src/Graphics.h	/^        SDL_Renderer *renderer;$/;"	m	class:Tedm::Graphics
+reset	demos/pong.cpp	/^    void reset() {$/;"	f	class:Ball
+resume	src/Game.cpp	/^void Tedm::Game::resume() {$/;"	f	class:Tedm::Game
+rightButtonPress	src/events/Event.h	/^        bool rightButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_RIGHT))!=0; }$/;"	f	class:Tedm::Event
+run	old/game.cpp	/^int Game::run() {$/;"	f	class:Game
+setEventHandler	src/Game.cpp	/^void Tedm::Game::setEventHandler(EventHandler &eventHandler) {$/;"	f	class:Tedm::Game
+setLevel	src/utils/Logger.cpp	/^void Tedm::Logger::setLevel(Tedm::Logger::Level level) {$/;"	f	class:Tedm::Logger
+setTargetFramerate	src/Game.cpp	/^void Tedm::Game::setTargetFramerate(int fps) {$/;"	f	class:Tedm::Game
+setWindowTitle	src/Game.cpp	/^void Tedm::Game::setWindowTitle(std::string windowTitle) {$/;"	f	class:Tedm::Game
+setWindowTitle	src/Graphics.cpp	/^void Tedm::Graphics::setWindowTitle(std::string windowTitle) {$/;"	f	class:Tedm::Graphics
+set_frame	demos/anakin_side.cpp	/^    void set_frame(int x, int y) {$/;"	f	class:Player	file:
+set_height_width	src/objects/sprite.h	/^    void set_height_width(int height, int width) {$/;"	f	class:Sprite_base
+set_pos	demos/anakin_side.cpp	/^    void set_pos(int x, int y){$/;"	f	class:Player
+set_pos	demos/pong.cpp	/^    void set_pos(int x, int y){$/;"	f	class:Player
+set_position	src/objects/object.h	/^    void set_position(int x, int y) {$/;"	f	class:Object
+set_position	src/objects/sprite.h	/^    void set_position(int x, int y) {$/;"	f	class:Sprite_base
+set_source_pos	src/objects/sprite.h	/^    void set_source_pos(int x, int y) {$/;"	f	class:Sprite_base
+set_sprite	demos/pong.cpp	/^    void set_sprite(SDL_Renderer *renderer, string filename) {$/;"	f	class:Ball
+set_sprite	src/objects/object.h	/^    void set_sprite(SDL_Renderer *renderer, std::string filename) {$/;"	f	class:Object
+set_sprite	src/objects/sprite.h	/^    void set_sprite(SDL_Renderer *renderer, std::string filename) {$/;"	f	class:Sprite_base
+set_x	src/objects/object.h	/^    void set_x(int i) { pos.x = i; };$/;"	f	class:Object
+set_y	src/objects/object.h	/^    void set_y(int i) { pos.y = i; };$/;"	f	class:Object
+shutdown	src/Game.cpp	/^void Tedm::Game::shutdown() {$/;"	f	class:Tedm::Game
+size	src/objects/object.h	/^    } size;$/;"	m	class:Object	typeref:struct:Object::__anon2
+sprite	src/objects/object.h	/^    Sprite_base sprite;$/;"	m	class:Object
+sprite	src/objects/sprite.h	/^    SDL_Texture *sprite;$/;"	m	class:Sprite_base
+src	src/objects/sprite.h	/^    SDL_Rect src;$/;"	m	class:Sprite_base
+start	src/utils/Timer.cpp	/^void Timer::start()$/;"	f	class:Timer
+startTicks	src/utils/Timer.h	/^    int startTicks;$/;"	m	class:Timer
+start_x	demos/pong.cpp	/^    int start_x;$/;"	m	class:Ball	file:
+start_y	demos/pong.cpp	/^    int start_y;$/;"	m	class:Ball	file:
+started	src/utils/Timer.h	/^    bool started;$/;"	m	class:Timer
+state	old/game.hpp	/^    State_base state;$/;"	m	class:Game
+state	src/objects/object.h	/^    State_base state;$/;"	m	class:Object
+state_id_dict	src/Game.h	/^        std::unordered_map<std::string, State> state_id_dict;$/;"	m	class:Tedm::Game
+stop	src/utils/Timer.cpp	/^void Timer::stop()$/;"	f	class:Timer
+targetFramerate	src/Context.h	/^        long targetFramerate;$/;"	m	class:Tedm::Context
+texture	src/img/Texture.h	/^        SDL_Texture *texture;$/;"	m	class:Tedm::Texture
+tgt	src/objects/sprite.h	/^    SDL_Rect tgt;$/;"	m	class:Sprite_base
+timeSinceLastLoop	src/Context.h	/^        int timeSinceLastLoop;$/;"	m	class:Tedm::Context
+unpause	src/utils/Timer.cpp	/^void Timer::unpause()$/;"	f	class:Timer
+update	old/game.hpp	/^    void update() {$/;"	f	class:Game
+update	src/objects/object.h	/^    void update() {$/;"	f	class:Object
+update_pos	demos/pong.cpp	/^    void update_pos() {$/;"	f	class:Ball
+update_screen	demos/pong.cpp	/^    void update_screen() {$/;"	f	class:Pong
+update_screen	src/Graphics.cpp	/^void Tedm::Graphics::update_screen(SDL_Texture *texture, SDL_Rect &src, SDL_Rect &dst) {$/;"	f	class:Tedm::Graphics
+update_trajectory	demos/pong.cpp	/^    void update_trajectory() {$/;"	f	class:Ball
+update_trajectory	demos/pong.cpp	/^    void update_trajectory(Player *p) {$/;"	f	class:Ball
+vx	demos/pong.cpp	/^    double vx, vy;$/;"	m	class:Ball	file:
+vy	demos/pong.cpp	/^    double vx, vy;$/;"	m	class:Ball	file:
+w	src/objects/object.h	/^        int w, h, d;$/;"	m	struct:Object::__anon2
+width	old/game.hpp	/^    int width;$/;"	m	class:Game
+width	src/Context.h	/^        int width;$/;"	m	class:Tedm::Context
+window	demos/anakin_side.cpp	/^    SDL_Window *window;$/;"	m	class:Anakin_side_scroller	file:
+window	demos/pong.cpp	/^    SDL_Window *window;$/;"	m	class:Pong	file:
+window	src/Graphics.h	/^        SDL_Window *window;$/;"	m	class:Tedm::Graphics
+windowTitle	src/Context.h	/^        std::string windowTitle;$/;"	m	class:Tedm::Context
+x	src/objects/object.h	/^        int x, y, z;$/;"	m	struct:Object::__anon1
+y	src/objects/object.h	/^        int x, y, z;$/;"	m	struct:Object::__anon1
+z	src/objects/object.h	/^        int x, y, z;$/;"	m	struct:Object::__anon1
+~Anakin_side_scroller	demos/anakin_side.cpp	/^    ~Anakin_side_scroller() {$/;"	f	class:Anakin_side_scroller
+~Environment	src/objects/environment.cpp	/^Environment::~Environment() {$/;"	f	class:Environment
+~Game	src/Game.cpp	/^Tedm::Game::~Game() {$/;"	f	class:Tedm::Game
+~Graphics	src/Graphics.cpp	/^Tedm::Graphics::~Graphics() {$/;"	f	class:Tedm::Graphics
+~Logger	src/utils/Logger.cpp	/^Tedm::Logger::~Logger() { }$/;"	f	class:Tedm::Logger
+~Pong	demos/pong.cpp	/^    ~Pong() {$/;"	f	class:Pong
+~Sprite_base	src/objects/sprite.h	/^    ~Sprite_base() {$/;"	f	class:Sprite_base

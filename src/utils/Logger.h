@@ -11,14 +11,14 @@ namespace Tedm {
     class Logger {
     public:
         enum Level {
-            LOG_DEBUG = 1;
-            LOG_INFO = 2;
-            LOG_WARN = 3;
-            LOG_ERROR = 4;
-            LOG_NONE = 5;
+            LOG_DEBUG = 1,
+            LOG_INFO = 2,
+            LOG_WARN = 3,
+            LOG_ERROR = 4,
+            LOG_NONE = 5,
         };
 
-        const std::string level_strings[] = {
+        const std::string level_strings[5] = {
                 "DEBUG",
                 "INFO",
                 "WARN",
@@ -26,7 +26,8 @@ namespace Tedm {
                 "NONE"
         };
 
-        Logger() : level(level) {}
+        //Logger() : Level(level) {}
+        Logger() {}
 
         Logger(Level level);
 

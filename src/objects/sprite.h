@@ -3,7 +3,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include "Graphics.h"
+#include "../Graphics.h"
 
 class Sprite_base {
 public:
@@ -25,7 +25,7 @@ public:
     }
 
     void set_sprite(SDL_Renderer *renderer, std::string filename) {
-        sprite = Graphics::loadTexture(renderer, filename);
+        sprite = Tedm::Graphics::loadTexture(renderer, filename);
     }
 
     void set_height_width(int height, int width) {

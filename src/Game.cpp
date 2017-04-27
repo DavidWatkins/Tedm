@@ -2,7 +2,7 @@
 // Created by david on 4/27/17.
 //
 
-#include <utils/Timer.h>
+#include "utils/Timer.h"
 #include "Game.h"
 
 Tedm::Game::Game() : ctx(Context()), currentState(graphics) {

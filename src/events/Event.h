@@ -15,7 +15,8 @@
 #ifndef TEDM_EVENT_H
 #define TEDM_EVENT_H
 
-#include <SDL_events.h>
+//#include <SDL_events.h>
+#include <SDL2/SDL_events.h>
 
 namespace Tedm {
     class Event {

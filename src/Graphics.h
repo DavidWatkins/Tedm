@@ -16,7 +16,7 @@ www.lazyfoo.net/tutorials/SDL/index.php
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
-#include <utils/Logger.h>
+#include "utils/Logger.h"
 
 namespace Tedm {
     class Graphics {
