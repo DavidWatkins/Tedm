@@ -114,21 +114,26 @@ public:
     }
 };
 
-class player_event_listener : KeyEventListener {
+class Player_KeyBoard_Listener : KeyEventListener {
+    Player *p1, *p2;
 public:
+    Player_KeyBoard_Listener(Player &p1, Player &p2) {
+        this->p1 = &p1;
+        this->p2 = &p2;
+    }
     void operator()(SDL_Keycode sym) override {
         switch(sym) {
             case SDLK_w:
-                p1.move_up();
+                p1->move_up();
                 break;
             case SDLK_s:
-                p1.move_down();
+                p1->move_down();
                 break;
             case SDLK_UP:
-                p2.move_up();
+                p2->move_up();
                 break;
             case SDLK_DOWN:
-                p2.move_down();
+                p2->move_down();
                 break;
         }
     }
@@ -138,9 +143,11 @@ class Pong_State : public State {
 public:
     Player p1, p2;
     Ball ball;
-    Pong_State(const Graphics &graphics, const Game &game) : 
+    Player_KeyBoard_Listener pkl;
+    Pong_State(const Graphics &graphics, Game &game) :
             State(graphics, game),p1{Player(15, 250)},
-            p2{Player(750, 250)}, ball{Ball(375,295, 0, 0)} {}
+            p2{Player(750, 250)}, ball{Ball(375,295, 0, 0)},
+            pkl{p1, p2};
 
     SDL_Texture *background;
 
@@ -151,18 +158,19 @@ public:
     }
 
     bool init() override {
-        
-        parent->setWindowTitle("Dat Pong");
+
+        game.setWindowTitle("Dat Pong");
         background = graphics.add_background("resources/dat_anaking.jpg");
-        parent.eventHandler.OnKeyDown(
-                make_shared<player_event_listener>(player_event_listener()));
-        new_round(); 
+        game.eventHandler.OnKeyDown(
+                make_shared<Player_KeyBoard_Listener>(
+                    Player_KeyBoard_Listener(p1, p2)));
+        new_round();
     }
 
     void update() override {
     	ball.update_pos();
-		
-        if(ball.collision(p1)) {    
+
+        if(ball.collision(p1)) {
             ball.update_trajectory(p1);
         } else if (ball.collision(p2)) {
             ball.update_trajectory(p2);
@@ -184,7 +192,7 @@ public:
         ball.draw();
         SDL_RenderPresent(renderer);
     }
-    
+
 };
 
 

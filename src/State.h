@@ -32,10 +32,10 @@ namespace Tedm {
 namespace Tedm {
     class State {
     public:
-        State(const Graphics &graphics, const Game &game) :
+        State(const Graphics &graphics, Game &game) :
                 graphics(graphics), ctx(Context()), id(""), game(game) {}
 
-        State(const Graphics &graphics, const Game &game, const Context &ctx, std::string id) :
+        State(const Graphics &graphics, Game &game, const Context &ctx, std::string id) :
                 graphics(graphics), ctx(Context()), id(id), game(game) {}
 
         virtual ~State() {};
@@ -58,7 +58,7 @@ namespace Tedm {
 
     protected:
 
-        const Game &game;
+        Game &game;
         const Context ctx;
         const Graphics &graphics;
         std::string id;
