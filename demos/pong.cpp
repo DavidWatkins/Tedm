@@ -12,6 +12,7 @@
 #include <iostream>
 
 using namespace std;
+using namespace Tedm;
 
 class Player : public Player_base {
     const unsigned int move_distance = 40;
@@ -19,7 +20,7 @@ class Player : public Player_base {
     const int WIDTH  = 10;
 public:
 
-    Player(std::string name, const int x, const int y) : Player_base(name,x,y,100,10) {
+    Player(const int x, const int y) : Player_base(x,y,100,10) {
         set_pos(x, y);
     }
 
@@ -115,7 +116,7 @@ public:
     }
 };
 
-class Pong : public Game {
+/*class Pong : public Game {
 private:
     SDL_Texture *background;
     SDL_Renderer *renderer;
@@ -198,6 +199,43 @@ public:
             SDL_RenderCopy(renderer, sprite, &o->sprite.src, &o->sprite.tgt);
         }
         SDL_RenderPresent(renderer);
+    }
+};*/
+
+class Pong_State : public State {
+    Player p1, p2;
+    Ball ball;
+    bool init() override {
+        p1 = Player(15,250);
+        p2 = Player(750,250);
+        ball = Ball(375,295, 0, 0);
+        parent->setWindowTitle("Dat Pong");
+    }
+};
+
+class player_event_listener : KeyEventListener {
+public:
+    void operator()(SDL_Keycode sym) override {
+        switch(sym) {
+            case SDL_w:
+                p1.move_up();
+                break;
+            case SDL_s:
+                p1.move_down();
+                break;
+            case SDL_UP:
+                p2.move_up();
+                break;
+            case SDL_DOWN:
+                p2.move_down();
+                break;
+        }
+    }
+}
+
+public:
+    Pong(std::string title) : Game(), p1{Player(15, 250)}, p2{Player(750,250)} {
+        eventHandler.OnKeyDown(make_shared<player_event_listener>(player_event_listener()));
     }
 };
 

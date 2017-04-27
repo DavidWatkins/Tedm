@@ -6,7 +6,7 @@
 #ifndef __STATE_HPP__
 #define __STATE_HPP__
 
-#include "event.hpp"
+#include "../src/events/Event.h"
 #include <queue>
 #include <iostream>
 

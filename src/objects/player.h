@@ -11,7 +11,7 @@
 
 class Player_base : public Object {
 public:
-    Player_base(std::string nm, const int x, const int y, const int h, const int w) : Object(x,y,h,w) {
+    Player_base(const int x, const int y, const int h, const int w) : Object(x,y,h,w) {
     };
 };
 #endif /* __PLAYER_HPP__ */
