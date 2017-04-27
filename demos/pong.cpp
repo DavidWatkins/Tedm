@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <math.h>
-#include "src/utils/Game.h"
+#include "Game.h"
 #include "objects/sprite.h"
 #include "objects/player.h"
 #include <iostream>
@@ -80,9 +80,9 @@ public:
      * https://gamedev.stackexchange.com/questions/4253/in-pong-how-do-you-
      * calculate-the-balls-direction-when-it-bounces-off-the-paddl
      */
-    void update_trajectory(Player *p) {
-        int PADDLEHEIGHT = p->get_height();
-        double relativeIntersectY = p->get_y()+(PADDLEHEIGHT/2) - (pos.y-(size.h/2));
+    void update_trajectory(Player &p) {
+        int PADDLEHEIGHT = p.get_height();
+        double relativeIntersectY = p.get_y()+(PADDLEHEIGHT/2) - (pos.y-(size.h/2));
         double normalizedRelativeIntersectionY = (relativeIntersectY/(PADDLEHEIGHT/2));
         double bounceAngle = normalizedRelativeIntersectionY * MAXBOUNCEANGLE;
         double ballSpeed = (sqrt((vx*vx) + (vy*vy)/25));
@@ -101,8 +101,8 @@ public:
         sprite.set_position(pos.x, pos.y);
     }
 
-    void set_sprite(SDL_Renderer *renderer, string filename) {
-        sprite.set_sprite(renderer, filename);
+    void set_sprite(string filename) {
+        sprite.set_sprite(filename);
     }
 
     int get_x() {
@@ -114,10 +114,34 @@ public:
     }
 };
 
+class player_event_listener : KeyEventListener {
+public:
+    void operator()(SDL_Keycode sym) override {
+        switch(sym) {
+            case SDLK_w:
+                p1.move_up();
+                break;
+            case SDLK_s:
+                p1.move_down();
+                break;
+            case SDLK_UP:
+                p2.move_up();
+                break;
+            case SDLK_DOWN:
+                p2.move_down();
+                break;
+        }
+    }
+};
+
 class Pong_State : public State {
+public:
     Player p1, p2;
     Ball ball;
-    
+    Pong_State(const Graphics &graphics, const Game &game) : 
+            State(graphics, game),p1{Player(15, 250)},
+            p2{Player(750, 250)}, ball{Ball(375,295, 0, 0)} {}
+
     SDL_Texture *background;
 
     void new_round() {
@@ -127,11 +151,12 @@ class Pong_State : public State {
     }
 
     bool init() override {
-        p1 = Player(15,250);
-        p2 = Player(750,250);
-        ball = Ball(375,295, 0, 0);
+        
         parent->setWindowTitle("Dat Pong");
         background = graphics.add_background("resources/dat_anaking.jpg");
+        parent.eventHandler.OnKeyDown(
+                make_shared<player_event_listener>(player_event_listener()));
+        new_round(); 
     }
 
     void update() override {
@@ -154,42 +179,22 @@ class Pong_State : public State {
 
     void render() override {
         graphics.draw(background);
-        graphics.draw(p1);
-        graphics.draw(p2);
-        graphics.draw(ball);
+        p1.draw();
+        p2.draw();
+        ball.draw();
         SDL_RenderPresent(renderer);
     }
     
 };
 
-class player_event_listener : KeyEventListener {
-public:
-    void operator()(SDL_Keycode sym) override {
-        switch(sym) {
-            case SDL_w:
-                p1.move_up();
-                break;
-            case SDL_s:
-                p1.move_down();
-                break;
-            case SDL_UP:
-                p2.move_up();
-                break;
-            case SDL_DOWN:
-                p2.move_down();
-                break;
-        }
-    }
-}
+
 
 public:
     Pong(std::string title) : Game(), p1{Player(15, 250)}, p2{Player(750,250)} {
-        eventHandler.OnKeyDown(make_shared<player_event_listener>(player_event_listener()));
     }
 };
 
 int main(int argc, char*argv[]) {
-    //Pong game = Pong("pong", "resources/dat_anakin.jpg", 800, 600, "demos/pong.cfg");
     Game pong = Game(Context(800, 600));
     bool quit = false;
     char ch;

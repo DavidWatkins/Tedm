@@ -12,12 +12,13 @@ www.lazyfoo.net/tutorials/SDL/index.php
 #ifndef __GRAPHICS_HPP__
 #define __GRAPHICS_HPP__
 
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
 #include <string>
 #include "utils/Logger.h"
-#include "src/objects/object.h"
 
 namespace Tedm {
     class Graphics {
@@ -38,8 +39,8 @@ namespace Tedm {
 
         void setWindowTitle(std::string basic_string);
 
-        void draw(Object &object);
         void draw(SDL_Texture *texture);
+        void draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt);
 
     private:
         SDL_Renderer *renderer;

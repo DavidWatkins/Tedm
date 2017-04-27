@@ -6,7 +6,6 @@
 #ifndef __OBJECT_HPP__
 #define __OBJECT_HPP__
 
-//#include "../../old/state.hpp"
 #include <iostream>
 #include "sprite.h"
 
@@ -20,7 +19,7 @@ namespace Tedm {
             int w, h, d;
         } size;
     public:
-//    State_base state;
+
         Sprite_base sprite;
 
         Object() {
@@ -71,6 +70,9 @@ namespace Tedm {
 //            } else {
 //                //default action
 //            }
+        }
+        void draw() {
+            sprite.draw();
         }
     };
 }

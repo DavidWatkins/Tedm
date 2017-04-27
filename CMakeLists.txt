@@ -6,18 +6,9 @@ include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-MESSAGE(${CMAKE_MODULE_PATH})
-if(APPLE)
-    
-    find_package(sdl2 REQUIRED)
-    find_package(SDL2_image REQUIRED)
-elseif(UNIX)
-    set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
-    set(SDL2_IMAGE_LIBRARY /usr/lib/libSDL2_image.so)
-    INCLUDE(FindPkgConfig)
-    PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
-    PKG_SEARCH_MODULE(SDL2_image REQUIRED SDL2_image)
-endif()
+
+find_package(sdl2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 
 INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})

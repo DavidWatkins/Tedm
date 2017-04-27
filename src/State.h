@@ -59,7 +59,7 @@ namespace Tedm {
     protected:
 
         const Game &game;
-        const Context &ctx;
+        const Context ctx;
         const Graphics &graphics;
         std::string id;
 

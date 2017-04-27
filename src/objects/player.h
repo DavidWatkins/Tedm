@@ -9,7 +9,7 @@
 #include <string>
 #include "objects/object.h"
 
-class Player_base : public Object {
+class Player_base : public Tedm::Object {
 public:
     Player_base(const int x, const int y, const int h, const int w) : Object(x,y,h,w) {
     };
