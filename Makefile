@@ -11,7 +11,6 @@ ifeq ($(UNAME_S),Darwin)
 endif
 LIBS+= -lSDL2main -lSDL2 -lSDL2_image
 
-#CXX=graphics++
 CXX=g++
 RM=rm -f
 CXXFLAGS=--std=c++1z -O2 -I$(INC_DIR)

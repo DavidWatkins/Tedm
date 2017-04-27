@@ -10,10 +10,16 @@ public:
     SDL_Texture *sprite;
     SDL_Rect src;
     SDL_Rect tgt;
+    Tedm::Graphics *graphics;
     Sprite_base() {}
-    Sprite_base(SDL_Renderer *renderer, std::string filename, int height, \
+    /*Sprite_base(SDL_Renderer *renderer, std::string filename, int height, \
             int width) {
 
+        set_height_width(height, width);
+        set_sprite(renderer, filename);
+    }*/
+    Sprite_base(Tedm::Graphics &g, std::string filename, int height, \
+            int width) : graphics{&g} {}
         set_height_width(height, width);
         set_sprite(renderer, filename);
     }
@@ -24,8 +30,8 @@ public:
         }
     }
 
-    void set_sprite(SDL_Renderer *renderer, std::string filename) {
-//        sprite = Tedm::Graphics::loadTexture(renderer, filename);
+    void set_sprite(std::string filename) {
+        sprite = graphics->loadTexture(filename);
     }
 
     void set_height_width(int height, int width) {
