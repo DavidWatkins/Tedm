@@ -44,7 +44,7 @@ set(SOURCE_FILES
         src/Graphics.cpp
         src/Graphics.h
         src/State.cpp
-        src/State.h)
+        src/State.h src/events/EventTrigger.cpp src/events/EventTrigger.h)
 
 set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 

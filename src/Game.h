@@ -31,8 +31,6 @@ namespace Tedm {
 
         void setWindowTitle(std::string windowTitle);
 
-        void setEventHandler(EventHandler &eventHandler);
-
         void shutdown();
 
         void registerState(std::string id, std::shared_ptr<State> s);
