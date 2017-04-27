@@ -3,7 +3,3 @@
 //
 
 #include "State.h"
-
-Tedm::State::State() {
-
-}

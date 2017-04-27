@@ -2,19 +2,18 @@
 // Created by david on 4/27/17.
 //
 
-#include "utils/Timer.h"
 #include "Game.h"
 
-Tedm::Game::Game() : ctx(Context()), currentState(graphics) {
+Tedm::Game::Game() : ctx(Context()), startStateId("")  {
     ctx.width = 800;
     ctx.height = 600;
 //    ctx.bpp = 32;
 //    ctx.videoModeFlags = (SDL_HWSURFACE | SDL_DOUBLEBUF);
     ctx.windowTitle = "";
-    log.setLevel(Logger::Level::LOG_INFO);
+    log.setLevel(Logger::LogLevel::LOG_INFO);
 }
 
-Tedm::Game::Game(Tedm::Context ctx) : ctx(ctx), currentState(graphics)  {
+Tedm::Game::Game(Tedm::Context ctx) : ctx(ctx), startStateId("")  {
 }
 
 Tedm::Game::~Game() {
@@ -27,20 +26,32 @@ void Tedm::Game::mainLoop() {
         exit(-1);
     }
 
+    //TODO add check for startstate existing
+    std::shared_ptr<State> currentState = state_id_dict[startStateId];
+
     if(!init()) {
         log.log_error("Initialization failure; aborting execution");
         exit(-1);
-    } else if(!currentState.init()) {
+    } else if(!currentState->init()) {
         log.log_error("User initialization failure; aborting execution");
         destroy();
         exit(-1);
     }
 
-    Event event;
     Timer fps;
 
     log.log_debug("Starting App execute loop");
     while(ctx.isRunning) {
+        //TODO Check that state exists
+        if(doTransition) {
+            log.log_info("Transitioning from " + currentStateId + " to " + nextStateId);
+            std::shared_ptr<State> nextState = state_id_dict[nextStateId];
+            currentState->destroy();
+            if(!nextState->init()) {
+                log.log_error("User initialization failure; aborting execution");
+            }
+        }
+
         // pull time
         fps.start();
 
@@ -51,10 +62,10 @@ void Tedm::Game::mainLoop() {
 
         if(!ctx.isPaused) {
             // update the scene
-            currentState.update();
+            currentState->update();
 
             // render the scene
-            currentState.render();
+            currentState->render();
 
             if( fps.get_ticks() < 1000 / ctx.targetFramerate ) {
                 SDL_Delay( ( 1000 / ctx.targetFramerate ) - fps.get_ticks() );
@@ -63,7 +74,7 @@ void Tedm::Game::mainLoop() {
     }
 
     // done; destroy
-    currentState.destroy();
+    currentState->destroy();
     destroy();
 }
 
@@ -90,7 +101,7 @@ void Tedm::Game::shutdown() {
     ctx.isRunning = false;
 }
 
-void Tedm::Game::registerState(std::string id, Tedm::State s) {
+void Tedm::Game::registerState(std::string id, std::shared_ptr<Tedm::State> s) {
     state_id_dict.insert(std::make_pair(id, s));
 }
 
@@ -128,6 +139,7 @@ void Tedm::Game::destroy() {
     log.log_debug("Exiting game...");
     // standard cleanup
     graphics.destroy();
+
     SDL_Quit();
 }
 
@@ -141,9 +153,7 @@ void Tedm::Game::resume() {
     //TODO add event on resume
 }
 
-bool Tedm::Game::collision(Object &obj) {
-    for(auto &x : objects) {
-        if(x.collision(obj)) return true;
-    }
-    return false;
+void Tedm::Game::transition(std::string newStateId) {
+    nextStateId = newStateId;
+    doTransition = true;
 }

@@ -53,7 +53,7 @@ set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 foreach (_src ${TARGETS})
     get_filename_component(EXEC_NAME ${_src} NAME_WE)
 
-    add_executable(${EXEC_NAME} ${_src} ${SOURCE_FILES})
+    add_executable(${EXEC_NAME} ${SOURCE_FILES} ${_src})
         MESSAGE(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
     TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} SDL2_image)
 endforeach()

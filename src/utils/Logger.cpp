@@ -4,38 +4,44 @@
 
 #include "Logger.h"
 
-void Tedm::Logger::log(Tedm::Logger::Level level, std::string msg) {
-    if(level >= getLevel()) {
-        std::cout << Tedm::Logger::level_strings[int(level)] << ": " << msg << std::endl;
+namespace Tedm {
+    void Logger::log(Logger::LogLevel msg_level, std::string msg) {
+        if(msg_level >= getLevel()) {
+            std::cout << Logger::level_strings[int(msg_level)] << ": " << msg << std::endl;
+        }
     }
-}
 
-Tedm::Logger::Level Tedm::Logger::getLevel() {
-    return level;
-}
+    Logger::LogLevel Logger::getLevel() {
+        return Logger::level;
+    }
 
-void Tedm::Logger::setLevel(Tedm::Logger::Level level) {
-    Tedm::Logger::level = level;
-}
+    void Logger::setLevel(Logger::LogLevel level) {
+        Logger::level = level;
+    }
 
-Tedm::Logger::Logger(Tedm::Logger::Level level) {
-    Tedm::Logger::level = level;
-}
+    void Logger::log_error(std::string msg) {
+        log(Logger::LogLevel::LOG_ERROR, msg);
+    }
 
-Tedm::Logger::~Logger() { }
+    void Logger::log_warning(std::string msg) {
+        log(Logger::LogLevel::LOG_WARN, msg);
+    }
 
-void Tedm::Logger::log_error(std::string msg) {
-    log(Level::LOG_ERROR, msg);
-}
+    void Logger::log_info(std::string msg) {
+        log(Logger::LogLevel::LOG_INFO, msg);
+    }
 
-void Tedm::Logger::log_warning(std::string msg) {
-    log(Level::LOG_WARN, msg);
-}
+    void Logger::log_debug(std::string msg) {
+        log(Logger::LogLevel::LOG_DEBUG, msg);
+    }
 
-void Tedm::Logger::log_info(std::string msg) {
-    log(Level::LOG_INFO, msg);
-}
+    const std::string Logger::level_strings[5] = {
+        "DEBUG",
+        "INFO",
+        "WARN",
+        "ERROR",
+        "NONE"
+    };
 
-void Tedm::Logger::log_debug(std::string msg) {
-    log(Level::LOG_DEBUG, msg);
+    Logger::LogLevel Logger::level = Logger::LogLevel::LOG_NONE;
 }

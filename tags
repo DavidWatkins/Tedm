@@ -49,13 +49,13 @@ JoyButtonListener	src/events/EventListener.h	/^    class JoyButtonListener {$/;"
 JoyHatListener	src/events/EventListener.h	/^    class JoyHatListener {$/;"	c	namespace:Tedm
 KeyEventListener	src/events/EventListener.h	/^    class KeyEventListener {$/;"	c	namespace:Tedm
 LIBS	Makefile	/^LIBS=$/;"	m
-LOG_DEBUG	src/utils/Logger.h	/^            LOG_DEBUG = 1;$/;"	e	enum:Tedm::Logger::Level
-LOG_ERROR	src/utils/Logger.h	/^            LOG_ERROR = 4;$/;"	e	enum:Tedm::Logger::Level
-LOG_INFO	src/utils/Logger.h	/^            LOG_INFO = 2;$/;"	e	enum:Tedm::Logger::Level
-LOG_NONE	src/utils/Logger.h	/^            LOG_NONE = 5;$/;"	e	enum:Tedm::Logger::Level
-LOG_WARN	src/utils/Logger.h	/^            LOG_WARN = 3;$/;"	e	enum:Tedm::Logger::Level
-Level	src/utils/Logger.h	/^        enum Level {$/;"	g	class:Tedm::Logger
-Logger	src/utils/Logger.cpp	/^Tedm::Logger::Logger(Tedm::Logger::Level level) {$/;"	f	class:Tedm::Logger
+LOG_DEBUG	src/utils/Logger.h	/^            LOG_DEBUG = 1;$/;"	e	enum:Tedm::Logger::LogLevel
+LOG_ERROR	src/utils/Logger.h	/^            LOG_ERROR = 4;$/;"	e	enum:Tedm::Logger::LogLevel
+LOG_INFO	src/utils/Logger.h	/^            LOG_INFO = 2;$/;"	e	enum:Tedm::Logger::LogLevel
+LOG_NONE	src/utils/Logger.h	/^            LOG_NONE = 5;$/;"	e	enum:Tedm::Logger::LogLevel
+LOG_WARN	src/utils/Logger.h	/^            LOG_WARN = 3;$/;"	e	enum:Tedm::Logger::LogLevel
+LogLevel	src/utils/Logger.h	/^        enum LogLevel {$/;"	g	class:Tedm::Logger
+Logger	src/utils/Logger.cpp	/^Tedm::Logger::Logger(Tedm::Logger::LogLevel level) {$/;"	f	class:Tedm::Logger
 Logger	src/utils/Logger.h	/^        Logger() : level(level) {}$/;"	f	class:Tedm::Logger
 Logger	src/utils/Logger.h	/^    class Logger {$/;"	c	namespace:Tedm
 MouseButtonListener	src/events/EventListener.h	/^    class MouseButtonListener {$/;"	c	namespace:Tedm
@@ -219,7 +219,7 @@ g	src/State.h	/^        Graphics &g;$/;"	m	class:Tedm::State
 getEvent	src/events/Event.h	/^        SDL_Event &getEvent() { return e; }$/;"	f	class:Tedm::Event
 getID	src/State.h	/^        std::string getID() { return id; }$/;"	f	class:Tedm::State
 getKeySymbol	src/events/Event.h	/^        SDL_Keycode getKeySymbol() { return e.key.keysym.sym; }$/;"	f	class:Tedm::Event
-getLevel	src/utils/Logger.cpp	/^Tedm::Logger::Level Tedm::Logger::getLevel() {$/;"	f	class:Tedm::Logger
+getLevel	src/utils/Logger.cpp	/^Tedm::Logger::LogLevel Tedm::Logger::getLevel() {$/;"	f	class:Tedm::Logger
 getMouseX	src/events/Event.h	/^        int getMouseX() { return e.motion.x; }$/;"	f	class:Tedm::Event
 getMouseXRel	src/events/Event.h	/^        int getMouseXRel() { return e.motion.xrel; }$/;"	f	class:Tedm::Event
 getMouseY	src/events/Event.h	/^        int getMouseY() { return e.motion.y; }$/;"	f	class:Tedm::Event
@@ -255,12 +255,12 @@ is_paused	src/utils/Timer.cpp	/^bool Timer::is_paused()$/;"	f	class:Timer
 is_started	src/utils/Timer.cpp	/^bool Timer::is_started()$/;"	f	class:Timer
 l	src/Graphics.h	/^        Logger l;$/;"	m	class:Tedm::Graphics
 leftButtonPress	src/events/Event.h	/^        bool leftButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_LEFT))!=0; }$/;"	f	class:Tedm::Event
-level	src/utils/Logger.h	/^        static Level level;$/;"	m	class:Tedm::Logger
+level	src/utils/Logger.h	/^        static LogLevel level;$/;"	m	class:Tedm::Logger
 level_strings	src/utils/Logger.h	/^        const std::string level_strings[] = {$/;"	m	class:Tedm::Logger
 loadIMG	src/Graphics.cpp	/^SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {$/;"	f	class:Tedm::Graphics
 loadTexture	src/Graphics.cpp	/^SDL_Texture *Tedm::Graphics::loadTexture(std::string path) {$/;"	f	class:Tedm::Graphics
 log	src/Game.h	/^        Logger log;$/;"	m	class:Tedm::Game
-log	src/utils/Logger.cpp	/^void Tedm::Logger::log(Tedm::Logger::Level level, std::string msg) {$/;"	f	class:Tedm::Logger
+log	src/utils/Logger.cpp	/^void Tedm::Logger::log(Tedm::Logger::LogLevel level, std::string msg) {$/;"	f	class:Tedm::Logger
 log_debug	src/utils/Logger.cpp	/^void Tedm::Logger::log_debug(std::string msg) {$/;"	f	class:Tedm::Logger
 log_error	src/utils/Logger.cpp	/^void Tedm::Logger::log_error(std::string msg) {$/;"	f	class:Tedm::Logger
 log_info	src/utils/Logger.cpp	/^void Tedm::Logger::log_info(std::string msg) {$/;"	f	class:Tedm::Logger
@@ -283,7 +283,7 @@ objects	src/Game.h	/^        std::vector<Object> objects;$/;"	m	class:Tedm::Game
 p	demos/anakin_side.cpp	/^    Player p;$/;"	m	class:Anakin_side_scroller	file:
 p1	demos/pong.cpp	/^    Player p1, p2;$/;"	m	class:Pong	file:
 p2	demos/pong.cpp	/^    Player p1, p2;$/;"	m	class:Pong	file:
-parent	src/State.h	/^        Game parent;$/;"	m	class:Tedm::State
+game	src/State.h	/^        Game game;$/;"	m	class:Tedm::State
 parse_config	old/game.cpp	/^Game::parse_config(std::string config_file,$/;"	f	class:Game
 pause	src/Game.cpp	/^void Tedm::Game::pause() {$/;"	f	class:Tedm::Game
 pause	src/utils/Timer.cpp	/^void Timer::pause()$/;"	f	class:Timer
@@ -304,7 +304,7 @@ resume	src/Game.cpp	/^void Tedm::Game::resume() {$/;"	f	class:Tedm::Game
 rightButtonPress	src/events/Event.h	/^        bool rightButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_RIGHT))!=0; }$/;"	f	class:Tedm::Event
 run	old/game.cpp	/^int Game::run() {$/;"	f	class:Game
 setEventHandler	src/Game.cpp	/^void Tedm::Game::setEventHandler(EventHandler &eventHandler) {$/;"	f	class:Tedm::Game
-setLevel	src/utils/Logger.cpp	/^void Tedm::Logger::setLevel(Tedm::Logger::Level level) {$/;"	f	class:Tedm::Logger
+setLevel	src/utils/Logger.cpp	/^void Tedm::Logger::setLevel(Tedm::Logger::LogLevel level) {$/;"	f	class:Tedm::Logger
 setTargetFramerate	src/Game.cpp	/^void Tedm::Game::setTargetFramerate(int fps) {$/;"	f	class:Tedm::Game
 setWindowTitle	src/Game.cpp	/^void Tedm::Game::setWindowTitle(std::string windowTitle) {$/;"	f	class:Tedm::Game
 setWindowTitle	src/Graphics.cpp	/^void Tedm::Graphics::setWindowTitle(std::string windowTitle) {$/;"	f	class:Tedm::Graphics

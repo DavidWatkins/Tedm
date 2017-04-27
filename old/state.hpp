@@ -6,9 +6,9 @@
 #ifndef __STATE_HPP__
 #define __STATE_HPP__
 
-#include "event.hpp"
 #include <queue>
 #include <iostream>
+#include "events/Event.h"
 
 //template<typename T>
 class State_base {

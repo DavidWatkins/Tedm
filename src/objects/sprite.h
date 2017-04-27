@@ -25,7 +25,7 @@ public:
     }
 
     void set_sprite(SDL_Renderer *renderer, std::string filename) {
-        sprite = Tedm::Graphics::loadTexture(renderer, filename);
+//        sprite = Tedm::Graphics::loadTexture(renderer, filename);
     }
 
     void set_height_width(int height, int width) {

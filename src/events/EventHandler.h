@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <memory>
 
 #include "Event.h"
 #include "EventListener.h"
@@ -14,98 +15,101 @@
 namespace Tedm {
     class EventHandler {
     public:
-        virtual void OnEvent(Event event);
+        virtual void OnInputFocus(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnInputFocus(EventListener eventListener);
+        virtual void OnInputBlur(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnInputBlur(EventListener eventListener);
+        virtual void OnKeyDown(std::shared_ptr<KeyEventListener> eventListener);
 
-        virtual void OnKeyDown(KeyEventListener eventListener);
+        virtual void OnKeyUp(std::shared_ptr<KeyEventListener> eventListener);
 
-        virtual void OnKeyUp(KeyEventListener eventListener);
+        virtual void OnMouseFocus(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnMouseFocus(EventListener eventListener);
+        virtual void OnMouseBlur(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnMouseBlur(EventListener eventListener);
+        virtual void OnMouseMove(std::shared_ptr<MouseMoveListener> eventListener);
 
-        virtual void OnMouseMove(MouseMoveListener eventListener);
+        virtual void OnMouseWheel(std::shared_ptr<MouseWheelListener> eventListener);
 
-        virtual void OnMouseWheel(MouseWheelListener eventListener);
+        virtual void OnLButtonDown(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnLButtonDown(MouseButtonListener eventListener);
+        virtual void OnLButtonUp(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnLButtonUp(MouseButtonListener eventListener);
+        virtual void OnRButtonDown(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnRButtonDown(MouseButtonListener eventListener);
+        virtual void OnRButtonUp(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnRButtonUp(MouseButtonListener eventListener);
+        virtual void OnMButtonDown(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnMButtonDown(MouseButtonListener eventListener);
+        virtual void OnMButtonUp(std::shared_ptr<MouseButtonListener> eventListener);
 
-        virtual void OnMButtonUp(MouseButtonListener eventListener);
+        virtual void OnJoyAxis(std::shared_ptr<JoyAxisListener> eventListener);
 
-        virtual void OnJoyAxis(JoyAxisListener eventListener);
+        virtual void OnJoyButtonDown(std::shared_ptr<JoyButtonListener> eventListener);
 
-        virtual void OnJoyButtonDown(JoyButtonListener eventListener);
+        virtual void OnJoyButtonUp(std::shared_ptr<JoyButtonListener> eventListener);
 
-        virtual void OnJoyButtonUp(JoyButtonListener eventListener);
+        virtual void OnJoyHat(std::shared_ptr<JoyHatListener> eventListener);
 
-        virtual void OnJoyHat(JoyHatListener eventListener);
+        virtual void OnJoyBall(std::shared_ptr<JoyBallListener> eventListener);
 
-        virtual void OnJoyBall(JoyBallListener eventListener);
+        virtual void OnMinimize(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnMinimize(EventListener eventListener);
+        virtual void OnRestore(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnRestore(EventListener eventListener);
+        virtual void OnResize(std::shared_ptr<WindowResizeListener> eventListener);
 
-        virtual void OnResize(WindowResizeListener eventListener);
+        virtual void OnExpose(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnExpose(EventListener eventListener);
+        virtual void OnExit(std::shared_ptr<EventListener> eventListener);
 
-        virtual void OnExit(EventListener eventListener);
-
-        virtual void OnUser(UserListener eventListener);
+        virtual void OnUser(std::shared_ptr<UserListener> eventListener);
 
         bool poll();
 
         void process();
 
     protected:
-        std::vector<EventListener> _InputFocusEvents;
-        std::vector<EventListener> _InputBlurEvents;
-        std::vector<EventListener> _MouseFocusEvents;
-        std::vector<EventListener> _MouseBlurEvents;
-        std::vector<EventListener> _MinimizeEvents;
-        std::vector<EventListener> _RestoreEvents;
-        std::vector<EventListener> _ExposeEvents;
-        std::vector<EventListener> _ExitEvents;
+        std::vector<std::shared_ptr<EventListener>> _InputFocusEvents;
+        std::vector<std::shared_ptr<EventListener>> _InputBlurEvents;
+        std::vector<std::shared_ptr<EventListener>> _MouseFocusEvents;
+        std::vector<std::shared_ptr<EventListener>> _MouseBlurEvents;
+        std::vector<std::shared_ptr<EventListener>> _MinimizeEvents;
+        std::vector<std::shared_ptr<EventListener>> _RestoreEvents;
+        std::vector<std::shared_ptr<EventListener>> _ExposeEvents;
+        std::vector<std::shared_ptr<EventListener>> _ExitEvents;
 
-        std::vector<UserListener> _UserEvents;
+        std::vector<std::shared_ptr<UserListener>> _UserEvents;
 
-        std::vector<WindowResizeListener> _WindowResizeEvents;
+        std::vector<std::shared_ptr<WindowResizeListener>> _WindowResizeEvents;
 
-        std::vector<JoyBallListener> _JoyBallEvents;
+        std::vector<std::shared_ptr<JoyBallListener>> _JoyBallEvents;
 
-        std::vector<JoyHatListener> _JoyHatEvents;
+        std::vector<std::shared_ptr<JoyHatListener>> _JoyHatEvents;
 
-        std::vector<JoyButtonListener> _JoyButtonDownEvents;
-        std::vector<JoyButtonListener> _JoyButtonUpEvents;
+        std::vector<std::shared_ptr<JoyButtonListener>> _JoyButtonDownEvents;
+        std::vector<std::shared_ptr<JoyButtonListener>> _JoyButtonUpEvents;
 
-        std::vector<JoyAxisListener> _JoyAxisEvents;
+        std::vector<std::shared_ptr<JoyAxisListener>> _JoyAxisEvents;
 
-        std::vector<MouseButtonListener> _LButtonDownEvents;
-        std::vector<MouseButtonListener> _LButtonUpEvents;
-        std::vector<MouseButtonListener> _RButtonDownEvents;
-        std::vector<MouseButtonListener> _RButtonUpEvents;
-        std::vector<MouseButtonListener> _MButtonDownEvents;
-        std::vector<MouseButtonListener> _MButtonUpEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _LButtonDownEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _LButtonUpEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _RButtonDownEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _RButtonUpEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _MButtonDownEvents;
+        std::vector<std::shared_ptr<MouseButtonListener>> _MButtonUpEvents;
 
-        std::vector<MouseMoveListener> _MouseMoveEvents;
+        std::vector<std::shared_ptr<MouseMoveListener>> _MouseMoveEvents;
 
-        std::vector<MouseWheelListener> _MouseWheelEvents;
+        std::vector<std::shared_ptr<MouseWheelListener>> _MouseWheelEvents;
 
-        std::vector<KeyEventListener> _KeyDownEvents;
-        std::vector<KeyEventListener> _KeyUpEvents;
+        std::vector<std::shared_ptr<KeyEventListener>> _KeyDownEvents;
+        std::vector<std::shared_ptr<KeyEventListener>> _KeyUpEvents;
+
+//        std::vector<std::shared_ptr<EventListener>> _onUpdate;
+//        std::vector<std::shared_ptr<
+
+        Event event;
     };
 }
 
