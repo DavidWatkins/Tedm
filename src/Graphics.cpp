@@ -126,3 +126,11 @@ Tedm::Graphics::~Graphics() {
     if(window)
         SDL_DestroyWindow( window );
 }
+
+void Tedm::Graphics::draw(SDL_Texture *texture) {
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+}
+
+void Tedm::Graphics::draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt) {
+    SDL_RenderCopy(renderer, texture, src, tgt);
+}

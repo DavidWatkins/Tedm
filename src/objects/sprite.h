@@ -12,10 +12,10 @@ namespace Tedm {
         SDL_Texture *sprite;
         SDL_Rect src;
         SDL_Rect tgt;
-        Tedm::Graphics *graphics;
+        Graphics *graphics;
         Sprite_base() {}
 
-        Sprite_base(Tedm::Graphics &g, std::string filename, int height, int width) : graphics{&g} {
+        Sprite_base(Graphics &g, std::string filename, int height, int width) : graphics{&g} {
             set_height_width(height, width);
             set_sprite(filename);
         }
@@ -56,6 +56,10 @@ namespace Tedm {
 
         SDL_Rect *get_src() {
             return &src;
+        }
+
+        void draw() {
+            graphics->draw(sprite, &src, &tgt);
         }
     };
 };
