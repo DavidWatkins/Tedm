@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <sstream>
 #include "state.hpp"
-#include "environment.hpp"
+#include "objects/environment.hpp"
 #include "event.hpp"
-#include "graphics.hpp"
+#include "Graphics.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -40,6 +40,8 @@ void Game::add_control(std::string func,
         std::map<std::string, Event>&str_func_map,
         std::map<std::string, std::pair
         <SDL_Keycode, Event>> &str_key_func_map){
+    if(!str_key_func_map.find(func))
+        return;
     std::pair<SDL_Keycode, Event> key_func_pair = str_key_func_map.find(func)->second;
     controls.push_back(std::make_pair(key_func_pair.first, key_func_pair.second));
 }

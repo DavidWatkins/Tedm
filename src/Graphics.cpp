@@ -1,10 +1,7 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <iostream>
-#include <string>
-#include "graphics.hpp"
 
-bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
+#include "Graphics.hpp"
+
+bool Tedm::Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
         /*SDL_Surface *screen,*/ int height, int width, std::string name) {
     const int imgFlags = IMG_INIT_PNG|IMG_INIT_JPG;
     SDL_Window *window = NULL;
@@ -48,7 +45,7 @@ bool Graphics::init(SDL_Window **w, SDL_Renderer **renderer, \
     return true;
 }
 
-SDL_Texture *Graphics::loadTexture(SDL_Renderer *renderer, std::string path) {
+SDL_Texture *Tedm::Graphics::loadTexture(SDL_Renderer *renderer, std::string path) {
     //The final texture
     SDL_Texture* newTexture = NULL;
 
@@ -70,7 +67,7 @@ SDL_Texture *Graphics::loadTexture(SDL_Renderer *renderer, std::string path) {
     return newTexture;
 }
 
-SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
+SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     SDL_Surface* optimizedSurface = NULL;
 
     std::cerr << "Loading: " << filename << std::endl;
@@ -92,14 +89,14 @@ SDL_Surface *Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
     return optimizedSurface;
 }
 
-SDL_Texture *Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
+SDL_Texture *Tedm::Graphics::add_background(SDL_Renderer *renderer, std::string filename) {
     SDL_Texture *texture {loadTexture(renderer, filename)};
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
     return texture;
 }
 
-void Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
+void Tedm::Graphics::update_screen(SDL_Renderer *renderer, SDL_Texture *texture,
                              SDL_Rect &src, SDL_Rect &dst) {
 
 }

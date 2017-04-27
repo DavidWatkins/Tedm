@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.1)
 project(Tedm)
 
-include_directories(${CMAKETEST_SOURCE_DIR}/include)
-include_directories(${CMAKETEST_SOURCE_DIR}/src)
-include_directories(${CMAKETEST_SOURCE_DIR}/demos)
+include_directories(include)
+include_directories(src)
+include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
 
 set(SDL2_IMAGE_INCLUDE_DIR /usr/include/SDL2)
@@ -19,28 +19,24 @@ include_directories(${SDL2_INCLUDE_DIR}
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1z -O2")
 
 set(SOURCE_FILES
-        include/environment.hpp
-        include/Event.h
+        src/objects/environment.hpp
         include/game.hpp
-        include/gamewithloopEXAMPLE.h
-        include/graphics.hpp
+        src/Graphics.hpp
         include/Input.h
         include/KeyboardEvent.h
-        include/object.hpp
-        include/player.hpp
-        include/sprite.hpp
+        src/objects/object.hpp
+        src/objects/player.hpp
+        src/objects/sprite.hpp
         include/state.hpp
-        include/timer.hpp
+        src/utils/Timer.hpp
 
-        src/environment.cpp
-        src/Event.cpp
-        src/game.cpp
-        src/gamewithloopEXAMPLE.cpp
-        src/graphics.cpp
-        src/Input.cpp
-        src/KeyboardEvent.cpp
-        src/timer.cpp
-        )
+        src/objects/environment.cpp
+        old/game.cpp
+        src/Graphics.cpp
+        old/Input.cpp
+        old/KeyboardEvent.cpp
+        src/utils/Timer.cpp
+        src/State.cpp src/State.h src/events/Event.cpp src/events/Event.h src/Context.cpp src/Context.h src/Game.cpp src/Game.h src/events/EventHandler.cpp src/events/EventHandler.h src/objects/Surface.cpp src/objects/Surface.h src/utils/Logger.cpp src/utils/Logger.h)
 
 set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 
@@ -48,5 +44,6 @@ foreach (_src ${TARGETS})
     get_filename_component(EXEC_NAME ${_src} NAME_WE)
 
     add_executable(${EXEC_NAME} ${_src} ${SOURCE_FILES})
-    TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARY})
+        MESSAGE(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+    TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} SDL2_image)
 endforeach()

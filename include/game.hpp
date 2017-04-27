@@ -11,9 +11,9 @@
 #include <functional>
 #include <map>
 #include <queue>
-#include "player.hpp"
+#include "objects/player.hpp"
 #include "state.hpp"
-#include "timer.hpp"
+#include "utils/Timer.hpp"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;

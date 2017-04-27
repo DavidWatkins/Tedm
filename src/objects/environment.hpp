@@ -6,7 +6,7 @@
 #ifndef __ENVIRONMENT_HPP__
 #define __ENVIRONMENT_HPP__
 
-#include "player.hpp"
+#include "objects/player.hpp"
 #include "event.hpp"
 #include <string>
 #include <iostream>

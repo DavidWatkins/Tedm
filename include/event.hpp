@@ -9,6 +9,7 @@ Purpose: Define event for game object to subscribe/respond to
 #include <map>
 #include <vector>
 #include <iostream>
+#include <functional>
 
 //template<typename T>
 class Event {

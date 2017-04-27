@@ -7,8 +7,8 @@
 #include "game.hpp"
 #include "event.hpp"
 #include "state.hpp"
-#include "sprite.hpp"
-#include "player.hpp"
+#include "objects/sprite.hpp"
+#include "objects/player.hpp"
 #include <iostream>
 
 using namespace std;

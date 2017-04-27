@@ -3,7 +3,7 @@
     copied from SDL tutorials
 */
 
-#include "timer.hpp"
+#include "utils/Timer.hpp"
 
 Timer::Timer()
 {

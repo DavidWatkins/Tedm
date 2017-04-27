@@ -21,6 +21,16 @@ protected:
 public:
     State_base state;
     Sprite_base sprite;
+
+    Object() {
+        pos.x = 0;
+        pos.y = 0;
+        size.h = 0;
+        size.w = 0;
+        sprite.set_source_pos(0, 0);
+        sprite.set_height_width(0, 0);
+    }
+
     Object(const int x, const int y, const int h, const int w) {
         pos.x = x;
         pos.y = y;

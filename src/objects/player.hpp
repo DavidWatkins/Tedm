@@ -7,7 +7,7 @@
 #define __PLAYER_HPP__
 
 #include <string>
-#include "object.hpp"
+#include "objects/object.hpp"
 
 class Player_base : public Object {
 public:
