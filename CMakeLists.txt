@@ -36,7 +36,7 @@ set(SOURCE_FILES
         old/Input.cpp
         old/KeyboardEvent.cpp
         src/utils/Timer.cpp
-        src/State.cpp src/State.h src/events/Event.cpp src/events/Event.h src/Context.cpp src/Context.h src/Game.cpp src/Game.h src/events/EventHandler.cpp src/events/EventHandler.h src/objects/Surface.cpp src/objects/Surface.h src/utils/Logger.cpp src/utils/Logger.h)
+        src/State.cpp src/State.h src/events/Event.cpp src/events/Event.h src/Context.cpp src/Context.h src/Game.cpp src/Game.h src/events/EventHandler.cpp src/events/EventHandler.h src/objects/Surface.cpp src/objects/Surface.h src/utils/Logger.cpp src/utils/Logger.h src/events/EventListener.cpp src/events/EventListener.h)
 
 set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 

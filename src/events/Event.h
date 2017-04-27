@@ -33,6 +33,33 @@ namespace Tedm {
          */
         SDL_Event &getEvent() { return e; }
 
+        int getType() { return e.type; }
+
+        SDL_Keycode getKeySymbol() { return e.key.keysym.sym; }
+
+        int getMouseX() { return e.motion.x; }
+
+        int getMouseY() { return e.motion.y; }
+
+        int getMouseXRel() { return e.motion.xrel; }
+
+        int getMouseYRel() { return e.motion.yrel; }
+
+        bool leftButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_LEFT))!=0; }
+
+        bool rightButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_RIGHT))!=0; }
+
+        bool middleButtonPress() { return (e.motion.state&SDL_BUTTON(SDL_BUTTON_MIDDLE))!=0; }
+
+        int currentMouseButtonPress() { return e.button.button; }
+
+        int currentMouseButtonX() { return e.button.x; }
+
+        int currentMouseButtonY() { return e.button.y; }
+
+        getNewWindowWidth
+                int getNewWindowHeight() { return e.resize.h; }
+
     private:
         SDL_Event e;
     };
