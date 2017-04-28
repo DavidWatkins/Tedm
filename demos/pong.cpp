@@ -5,9 +5,11 @@
 #include <vector>
 #include <math.h>
 #include "Game.h"
-#include "objects/sprite.h"
 #include "objects/player.h"
-#include <iostream>
+
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 
 using namespace std;
 using namespace Tedm;
@@ -54,7 +56,7 @@ public:
 };
 
 class Ball : public Object {
-    const double MAXBOUNCEANGLE {M_PI/12};
+    const double MAXBOUNCEANGLE = M_PI/12;
     double vx, vy;
     int start_x;
     int start_y;
@@ -143,9 +145,13 @@ class Pong_State : public State {
 public:
     Player p1, p2;
     Ball ball;
+
     Pong_State(Game &game) :
-            State(game.graphics, game),p1{Player(15, 250)},
-            p2{Player(750, 250)}, ball{Ball(375,295, 0, 0)} {}
+            State(game, "pong"),
+            p1{Player(15, 250)},
+            p2{Player(750, 250)},
+            ball{Ball(375,295, 0, 0)}{}
+
     SDL_Texture *background;
 
     void new_round() {
@@ -157,7 +163,7 @@ public:
     bool init() override {
         game.setWindowTitle("Dat Pong");
         background = graphics.add_background("resources/dat_anaking.jpg");
-        eventHandler->OnKeyDown(
+        eventHandler.addKeyDownListener(
                 make_shared<Player_KeyBoard_Listener>(
                     Player_KeyBoard_Listener(p1, p2)));
         new_round();
@@ -169,11 +175,11 @@ public:
     }
 
     void paused() override {
-        ctx.isPaused = true;
+//        context.isPaused = true;
     }
 
     void resumed() override {
-        ctx.isPaused = false;
+//        context.isPaused = false;
     }
 
     void update() override {
@@ -185,10 +191,10 @@ public:
             ball.update_trajectory(p2);
         }
 
-        if(ball.get_y() <= 0 || ball.get_y() >= ctx.height-10) {
+        if(ball.get_y() <= 0 || ball.get_y() >= context.height-10) {
             ball.update_trajectory();
         }
-        if(ball.get_x() <= 0 || ball.get_x() >= ctx.width-50) {
+        if(ball.get_x() <= 0 || ball.get_x() >= context.width-50) {
             new_round();
         }
         //render();

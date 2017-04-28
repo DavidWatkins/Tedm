@@ -35,8 +35,8 @@ EventListener	src/events/EventListener.h	/^    class EventListener {$/;"	c	names
 FRAMES_PER_SECOND	old/game.hpp	/^const int FRAMES_PER_SECOND = 12;$/;"	v
 Game	old/game.cpp	/^Game::Game(std::string title, std::string title_screen_filename, \\$/;"	f	class:Game
 Game	old/game.hpp	/^class Game {$/;"	c
-Game	src/Game.cpp	/^Tedm::Game::Game() : ctx(Context()), currentState(graphics) {$/;"	f	class:Tedm::Game
-Game	src/Game.cpp	/^Tedm::Game::Game(Tedm::Context ctx) : ctx(ctx), currentState(graphics)  {$/;"	f	class:Tedm::Game
+Game	src/Game.cpp	/^Tedm::Game::Game() : context(Context()), currentState(graphics) {$/;"	f	class:Tedm::Game
+Game	src/Game.cpp	/^Tedm::Game::Game(Tedm::Context context) : context(context), currentState(graphics)  {$/;"	f	class:Tedm::Game
 Game	src/Game.h	/^    class Game {$/;"	c	namespace:Tedm
 Graphics	src/Graphics.h	/^        Graphics() : renderer(NULL), window(NULL), initialized(false), l(Logger()) {}$/;"	f	class:Tedm::Graphics
 Graphics	src/Graphics.h	/^    class Graphics {$/;"	c	namespace:Tedm
@@ -197,8 +197,8 @@ collision	old/game.cpp	/^bool Game::collision(Object &obj) {$/;"	f	class:Game
 collision	src/Game.cpp	/^bool Tedm::Game::collision(Object &obj) {$/;"	f	class:Tedm::Game
 collision	src/objects/object.h	/^    bool collision(Object &obj) {$/;"	f	class:Object
 controls	old/game.hpp	/^    std::vector<std::pair<SDL_Keycode, Event>> controls;$/;"	m	class:Game
-ctx	src/Game.h	/^        Context ctx;$/;"	m	class:Tedm::Game
-ctx	src/State.h	/^        Context ctx;$/;"	m	class:Tedm::State
+context	src/Game.h	/^        Context context;$/;"	m	class:Tedm::Game
+context	src/State.h	/^        Context context;$/;"	m	class:Tedm::State
 currentMouseButtonPress	src/events/Event.h	/^        int currentMouseButtonPress() { return e.button.button; }$/;"	f	class:Tedm::Event
 currentMouseButtonX	src/events/Event.h	/^        int currentMouseButtonX() { return e.button.x; }$/;"	f	class:Tedm::Event
 currentMouseButtonY	src/events/Event.h	/^        int currentMouseButtonY() { return e.button.y; }$/;"	f	class:Tedm::Event

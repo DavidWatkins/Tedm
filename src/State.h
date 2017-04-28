@@ -32,12 +32,7 @@ namespace Tedm {
 namespace Tedm {
     class State {
     public:
-        State(const Graphics &graphics, Game &game) :
-                graphics(graphics), ctx(Context()), id(""), game(game) {}
-
-        State(const Graphics &graphics, Game &game, Context &ctx,
-              std::string id) : graphics(graphics), ctx(Context()), id(id),
-                                game(game) {}
+        State(Game &game, std::string id);
 
         virtual ~State() {};
 
@@ -55,18 +50,14 @@ namespace Tedm {
 
         virtual void resumed() = 0;
 
-        void setEventHandler(EventHandler &eventHandler) {
-            this->eventHandler = &eventHandler;
-        }
-
         bool operator==(const State &other) { return id == other.id; }
 
     protected:
 
         Game &game;
-        Context ctx;
-        const Graphics &graphics;
-        EventHandler *eventHandler;
+        Graphics &graphics;
+        EventHandler &eventHandler;
+        Context &context;
         std::string id;
 
     };

@@ -4,16 +4,16 @@
 
 #include "Game.h"
 
-Tedm::Game::Game() : ctx(Context()), startStateId("")  {
-    ctx.width = 800;
-    ctx.height = 600;
-//    ctx.bpp = 32;
-//    ctx.videoModeFlags = (SDL_HWSURFACE | SDL_DOUBLEBUF);
-    ctx.windowTitle = "";
+Tedm::Game::Game() : context(Context()), startStateId("")  {
+    context.width = 800;
+    context.height = 600;
+//    context.bpp = 32;
+//    context.videoModeFlags = (SDL_HWSURFACE | SDL_DOUBLEBUF);
+    context.windowTitle = "";
     log.setLevel(Logger::LogLevel::LOG_INFO);
 }
 
-Tedm::Game::Game(Tedm::Context ctx) : ctx(ctx), startStateId("")  {
+Tedm::Game::Game(Tedm::Context ctx) : context(ctx), startStateId("")  {
 }
 
 Tedm::Game::~Game() {
@@ -29,11 +29,6 @@ void Tedm::Game::mainLoop() {
     //TODO add check for startstate existing
     std::shared_ptr<State> currentState = state_id_dict[startStateId];
 
-    //Set all of the eventHandlers for the states
-    std::for_each(state_id_dict.begin(), state_id_dict.end(), [&](auto &state_pair) {
-        state_pair.second->setEventHandler(this->eventHandler);
-    });
-
     if(!init()) {
         log.log_error("Initialization failure; aborting execution");
         exit(-1);
@@ -46,7 +41,7 @@ void Tedm::Game::mainLoop() {
     Timer fps;
 
     log.log_debug("Starting App execute loop");
-    while(ctx.isRunning) {
+    while(context.isRunning) {
         //TODO Check that state exists
         if(doTransition) {
             log.log_info("Transitioning from " + currentStateId + " to " + nextStateId);
@@ -63,15 +58,15 @@ void Tedm::Game::mainLoop() {
         // check events
         eventHandler.checkListeners();
 
-        if(!ctx.isPaused) {
+        if(!context.isPaused) {
             // update the scene
             currentState->update();
 
             // render the scene
             currentState->render();
 
-            if( fps.get_ticks() < 1000 / ctx.targetFramerate ) {
-                SDL_Delay( ( 1000 / ctx.targetFramerate ) - fps.get_ticks() );
+            if( fps.get_ticks() < 1000 / context.targetFramerate ) {
+                SDL_Delay( ( 1000 / context.targetFramerate ) - fps.get_ticks() );
             }
         }
     }
@@ -83,20 +78,20 @@ void Tedm::Game::mainLoop() {
 
 void Tedm::Game::setTargetFramerate(int fps) {
     if(fps > 0 && fps <= 1000) {
-        ctx.targetFramerate = (long) floor(1000.0 / fps);
-        log.log_debug("New target frame duration: " + std::to_string(ctx.targetFramerate) + "ms");
+        context.targetFramerate = (long) floor(1000.0 / fps);
+        log.log_debug("New target frame duration: " + std::to_string(context.targetFramerate) + "ms");
     } else {
         log.log_error("Target framerate must be between 1 and 1000 (inclusive)");
     }
 }
 
 void Tedm::Game::setWindowTitle(std::string windowTitle) {
-    ctx.windowTitle = windowTitle;
-    graphics.setWindowTitle(ctx.windowTitle);
+    context.windowTitle = windowTitle;
+    graphics.setWindowTitle(context.windowTitle);
 }
 
 void Tedm::Game::shutdown() {
-    ctx.isRunning = false;
+    context.isRunning = false;
 }
 
 void Tedm::Game::registerState(std::string id, std::shared_ptr<Tedm::State> s) {
@@ -123,12 +118,12 @@ bool Tedm::Game::init() {
     }
 
     // try to setup root surface
-    if(!graphics.init(ctx.width, ctx.height, ctx.windowTitle)) {
+    if(!graphics.init(context.width, context.height, context.windowTitle)) {
         log.log_error("Unable to initialize graphics");
         return false;
     }
 
-    graphics.setWindowTitle(ctx.windowTitle);
+    graphics.setWindowTitle(context.windowTitle);
 
     return true;
 }
@@ -142,12 +137,12 @@ void Tedm::Game::destroy() {
 }
 
 void Tedm::Game::pause() {
-    ctx.isPaused = true;
+    context.isPaused = true;
     //TODO Add event on pause
 }
 
 void Tedm::Game::resume() {
-    ctx.isPaused = false;
+    context.isPaused = false;
     //TODO add event on resume
 }
 
