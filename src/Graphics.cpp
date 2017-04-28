@@ -59,7 +59,6 @@ SDL_Texture *Tedm::Graphics::loadTexture(std::string path) const {
         printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
     } else {
         //Create texture from surface pixels
-        printf("%d\n", renderer);
         newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
         if( newTexture == NULL ) {
             //TODO REPLACE WITH LOGGER
