@@ -24,12 +24,12 @@ set(SOURCE_FILES
         src/events/EventHandler.h
         src/events/EventListener.cpp
         src/events/EventListener.h
+        src/events/EventTrigger.cpp
+        src/events/EventTrigger.h
 
         src/img/Texture.cpp
         src/img/Texture.h
 
-        src/objects/environment.cpp
-        src/objects/environment.h
         src/objects/object.h
         src/objects/player.h
         src/objects/sprite.h
@@ -46,10 +46,9 @@ set(SOURCE_FILES
         src/Graphics.cpp
         src/Graphics.h
         src/State.cpp
-        src/State.h #src/events/EventTrigger.cpp src/events/EventTrigger.h
-        )
+        src/State.h)
 
-set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
+set(TARGETS demos/anakin_side.cpp demos/pong.cpp demos/part1.cpp demos/part2.cpp demos/part3.cpp)
 
 foreach (_src ${TARGETS})
     get_filename_component(EXEC_NAME ${_src} NAME_WE)

@@ -38,6 +38,8 @@ Tedm::Game::Game() : context(Context()), startStateId("")  {
 }
 
 Tedm::Game::Game(Tedm::Context ctx) : context(ctx), startStateId("")  {
+    doTransition = false;
+    log.setLevel(Logger::LogLevel::LOG_INFO);
 }
 
 Tedm::Game::~Game() {
@@ -177,4 +179,8 @@ void Tedm::Game::resume() {
 void Tedm::Game::transition(std::string newStateId) {
     nextStateId = newStateId;
     doTransition = true;
+}
+
+void Tedm::Game::setStartState(std::string startStateId) {
+    this->startStateId = startStateId;
 }

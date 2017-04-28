@@ -101,6 +101,12 @@ namespace Tedm {
          * @param newStateId the string identifier of the new state
          */
         void transition(std::string newStateId);
+
+        /**
+         * @brief Set the start state of the Game
+         * @param startStateId The string identifier of the start state
+         */
+        void setStartState(std::string startStateId);
     protected:
 
         /**
