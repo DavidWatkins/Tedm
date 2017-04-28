@@ -67,6 +67,8 @@ void Tedm::Game::mainLoop() {
 
             // render the scene
             currentState->render();
+            //Flush graphics buffer to screen
+            graphics.present();
 
             if( fps.get_ticks() < 1000 / context.targetFramerate ) {
                 SDL_Delay( ( 1000 / context.targetFramerate ) - fps.get_ticks() );
@@ -121,7 +123,7 @@ bool Tedm::Game::init() {
     }
 
     // try to setup root surface
-    if(!graphics.init(context.width, context.height, context.windowTitle)) {
+    if(!graphics.init(context.height, context.width, context.windowTitle)) {
         log.log_error("Unable to initialize graphics");
         return false;
     }

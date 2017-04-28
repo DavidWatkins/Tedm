@@ -75,7 +75,6 @@ namespace Tedm {
         }
 
         void draw() {
-            printf("Sprite filename %s %d\n", filename.c_str(), sprite);
             if(!sprite)
                 set_sprite(filename);
 

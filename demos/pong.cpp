@@ -238,6 +238,17 @@ public:
     }
 };
 
+class Quit_Listener : public EventListener {
+    bool &isRunning;
+public:
+    Quit_Listener(bool &b) : isRunning(b) {
+    }
+
+    void operator()() override {
+        isRunning = false;
+    }
+};
+
 /**
  * @brief The user creates State class for each game state  which inherits the 
  * State class and implements elements specific to the state
@@ -278,7 +289,11 @@ public:
         background = graphics.add_background("../resources/dat_anakin.jpg");
         eventHandler.addKeyDownListener(
                 make_shared<Player_KeyBoard_Listener>(
-                    Player_KeyBoard_Listener(p1, p2)));
+                        Player_KeyBoard_Listener(p1, p2)));
+        eventHandler.addExitListener(
+                make_shared<Quit_Listener>(
+                        Quit_Listener(context.isRunning)));
+        context.targetFramerate = 1000;
         new_round();
         return true;
     }
@@ -337,7 +352,6 @@ public:
         p1.draw();
         p2.draw();
         ball.draw();
-        graphics.present();
     }
 
 };
