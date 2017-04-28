@@ -105,7 +105,7 @@ int main(int argc, char*argv[]) {
 
 We added several key elements here. First of all we added a background object that refers to the dat_anakin.jpg file. This will form the background of the screen.
 
-![Image of part2 example](https://octodex.github.com/images/yaktocat.png) 
+![Image of part2 example](https://cdn.rawgit.com/DavidWatkins/Tedm/30643308/img/part2ui.PNG) 
 
 ```c++
 #include <State.h>
@@ -146,3 +146,45 @@ int main(int argc, char*argv[]) {
 ```
 
 We added several key elements here. First of all we pointed the Object blaster to the resource "blaster.png". This will give it a reference to a texture that the graphics can draw. Then we made sure to call the draw function of the object we want shown onto the screen. If the state were to exit we would lose the state and the objects would no longer be drawn to the screen. 
+
+# Part 3 - Events
+One of the best features of Tedm is the functionality for a multitude of different event types. For example take this Quit_Listener:
+
+```c++
+class Quit_Listener : public EventListener {
+    bool &isRunning;
+public:
+    Quit_Listener(bool &b) : isRunning(b) {
+    }
+
+    void operator()() override {
+        isRunning = false;
+    }
+};
+
+...
+game.eventHandler.addExitListener(std::make_shared(Quit_Listener(game.isRunning)));
+...
+```
+
+The convenient part of this is that we can define any kind of event we might need that are supported by hardware triggers. The event system is fairly robust in SDL and therefore the EventHandler can handle a robust set of triggers. You can also define your own custom events:
+
+```c++
+class Quit_Trigger : public EventTrigger {
+    bool &isRunning;
+public:
+    Quit_Trigger(bool &b) : isRunning(b) {}
+
+    bool triggered() override {
+    	return b;
+    }
+
+    void operator()() override {
+        isRunning = false;
+    }
+};
+
+...
+game.eventHandler.addEventTrigger(std::make_shared(Quit_Trigger(game.isRunning)));
+...
+```
