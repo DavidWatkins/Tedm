@@ -104,10 +104,6 @@ SDL_Texture *Tedm::Graphics::add_background(std::string filename) const {
     return texture;
 }
 
-void Tedm::Graphics::update_screen(SDL_Texture *texture, SDL_Rect &src, SDL_Rect &dst) {
-
-}
-
 bool Tedm::Graphics::isInitialized() {
     return initialized;
 }
