@@ -7,7 +7,7 @@
 # Tedm
 A C++ game engine with an SDL backend
 
-#Dependencies
+# Dependencies
 This library is fairly lightweight, only relying on SDL2 to offer a cross platform graphics library solution. 
 - For Ubuntu 16.10
 ```bash
@@ -22,11 +22,18 @@ $ sudo bash ./install-deps.sh
 $ brew install sdl2
 ```
 
-#How to build
+# How to build
 ```bash
 $ mkdir build && cd build
 $ cmake .. && make
 ```
 
-#Tutorial
+# Tutorial
 [Tutorial for this project](Tutorial.md)
+
+# Documentation
+To build the documentation download doxygen and run:
+```bash
+$ doxygen doxygen_config
+$ firefox documentation/html/index.html
+```
