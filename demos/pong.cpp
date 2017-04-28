@@ -256,6 +256,7 @@ public:
  */
 class Pong_State : public State {
 public:
+    /* Creating Game objects within the state */
     Player p1, p2;
     Ball ball;
 
@@ -288,12 +289,10 @@ public:
     bool init() override {
         game.setWindowTitle("Dat Pong");
         background = graphics.add_background("../resources/dat_anakin.jpg");
-        eventHandler.addKeyDownListener(
-                make_shared<Player_KeyBoard_Listener>(
-                        Player_KeyBoard_Listener(p1, p2)));
-        eventHandler.addExitListener(
-                make_shared<Quit_Listener>(
-                        Quit_Listener(context.isRunning)));
+        eventHandler.addKeyDownListener(make_shared<Player_KeyBoard_Listener>(
+                                        Player_KeyBoard_Listener(p1, p2)));
+        eventHandler.addExitListener(make_shared<Quit_Listener>(
+                                     Quit_Listener(context.isRunning)));
         context.targetFramerate = 1000;
         new_round();
         return true;
@@ -335,13 +334,14 @@ public:
             ball.update_trajectory(p2);
         }
 
+        /* Hits Ceil or Floor of the game */
         if(ball.get_y() <= 0 || ball.get_y() >= context.height-10) {
             ball.update_trajectory();
         }
+        /* Hits the goal */
         if(ball.get_x() <= 0 || ball.get_x() >= context.width-50) {
             new_round();
         }
-        //render();
     }
 
     /**

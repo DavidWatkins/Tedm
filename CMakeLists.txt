@@ -7,7 +7,7 @@ link_directories(${CMAKETEST_BINARY_DIR}/src)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
-find_package(sdl2 REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
 #INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
@@ -28,8 +28,6 @@ set(SOURCE_FILES
         src/img/Texture.cpp
         src/img/Texture.h
 
-        src/objects/environment.cpp
-        src/objects/environment.h
         src/objects/object.h
         src/objects/player.h
         src/objects/sprite.h
