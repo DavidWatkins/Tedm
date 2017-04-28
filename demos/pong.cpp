@@ -157,7 +157,7 @@ public:
     bool init() override {
         game.setWindowTitle("Dat Pong");
         background = graphics.add_background("../resources/dat_anakin.jpg");
-        eventHandler->OnKeyDown(
+        eventHandler->addKeyDownListener(
                 make_shared<Player_KeyBoard_Listener>(
                     Player_KeyBoard_Listener(p1, p2)));
         new_round();
