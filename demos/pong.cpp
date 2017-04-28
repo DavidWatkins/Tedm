@@ -39,7 +39,7 @@ using namespace Tedm;
 
 /**
  * @brief the user makes a Player class which inherits Player_base and defines
- * functionality specific to their game. This includes default size, position, 
+ * functionality specific to their game. This includes default size, position,
  * functions for user input, etc.
  * @see Player_base
 */
@@ -50,12 +50,13 @@ class Player : public Player_base {
 public:
 
     /**
-     * @brief The Player inherits Player_base and sets the position 
+     * @brief The Player inherits Player_base and sets the position
      * @param x The starting x coordinate
      * @param y The starting y coordinate
     */
     Player(Graphics &g, std::string filename, const int x, const int y) : Player_base(g, filename, x,y,100,10) {
         set_pos(x, y);
+        sprite.set_source_pos(0, 0);
     }
 
     /**
@@ -70,7 +71,7 @@ public:
     }
 
     /**
-     * @brief Move up when the user enters the up key 
+     * @brief Move up when the user enters the up key
     */
     void move_up() {
         set_y(get_y() - move_distance);
@@ -81,7 +82,7 @@ public:
     }
 
     /**
-     * @brief Move down when the user enters the up key 
+     * @brief Move down when the user enters the up key
     */
     void move_down() {
         set_y(get_y() + move_distance);
@@ -90,7 +91,7 @@ public:
         }
         sprite.set_position(get_x(), get_y());
     }
-    
+
     /**
      * @brief Get the players y coordinate position
      * @return the y coordinate position
@@ -123,7 +124,7 @@ class Ball : public Object {
 public:
     /**
      * @brief The Ball constructor sets the height, weight, position, and
-     * position of the sprite within the image. 
+     * position of the sprite within the image.
      * @param posx the x coordinate
      * @param posy the y coordinate
      * @param srcx the x coordinate of the sprite within the image
@@ -136,11 +137,11 @@ public:
         start_y = posy;
         reset();
     }
-    
+
     /**
-     * @brief Return the ball to starting position and set the speed to 
+     * @brief Return the ball to starting position and set the speed to
      * default(1)
-     */ 
+     */
     void reset() {
         pos.x = start_x;
         pos.y = start_y;
@@ -152,7 +153,7 @@ public:
      * @brief Change the trajectory of ball based on the position of contact
      * with the paddle
      * @param p the paddle which made contact
-     * 
+     *
      * @see https://gamedev.stackexchange.com/questions/4253/in-pong-how-do-you-
      * calculate-the-balls-direction-when-it-bounces-off-the-paddl
      */
@@ -166,7 +167,7 @@ public:
         vx = ballSpeed*cos(bounceAngle)*dir_x;
         vy = ballSpeed*(-sin(bounceAngle)*5);
     }
-    
+
     /**
      * @brief Reverse trajectory upon direct contact
      */
@@ -211,7 +212,7 @@ public:
 /**
  * @brief The user greates a KeyEventListener class to define the functions
  * that will execute in response to user input, inheriting the KeyEventListener
- * class and overriding the appropriate virtual functions. 
+ * class and overriding the appropriate virtual functions.
  */
 class Player_KeyBoard_Listener : public KeyEventListener {
     Player *p1, *p2;
@@ -250,14 +251,14 @@ public:
 };
 
 /**
- * @brief The user creates State class for each game state  which inherits the 
+ * @brief The user creates State class for each game state  which inherits the
  * State class and implements elements specific to the state
  */
 class Pong_State : public State {
 public:
     Player p1, p2;
     Ball ball;
-    
+
     /**
      * @brief The constructor initializes the paddles and ball.
      * @param game the main Game object
@@ -299,7 +300,7 @@ public:
     }
 
     /**
-     * @brief Remove state event listeners so they do not interfere with the 
+     * @brief Remove state event listeners so they do not interfere with the
      * following state
      */
     void destroy() override {
@@ -308,14 +309,14 @@ public:
 
     /**
      * @brief Pause the game
-     */ 
+     */
     void paused() override {
         //context.isPaused = true;
     }
 
     /**
      * @brief Unpause the game
-     */ 
+     */
     void resumed() override {
         //context.isPaused = false;
     }
