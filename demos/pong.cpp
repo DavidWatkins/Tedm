@@ -207,4 +207,7 @@ public:
 int main(int argc, char*argv[]) {
     Game pong = Game();
     Pong_State pong_state(pong);
+    pong.registerState("default", make_shared<Pong_State>(pong_state));
+    pong.transition("default");
+    pong.mainLoop();
 }
