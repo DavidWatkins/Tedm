@@ -11,6 +11,7 @@ Tedm::Game::Game() : context(Context()), startStateId("")  {
 //    context.videoModeFlags = (SDL_HWSURFACE | SDL_DOUBLEBUF);
     context.windowTitle = "";
     log.setLevel(Logger::LogLevel::LOG_INFO);
+    doTransition = false;
 }
 
 Tedm::Game::Game(Tedm::Context ctx) : context(ctx), startStateId("")  {
@@ -51,6 +52,7 @@ void Tedm::Game::mainLoop() {
             if(!nextState->init()) {
                 log.log_error("User initialization failure; aborting execution");
             }
+            doTransition = false;
         }
 
         // pull time

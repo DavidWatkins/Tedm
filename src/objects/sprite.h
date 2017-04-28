@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
+#include <fstream>
 #include "Graphics.h"
 
 namespace Tedm {
@@ -12,12 +13,25 @@ namespace Tedm {
         SDL_Texture *sprite;
         SDL_Rect src;
         SDL_Rect tgt;
-        Graphics *graphics;
-        Sprite_base() {}
+        std::string filename;
+        Graphics &graphics;
 
-        Sprite_base(Graphics &g, std::string filename, int height, int width) : graphics{&g} {
+        Sprite_base(Graphics &g) : graphics{g} {
+            set_height_width(0, 0);
+            this->filename = "";
+            sprite = 0;
+        }
+
+        Sprite_base(Graphics &g, int height, int width) : graphics{g} {
             set_height_width(height, width);
-            set_sprite(filename);
+            this->filename = "";
+            sprite = 0;
+        }
+
+        Sprite_base(Graphics &g, std::string filename, int height, int width) : graphics{g} {
+            set_height_width(height, width);
+            this->filename = filename;
+            sprite = 0;
         }
 
         ~Sprite_base() {
@@ -27,7 +41,9 @@ namespace Tedm {
         }
 
         void set_sprite(std::string filename) {
-            sprite = graphics->loadTexture(filename);
+            std::ifstream f(filename.c_str());
+            if(f.good())
+                sprite = graphics.loadTexture(filename);
         }
 
         void set_height_width(int height, int width) {
@@ -59,7 +75,12 @@ namespace Tedm {
         }
 
         void draw() {
-            graphics->draw(sprite, &src, &tgt);
+            printf("Sprite filename %s %d\n", filename.c_str(), sprite);
+            if(!sprite)
+                set_sprite(filename);
+
+            if(sprite)
+                graphics.draw(sprite, &src, &tgt);
         }
     };
 };

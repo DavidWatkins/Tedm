@@ -54,7 +54,7 @@ public:
      * @param x The starting x coordinate
      * @param y The starting y coordinate
     */
-    Player(const int x, const int y) : Player_base(x,y,100,10) {
+    Player(Graphics &g, std::string filename, const int x, const int y) : Player_base(g, filename, x,y,100,10) {
         set_pos(x, y);
     }
 
@@ -129,7 +129,7 @@ public:
      * @param srcx the x coordinate of the sprite within the image
      * @param srcy the y coordinate of the sprite within the image
     */
-    Ball(int posx, int posy, int srcx, int srcy) : Object(posx,posy,10,50) {
+    Ball(Graphics &g, std::string filename, int posx, int posy, int srcx, int srcy) : Object(g, filename, posx,posy,10,50) {
         sprite.set_source_pos(srcx, srcy);
         sprite.set_height_width(10, 50);
         start_x = posx;
@@ -253,9 +253,9 @@ public:
      */
     Pong_State(Game &game) :
             State(game, "pong"),
-            p1{Player(15, 250)},
-            p2{Player(750, 250)},
-            ball{Ball(375,295, 0, 0)}{}
+            p1{Player(graphics, "../resources/blue1.png", 15, 250)},
+            p2{Player(graphics, "../resources/blue1.png", 750, 250)},
+            ball{Ball(graphics, "../resources/blaster.png", 375, 295, 0, 0)} {}
 
     SDL_Texture *background;
 
