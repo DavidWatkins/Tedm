@@ -46,6 +46,7 @@ void Tedm::Game::mainLoop() {
     Timer fps;
 
     log.log_debug("Starting App execute loop");
+    ctx.isRunning = true;
     while(ctx.isRunning) {
         //TODO Check that state exists
         if(doTransition) {
