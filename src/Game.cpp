@@ -31,7 +31,7 @@ void Tedm::Game::mainLoop() {
 
     //Set all of the eventHandlers for the states
     std::for_each(state_id_dict.begin(), state_id_dict.end(), [&](auto &state_pair) {
-        state_pair.second.setEventHandler(this->eventHandler);
+        state_pair.second->setEventHandler(this->eventHandler);
     });
 
     if(!init()) {

@@ -48,7 +48,7 @@ bool Tedm::Graphics::init(int height, int width, std::string name) {
     return true;
 }
 
-SDL_Texture *Tedm::Graphics::loadTexture(std::string path) {
+SDL_Texture *Tedm::Graphics::loadTexture(std::string path) const {
     //The final texture
     SDL_Texture* newTexture = NULL;
 
@@ -72,7 +72,7 @@ SDL_Texture *Tedm::Graphics::loadTexture(std::string path) {
     return newTexture;
 }
 
-SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) {
+SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filename) const {
     SDL_Surface* optimizedSurface = NULL;
 
     //TODO REPLACE WITH LOGGER
@@ -97,7 +97,7 @@ SDL_Surface *Tedm::Graphics::loadIMG(SDL_PixelFormat *format, std::string filena
     return optimizedSurface;
 }
 
-SDL_Texture *Tedm::Graphics::add_background(std::string filename) {
+SDL_Texture *Tedm::Graphics::add_background(std::string filename) const {
     SDL_Texture *texture {loadTexture(filename)};
     SDL_RenderCopy(renderer, texture, NULL, NULL );
     SDL_RenderPresent( renderer );
@@ -127,10 +127,15 @@ Tedm::Graphics::~Graphics() {
         SDL_DestroyWindow( window );
 }
 
-void Tedm::Graphics::draw(SDL_Texture *texture) {
+void Tedm::Graphics::draw(SDL_Texture *texture) const {
     SDL_RenderCopy(renderer, texture, NULL, NULL);
 }
 
-void Tedm::Graphics::draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt) {
+void Tedm::Graphics::draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt)
+    const {
     SDL_RenderCopy(renderer, texture, src, tgt);
+}
+
+void Tedm::Graphics::present() const {
+    SDL_RenderPresent(renderer);
 }

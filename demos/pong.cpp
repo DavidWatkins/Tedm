@@ -114,21 +114,26 @@ public:
     }
 };
 
-class player_event_listener : KeyEventListener {
+class Player_KeyBoard_Listener : public KeyEventListener {
+    Player *p1, *p2;
 public:
+    Player_KeyBoard_Listener(Player &p1, Player &p2) {
+        this->p1 = &p1;
+        this->p2 = &p2;
+    }
     void operator()(SDL_Keycode sym) override {
         switch(sym) {
             case SDLK_w:
-                p1.move_up();
+                p1->move_up();
                 break;
             case SDLK_s:
-                p1.move_down();
+                p1->move_down();
                 break;
             case SDLK_UP:
-                p2.move_up();
+                p2->move_up();
                 break;
             case SDLK_DOWN:
-                p2.move_down();
+                p2->move_down();
                 break;
         }
     }
@@ -138,10 +143,9 @@ class Pong_State : public State {
 public:
     Player p1, p2;
     Ball ball;
-    Pong_State(const Graphics &graphics, const Game &game) : 
-            State(graphics, game),p1{Player(15, 250)},
+    Pong_State(Game &game) :
+            State(game.graphics, game),p1{Player(15, 250)},
             p2{Player(750, 250)}, ball{Ball(375,295, 0, 0)} {}
-
     SDL_Texture *background;
 
     void new_round() {
@@ -151,30 +155,43 @@ public:
     }
 
     bool init() override {
-        
-        parent->setWindowTitle("Dat Pong");
+        game.setWindowTitle("Dat Pong");
         background = graphics.add_background("resources/dat_anaking.jpg");
-        parent.eventHandler.OnKeyDown(
-                make_shared<player_event_listener>(player_event_listener()));
-        new_round(); 
+        eventHandler->OnKeyDown(
+                make_shared<Player_KeyBoard_Listener>(
+                    Player_KeyBoard_Listener(p1, p2)));
+        new_round();
+        return true;
+    }
+
+    void destroy() override {
+
+    }
+
+    void paused() override {
+        ctx.isPaused = true;
+    }
+
+    void resumed() override {
+        ctx.isPaused = false;
     }
 
     void update() override {
-    	ball.update_pos();
-		
-        if(ball.collision(p1)) {    
+        ball.update_pos();
+
+        if(ball.collision(p1)) {
             ball.update_trajectory(p1);
         } else if (ball.collision(p2)) {
             ball.update_trajectory(p2);
         }
 
-        if(ball.get_y() <= 0 || ball.get_y() >= height-10) {
+        if(ball.get_y() <= 0 || ball.get_y() >= ctx.height-10) {
             ball.update_trajectory();
         }
-        if(ball.get_x() <= 0 || ball.get_x() >= width-50) {
-            enqueue_events(RESET);
+        if(ball.get_x() <= 0 || ball.get_x() >= ctx.width-50) {
+            new_round();
         }
-        render();
+        //render();
     }
 
     void render() override {
@@ -182,35 +199,15 @@ public:
         p1.draw();
         p2.draw();
         ball.draw();
-        SDL_RenderPresent(renderer);
+        graphics.present();
     }
-    
-};
 
-
-
-public:
-    Pong(std::string title) : Game(), p1{Player(15, 250)}, p2{Player(750,250)} {
-    }
 };
 
 int main(int argc, char*argv[]) {
-    Game pong = Game(Context(800, 600));
-    bool quit = false;
-    char ch;
-    std::cout << "Game Loaded" << std::endl;
-    game.update_screen();
-    SDL_Event e;
-    while( !quit ) {
-        //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 ) {
-            //User requests quit
-            if( e.type == SDL_QUIT ) {
-                quit = true;
-            } else if( e.type == SDL_KEYDOWN ) { //User presses a key
-                game.handle_keypress(e.key.keysym.sym);
-            }
-        }
-        game.update_screen();
-    }
+    Game pong = Game();
+    Pong_State pong_state(pong);
+    pong.registerState("default", make_shared<Pong_State>(pong_state));
+    pong.transition("default");
+    pong.mainLoop();
 }

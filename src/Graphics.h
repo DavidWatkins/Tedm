@@ -30,17 +30,18 @@ namespace Tedm {
         void destroy();
 
         bool init(int height, int width, std::string name);
-        SDL_Texture *loadTexture(std::string path);
-        SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename);
+        SDL_Texture *loadTexture(std::string path) const;
+        SDL_Surface *loadIMG(SDL_PixelFormat *format, std::string filename) const;
         void update_screen(SDL_Texture *texture, SDL_Rect &src, SDL_Rect &dst);
-        SDL_Texture *add_background(std::string filename);
+        SDL_Texture *add_background(std::string filename) const;
 
         bool isInitialized();
 
         void setWindowTitle(std::string basic_string);
 
-        void draw(SDL_Texture *texture);
-        void draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt);
+        void draw(SDL_Texture *texture) const;
+        void draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt) const;
+        void present() const;
 
     private:
         SDL_Renderer *renderer;

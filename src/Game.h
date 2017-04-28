@@ -37,6 +37,7 @@ namespace Tedm {
 
         void transition(std::string newStateId);
 
+        Graphics graphics;
     protected:
 
         virtual bool init();
@@ -54,7 +55,6 @@ namespace Tedm {
         std::string startStateId;
 
         Logger log;
-        Graphics graphics;
 
         std::string nextStateId;
         bool doTransition;

@@ -10,7 +10,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 find_package(sdl2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
+#INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
+message(${SDL2_IMAGE_INCLUDE_DIR} ${SDL2_INCLUDE_DIR})
+include_directories("/usr/local/include/")
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++1z -O2")
@@ -44,7 +46,8 @@ set(SOURCE_FILES
         src/Graphics.cpp
         src/Graphics.h
         src/State.cpp
-        src/State.h src/events/EventTrigger.cpp src/events/EventTrigger.h)
+        src/State.h #src/events/EventTrigger.cpp src/events/EventTrigger.h
+        )
 
 set(TARGETS demos/anakin_side.cpp demos/pong.cpp)
 
@@ -54,5 +57,5 @@ foreach (_src ${TARGETS})
     add_executable(${EXEC_NAME} ${SOURCE_FILES} ${_src})
     MESSAGE(${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
-    TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} SDL2_image)
+    TARGET_LINK_LIBRARIES(${EXEC_NAME} ${SDL2_LIBRARIES} SDL2 SDL2_image)
 endforeach()
