@@ -8,3 +8,4 @@ Vagrantfile
 *.o
 pong
 anakin_side
+documentation/*
