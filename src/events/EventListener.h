@@ -33,32 +33,61 @@
 #include <SDL2/SDL_keycode.h>
 
 namespace Tedm {
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    *  This is the default case for custom events that are not SDL key events.
+    */
     class EventListener {
     public:
         virtual void operator()() = 0;
     };
 
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    *  This is executed upon keypress.
+    */
     class KeyEventListener {
     public:
         virtual void operator()(SDL_Keycode sym) = 0;
     };
 
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    *  This is executed upon mouse movement.
+    */
     class MouseMoveListener {
     public:
         virtual void operator()(int x, int y, int rel_x, int rel_y,
                                 bool left_click, bool right_click, bool middle_click) = 0;
     };
 
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    *  This is executed upon mouse wheel interaction.
+    */
     class MouseWheelListener {
     public:
         virtual void operator()(bool scroll_up, bool scroll_down) = 0;
     };
 
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    *  This is executed upon mouse button press.
+    */
     class MouseButtonListener {
     public:
         virtual void operator()(int x, int y) = 0;
     };
 
+    /**
+    *  @brief Define functions to occur upon event occurance.
+    *  User can overload () operator and it will be executed with the event
+    */
     class UserListener {
     public:
         virtual void operator()(int type, int code, void* data1, void* data2) = 0;
