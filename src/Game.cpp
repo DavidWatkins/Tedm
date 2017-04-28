@@ -61,9 +61,7 @@ void Tedm::Game::mainLoop() {
         fps.start();
 
         // check events
-        while(eventHandler.poll()) {
-            eventHandler.process();
-        }
+        eventHandler.checkListeners();
 
         if(!ctx.isPaused) {
             // update the scene
