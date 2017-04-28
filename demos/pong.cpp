@@ -156,7 +156,7 @@ public:
 
     bool init() override {
         game.setWindowTitle("Dat Pong");
-        background = graphics.add_background("resources/dat_anaking.jpg");
+        background = graphics.add_background("../resources/dat_anakin.jpg");
         eventHandler->OnKeyDown(
                 make_shared<Player_KeyBoard_Listener>(
                     Player_KeyBoard_Listener(p1, p2)));
@@ -207,7 +207,6 @@ public:
 int main(int argc, char*argv[]) {
     Game pong = Game();
     Pong_State pong_state(pong);
-    pong.registerState("default", make_shared<Pong_State>(pong_state));
-    pong.transition("default");
+    pong.registerState("", make_shared<Pong_State>(pong_state));
     pong.mainLoop();
 }
