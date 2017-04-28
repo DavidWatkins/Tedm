@@ -31,14 +31,13 @@ namespace Tedm {
 
         void setWindowTitle(std::string windowTitle);
 
-        void setEventHandler(EventHandler &eventHandler);
-
         void shutdown();
 
         void registerState(std::string id, std::shared_ptr<State> s);
 
         void transition(std::string newStateId);
 
+        Graphics graphics;
     protected:
 
         virtual bool init();
@@ -56,7 +55,6 @@ namespace Tedm {
         std::string startStateId;
 
         Logger log;
-        Graphics graphics;
 
         std::string nextStateId;
         bool doTransition;

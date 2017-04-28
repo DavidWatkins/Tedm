@@ -39,8 +39,9 @@ namespace Tedm {
 
         void setWindowTitle(std::string basic_string);
 
-        void draw(SDL_Texture *texture);
-        void draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt);
+        void draw(SDL_Texture *texture) const;
+        void draw(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *tgt) const;
+        void present() const;
 
     private:
         SDL_Renderer *renderer;

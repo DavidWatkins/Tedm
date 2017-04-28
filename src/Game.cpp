@@ -29,6 +29,11 @@ void Tedm::Game::mainLoop() {
     //TODO add check for startstate existing
     std::shared_ptr<State> currentState = state_id_dict[startStateId];
 
+    //Set all of the eventHandlers for the states
+    std::for_each(state_id_dict.begin(), state_id_dict.end(), [&](auto &state_pair) {
+        state_pair.second->setEventHandler(this->eventHandler);
+    });
+
     if(!init()) {
         log.log_error("Initialization failure; aborting execution");
         exit(-1);
@@ -90,11 +95,6 @@ void Tedm::Game::setTargetFramerate(int fps) {
 void Tedm::Game::setWindowTitle(std::string windowTitle) {
     ctx.windowTitle = windowTitle;
     graphics.setWindowTitle(ctx.windowTitle);
-}
-
-void Tedm::Game::setEventHandler(EventHandler &eventHandler) {
-    log.log_info("Setting the event handler");
-    this->eventHandler = eventHandler;
 }
 
 void Tedm::Game::shutdown() {

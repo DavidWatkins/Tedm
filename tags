@@ -91,7 +91,7 @@ OnRButtonDown	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRButtonDo
 OnRButtonUp	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRButtonUp(Tedm::MouseButtonListener eventListener) {$/;"	f	class:Tedm::EventHandler
 OnResize	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnResize(Tedm::WindowResizeListener eventListener) {$/;"	f	class:Tedm::EventHandler
 OnRestore	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnRestore(Tedm::EventListener eventListener) {$/;"	f	class:Tedm::EventHandler
-OnUser	src/events/EventHandler.cpp	/^void Tedm::EventHandler::OnUser(Tedm::UserListener eventListener) {$/;"	f	class:Tedm::EventHandler
+OnUser	src/events/EventHandler.cpp	/^void Tedm::EventHandler::addUserListener(Tedm::UserListener eventListener) {$/;"	f	class:Tedm::EventHandler
 P1_MOVE_DOWN	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
 P1_MOVE_UP	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
 P2_MOVE_DOWN	demos/pong.cpp	/^    enum CONTROLS {P1_MOVE_UP, P1_MOVE_DOWN, P2_MOVE_UP, P2_MOVE_DOWN};$/;"	e	enum:Pong::CONTROLS	file:
