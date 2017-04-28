@@ -54,7 +54,7 @@ public:
      * @param x The starting x coordinate
      * @param y The starting y coordinate
     */
-    Player(const int x, const int y) : Player_base(x,y,100,10) {
+    Player(Graphics &g, std::string filename, const int x, const int y) : Player_base(g, filename, x,y,100,10) {
         set_pos(x, y);
     }
 
@@ -129,7 +129,7 @@ public:
      * @param srcx the x coordinate of the sprite within the image
      * @param srcy the y coordinate of the sprite within the image
     */
-    Ball(int posx, int posy, int srcx, int srcy) : Object(posx,posy,10,50) {
+    Ball(Graphics &g, std::string filename, int posx, int posy, int srcx, int srcy) : Object(g, filename, posx,posy,10,50) {
         sprite.set_source_pos(srcx, srcy);
         sprite.set_height_width(10, 50);
         start_x = posx;
@@ -238,6 +238,17 @@ public:
     }
 };
 
+class Quit_Listener : public EventListener {
+    bool &isRunning;
+public:
+    Quit_Listener(bool &b) : isRunning(b) {
+    }
+
+    void operator()() override {
+        isRunning = false;
+    }
+};
+
 /**
  * @brief The user creates State class for each game state  which inherits the 
  * State class and implements elements specific to the state
@@ -253,9 +264,9 @@ public:
      */
     Pong_State(Game &game) :
             State(game, "pong"),
-            p1{Player(15, 250)},
-            p2{Player(750, 250)},
-            ball{Ball(375,295, 0, 0)}{}
+            p1{Player(graphics, "../resources/blue1.png", 15, 250)},
+            p2{Player(graphics, "../resources/blue1.png", 750, 250)},
+            ball{Ball(graphics, "../resources/blaster.png", 375, 295, 0, 0)} {}
 
     SDL_Texture *background;
 
@@ -278,7 +289,11 @@ public:
         background = graphics.add_background("../resources/dat_anakin.jpg");
         eventHandler.addKeyDownListener(
                 make_shared<Player_KeyBoard_Listener>(
-                    Player_KeyBoard_Listener(p1, p2)));
+                        Player_KeyBoard_Listener(p1, p2)));
+        eventHandler.addExitListener(
+                make_shared<Quit_Listener>(
+                        Quit_Listener(context.isRunning)));
+        context.targetFramerate = 1000;
         new_round();
         return true;
     }
@@ -337,7 +352,6 @@ public:
         p1.draw();
         p2.draw();
         ball.draw();
-        graphics.present();
     }
 
 };

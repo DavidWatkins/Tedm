@@ -34,6 +34,7 @@ Tedm::Game::Game() : context(Context()), startStateId("")  {
 //    context.videoModeFlags = (SDL_HWSURFACE | SDL_DOUBLEBUF);
     context.windowTitle = "";
     log.setLevel(Logger::LogLevel::LOG_INFO);
+    doTransition = false;
 }
 
 Tedm::Game::Game(Tedm::Context ctx) : context(ctx), startStateId("")  {
@@ -74,6 +75,7 @@ void Tedm::Game::mainLoop() {
             if(!nextState->init()) {
                 log.log_error("User initialization failure; aborting execution");
             }
+            doTransition = false;
         }
 
         // pull time
@@ -88,6 +90,8 @@ void Tedm::Game::mainLoop() {
 
             // render the scene
             currentState->render();
+            //Flush graphics buffer to screen
+            graphics.present();
 
             if( fps.get_ticks() < 1000 / context.targetFramerate ) {
                 SDL_Delay( ( 1000 / context.targetFramerate ) - fps.get_ticks() );
@@ -142,7 +146,7 @@ bool Tedm::Game::init() {
     }
 
     // try to setup root surface
-    if(!graphics.init(context.width, context.height, context.windowTitle)) {
+    if(!graphics.init(context.height, context.width, context.windowTitle)) {
         log.log_error("Unable to initialize graphics");
         return false;
     }

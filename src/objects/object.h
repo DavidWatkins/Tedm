@@ -22,7 +22,7 @@ namespace Tedm {
 
         Sprite_base sprite;
 
-        Object() {
+        Object(Graphics &g) : sprite(g) {
             pos.x = 0;
             pos.y = 0;
             size.h = 0;
@@ -31,7 +31,25 @@ namespace Tedm {
             sprite.set_height_width(0, 0);
         }
 
-        Object(const int x, const int y, const int h, const int w) {
+        Object(Graphics &g, std::string filename) : sprite(g, filename, 0, 0) {
+            pos.x = 0;
+            pos.y = 0;
+            size.h = 0;
+            size.w = 0;
+            sprite.set_source_pos(0, 0);
+            sprite.set_height_width(0, 0);
+        }
+
+        Object(Graphics &g, const int x, const int y, const int h, const int w) : sprite(g, h, w) {
+            pos.x = x;
+            pos.y = y;
+            size.h = h;
+            size.w = w;
+            sprite.set_source_pos(x, y);
+            sprite.set_height_width(h, w);
+        }
+
+        Object(Graphics &g, std::string filename, const int x, const int y, const int h, const int w) : sprite(g, filename, h, w) {
             pos.x = x;
             pos.y = y;
             size.h = h;
