@@ -1,7 +1,32 @@
+/****************************************************************************
+ *                                                                          *
+ * This file is part of Tedm.                                               *
+ *                                                                          *
+ *   Tedm is free software: you can redistribute it and/or modify it        *
+ *   under the terms of the GNU Lesser General Public License as published  *
+ *   by the Free Software Foundation, either version 3 of the License, or   *
+ *   (at your option) any later version.                                    *
+ *                                                                          *
+ *   Box is distributed in the hope that it will be useful,                 *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of         *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          *
+ *   GNU Lesser General Public License for more details.                    *
+ *                                                                          *
+ *   You should have received a copy of the GNU Lesser General Public       *
+ *   License along with Tedm.  If not, see <http://www.gnu.org/licenses/>.  *
+ ****************************************************************************/
+
 /**
-    timer.cpp
-    copied from SDL tutorials
-*/
+ *  @file    Timer.cpp
+ *  @author  David Watkins, Theodore Ahlfeld, Matthew Haigh
+ *  @date    4/27/2017
+ *  @version 1.0
+ *
+ *  @brief Timer for maintaining frame rate
+ *
+ *  @see http://lazyfoo.net/tutorials/SDL/14_animated_sprites_and_vsync/index.php
+ *
+ */
 
 #include "utils/Timer.h"
 
