@@ -20,6 +20,7 @@ namespace Tedm {
 namespace Tedm {
 
     class Game {
+        friend class State;
     public:
         Game();
         Game(Context ctx);
@@ -36,8 +37,6 @@ namespace Tedm {
         void registerState(std::string id, std::shared_ptr<State> s);
 
         void transition(std::string newStateId);
-
-        Graphics graphics;
     protected:
 
         virtual bool init();
@@ -49,7 +48,9 @@ namespace Tedm {
         virtual void resume();
 
         EventHandler eventHandler;
-        Context ctx;
+        Graphics graphics;
+
+        Context context;
         std::unordered_map<std::string, std::shared_ptr<State>> state_id_dict;
         std::string currentStateId;
         std::string startStateId;

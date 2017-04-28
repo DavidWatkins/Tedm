@@ -10,7 +10,7 @@ language: cpp
 compiler:
   - g++
 
-dist: xenial
+dist: yakkety
 
 addons:
  apt:
