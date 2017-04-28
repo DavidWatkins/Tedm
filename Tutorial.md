@@ -68,38 +68,81 @@ These are the basics for creating a game for Tedm. In later sections we will go 
 Let's load the assets we need for our game. You do this by creating objects inside of the init function of a state. Tedm will automatically pick up these references and read in their textures. You then will be able to display them to the screen by making a call to render. 
 
 ```c++
-#include <object/State.h>
-#include <object/Object.h>
+#include <State.h>
 #include "Game.h"
 #include <memory>
 
-class GameState : public State {
-	public:
+class GameState : public Tedm::State {
+public:
+    SDL_Texture * background;
 
-	Object blaster;
+	GameState(Tedm::Game &g) : State(g, "GameState") {}
 
-	GameState(Game &game) : 
-		State(game, "Start"), blaster{graphics, "../resources/blaster.png", 0, 0} {}
-
-	bool init() override { return true; }
+	bool init() override {
+        background = graphics.add_background("../resources/dat_anakin.jpg");
+        return true;
+    }
 	void destroy() override {}
 	void paused() override {}
 	void resumed() override {}
 	void update() override {}
-	void render override {
-		blaster.draw();
+	void render() override {
+        graphics.draw(background);
 	}
-}
+};
 
 int main(int argc, char*argv[]) {
-	Context context;
-    Game g = Game(context);
+	Tedm::Context context;
+	Tedm::Game g = Tedm::Game(context);
+	context.width = 800;
+	context.height = 600;
+	GameState game_state(g);
+	g.registerState("Start", std::make_shared<GameState>(game_state));
+    g.setStartState("Start");
+	g.mainLoop();
+}
+```
+
+We added several key elements here. First of all we added a background object that refers to the dat_anakin.jpg file. This will form the background of the screen.
+
+![Image of part2 example](https://octodex.github.com/images/yaktocat.png) 
+
+```c++
+#include <State.h>
+#include "Game.h"
+#include <memory>
+
+class GameState : public Tedm::State {
+public:
+    Tedm::Object blaster;
+    SDL_Texture *background;
+
+    GameState(Tedm::Game &g) : State(g, "GameState"), blaster(graphics, "../resources/dat_anakin.png", 475, 375, 100, 100) {}
+
+    bool init() override {
+        background = graphics.add_background("../resources/dat_anakin.jpg");
+        return true;
+    }
+    void destroy() override {}
+    void paused() override {}
+    void resumed() override {}
+    void update() override {}
+    void render() override {
+        graphics.draw(background);
+        blaster.draw();
+    }
+};
+
+int main(int argc, char*argv[]) {
+    Tedm::Context context;
+    Tedm::Game g = Tedm::Game(context);
     context.width = 800;
     context.height = 600;
     GameState game_state(g);
-    g.registerState("Start", make_shared<GameState>(game_state));
+    g.registerState("Start", std::make_shared<GameState>(game_state));
+    g.setStartState("Start");
     g.mainLoop();
 }
 ```
 
-We added several key elements here. First of all we pointed the Object blaster to the resource "blaster.png". This will give it a reference to a texture that the graphics can draw. Then we made sure to call the draw function of the 
+We added several key elements here. First of all we pointed the Object blaster to the resource "blaster.png". This will give it a reference to a texture that the graphics can draw. Then we made sure to call the draw function of the object we want shown onto the screen. If the state were to exit we would lose the state and the objects would no longer be drawn to the screen. 
