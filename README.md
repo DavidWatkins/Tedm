@@ -10,7 +10,7 @@ A C++ game engine with an SDL backend
 This library is fairly lightweight, only relying on SDL2 to offer a cross platform graphics library solution. 
 - For Ubuntu 16.10
 ```bash
-$ sudo apt-get install libsdl2-2.0 libsdl2-dev libsdl2-image
+$ sudo apt-get install libsdl2-2.0 libsdl2-dev libsdl2-image1.2
 ```
 or alternatively run 
 ```bash
