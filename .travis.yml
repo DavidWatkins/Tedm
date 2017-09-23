@@ -1,24 +1,6 @@
-sudo: required
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install libsdl2-dev libsdl2-2.0 libsdl2-image libsdl2-image-dev
-
 # Enable C++ support
 language: cpp
+sudo: required
+dist: xenial
 
-# Compiler selection
-compiler:
-  - g++
-
-dist: yakkety
-
-addons:
- apt:
-   packages:
-   - cmake
-
-# Build steps
-script:
-  - mkdir build
-  - cd build && cmake ..
-  - make
+script: bash -ex .travis-ci.sh
