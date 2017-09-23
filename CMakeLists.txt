@@ -5,7 +5,7 @@ include_directories(src)
 include_directories(demos)
 link_directories(${CMAKETEST_BINARY_DIR}/src)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake")
 
 find_package(sdl2 REQUIRED)
 find_package(SDL2_image REQUIRED)
